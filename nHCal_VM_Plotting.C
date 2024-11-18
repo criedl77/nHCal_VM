@@ -33,12 +33,12 @@ void nHCal_VM_Plotting()
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1");
   //TString strang_ram("pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs");
-  //TString strang_ram("pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39");
+  TString strang_ram("pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39");
   //TString strang_ram("rho_10x100_uChannel_Q2of0to10_hiDiv");
   //TString strang_ram("sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs");
   //TString strang_ram("pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs");
   //TString strang_ram("podio_output_100events");
-   TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files");   
+  //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files");   
   
   const char *strang=strang_ram.Data();
 
