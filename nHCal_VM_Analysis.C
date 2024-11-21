@@ -510,7 +510,7 @@ void nHCal_VM_Analysis(){
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
 		  
-		  cout << "Particle is pdg: " << pdg << " eta-gen:" << trueEta << " eta-rec:" << recEta <<" .\n";
+		  cout << "Particle is pdg: " << pdg << " eta-gen:" << partEta << " eta-rec:" << CPartEta <<" .\n";
 		  
 		  if( pdg == 11){
 		    nrec_electrons++;
