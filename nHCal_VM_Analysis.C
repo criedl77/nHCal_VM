@@ -48,11 +48,11 @@ void nHCal_VM_Analysis(){
   //const char strang[]="pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //const char strang[]="pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
   //const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-  const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
+  //const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv";
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
   //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
-  //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
+  const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
   //const char strang[]="EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
 
   // sartre J/Psi, old 2022 data: "The tree does not have a branch called ReconstructedChargedParticleAssociations.recID"
@@ -495,7 +495,7 @@ void nHCal_VM_Analysis(){
 	  // Loop over associations to find matching ReconstructedChargedParticle
 	  for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
 	    {
-	      //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
+	      cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
 	      
 	      if(simuAssoc[j] == i) // Find association index matching the index of the thrown particle we are looking at
 		{
@@ -510,7 +510,7 @@ void nHCal_VM_Analysis(){
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
 		  
-		  //cout << "Particle is pdg: " << pdg << " .\n";
+		  cout << "Particle is pdg: " << pdg << " eta-gen:" << trueEta << " eta-rec:" << recEta <<" .\n";
 		  
 		  if( pdg == 11){
 		    nrec_electrons++;
