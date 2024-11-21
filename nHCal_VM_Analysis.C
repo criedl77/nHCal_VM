@@ -108,9 +108,9 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<float> partMomY(tree_reader, "MCParticles.momentum.y");
   TTreeReaderArray<float> partMomZ(tree_reader, "MCParticles.momentum.z");
   TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
-  TTreeReaderArray<int> partMass(tree_reader, "MCParticles.mass");
-  TTreeReaderArray<int> partEndpointZ(tree_reader, "MCParticles.endpoint.z");
-  TTreeReaderArray<int> partVertexZ(tree_reader, "MCParticles.vertex.z");
+  TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
+  TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.z");
+  TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
   // Get reconstructed track information:
   TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
@@ -232,7 +232,7 @@ void nHCal_VM_Analysis(){
   while(tree_reader.Next()) { // Loop over events
 
     ievgen++;
-    cout << "+ Entering event #: " << ievgen << " \n";    
+    //cout << "+ Entering event #: " << ievgen << " \n";    
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
@@ -281,7 +281,7 @@ void nHCal_VM_Analysis(){
 	  // charged-kaon decays:
 	  if( partPdg[i] == 321 && partGenStat[i] == 2 ) // only kpm that decay
 	    {
-	      cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
+	      //cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
 
 	      // count the kpm to mupm decays:
 	      ndecay_kpm_mupm++;
@@ -355,7 +355,7 @@ void nHCal_VM_Analysis(){
 		{
 		  if( (partPdg[daughters_index[i_daughters_begin]] == 321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -321 ) || (partPdg[daughters_index[i_daughters_begin]] == -321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 321) )
 		    {
-		      cout << "-> Event " << ievgen << " found phi(1020) decayed into K+ K-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
+		      //cout << "-> Event " << ievgen << " found phi(1020) decayed into K+ K-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
 		      
 		      // count it:
 		      ndecay_phi_kk++;
@@ -375,7 +375,7 @@ void nHCal_VM_Analysis(){
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
 
-		      cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
+		      //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
 		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n"; 
