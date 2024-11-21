@@ -510,7 +510,7 @@ void nHCal_VM_Analysis(){
 
 		  if( CPartEta < 0.00001 && CPartEta > -0.00001 )
 		    {
-		      cout << "***** Event " << ievgen << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
+		      cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
 		    }
 		  
 		  if( pdg == 11){
