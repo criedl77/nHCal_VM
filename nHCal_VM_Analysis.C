@@ -508,6 +508,7 @@ void nHCal_VM_Analysis(){
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
 
+		  // this is all tracks:
 		  if( CPartEta < 0.00001 && CPartEta > -0.00001 )
 		    {
 		      cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
@@ -580,11 +581,17 @@ void nHCal_VM_Analysis(){
 		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
 
-		      // count the decay pions (reco level) that are within the nHCal acceptance, here pion1:
+		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
 			}
+
+		      if( recEta_phi_k1 < 0.00001 && recEta_phi_k1 > -0.00001 )
+		    {
+		      cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K1, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k1 << " \n";
+		    }
+		      
 		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
 		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
 		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
@@ -597,11 +604,17 @@ void nHCal_VM_Analysis(){
 		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
 
-		      // count the decay pions (reco level) that are within the nHCal acceptance, here pion2:
+		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
 			}
+
+		      if( recEta_phi_k2 < 0.00001 && recEta_phi_k2 > -0.00001 )
+			{
+			  cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K2, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k2 << " \n";
+			}
+		      
 		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
 		    }// end of phi(1020) decay K2
