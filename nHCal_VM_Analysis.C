@@ -52,19 +52,19 @@ void nHCal_VM_Analysis(){
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv";
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
   //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
-  const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
+  //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
   //const char strang[]="EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
 
   // sartre J/Psi, old 2022 data: "The tree does not have a branch called ReconstructedChargedParticleAssociations.recID"
   // and others. Some trees have been renamed since then. Take hepmc generated runs and reproduce with latest geometry: mc ls  S3/eictest/EPIC/EVGEN/EXCLUSIVE/DIFFRACTIVE_JPSI_ABCONV/Sartre/Coherent/sartre_bnonsat_Au_jpsi_ab_eAu_2_000.hepmc.gz
   //const char strang[]="sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
   
-  //const char strang[]="Sartre_Au_phi_10runs"; // local runlist
+  const char strang[]="Sartre_Au_phi_10runs"; // local runlist
   
   cout << "Analyzed data is of the type: \n " << strang << " \n";
 
-  //TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
-  TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");
+  TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
+  //TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");
   
   const char *runlist=runlist_ram.Data();
   
