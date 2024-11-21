@@ -378,7 +378,7 @@ void nHCal_VM_Analysis(){
 		      cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
-		     cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n"; 
+		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n"; 
 		    
 		    } // end of phi to k+k- decays
 		} // end of 2-body decays
@@ -447,7 +447,7 @@ void nHCal_VM_Analysis(){
 	  else if( pdg == 321 ){
 	    ngen_kaons++;
 	    kaonEta->Fill(trueEta);
-	    cout << "**************Kaon \n";
+	    //cout << "**************Kaon \n";
 	  } // kaons_pm                                                                                                     
 	  else if( pdg == 113){
 	    ngen_rho0++;
@@ -495,12 +495,10 @@ void nHCal_VM_Analysis(){
 	  // Loop over associations to find matching ReconstructedChargedParticle
 	  for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
 	    {
-	      cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
+	      //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
 	      
 	      if(simuAssoc[j] == i) // Find association index matching the index of the thrown particle we are looking at
 		{
-		  cout << "***** Event " << ievgen << ", found association index: " << simuAssoc[j] << ", track energy:" << trackEnergy[recoAssoc[j]]<< " \n";
-		  
 		  TVector3 recMom(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]); // recoAssoc[j] is the index of the matched ReconstructedChargedParticle                                                       
 		  
 		  float CPartEta = recMom.PseudoRapidity();
@@ -510,7 +508,7 @@ void nHCal_VM_Analysis(){
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
 		  
-		  cout << "Particle is pdg: " << pdg << " eta-gen:" << partEta << " eta-rec:" << CPartEta <<" .\n";
+		  cout << "***** Event " << ievgen << ", found association index: " << simuAssoc[j] << "pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  " eta-gen: " << trueEta << " eta-rec: " << CPartEta << " \n";
 		  
 		  if( pdg == 11){
 		    nrec_electrons++;
@@ -673,13 +671,13 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated pi0: " << ngen_pi0 << ", of which decay into 2 gamma: " << ndecay_pi0_gg <<  " \n";
   cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " << ndecay_kpm_mupm << " \n";
   cout << "Number of generated rho0: " << ngen_rho0 << ", of which decay into pi+ pi-: " << ndecay_rho0_pp << ", into mu+ mu-: " << ndecay_rho0_mumu << ", into e+ e-: " << ndecay_rho0_ee << " \n";
-  cout << "        " << ndecay_rho0_pionpm_nHCal << " pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
+  cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
   cout << "Number of generated rho+: " << ngen_rhop << " \n";
   cout << "Number of generated phi: " << ngen_phi <<", of which decay into K+ K-: " << ndecay_phi_kk << " \n";
-  cout << "        " << ndecay_phi_kaonpm_nHCal << " K+ K- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_phi_kaonpm_nHCal << " \n";
+  cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_phi_kaonpm_nHCal << " \n";
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
-  cout << "        " << ndecay_jpsi_epm_nHCal << " e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
+  cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
   cout << "Number of generated Upsilon: " << ngen_upsilon << " \n";
   cout << "Number of generated D0: " << ngen_d0 << " \n";
   cout << "Number of generated B0: " << ngen_b0 << " \n\n";
