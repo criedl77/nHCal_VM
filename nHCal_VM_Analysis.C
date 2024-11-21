@@ -507,8 +507,11 @@ void nHCal_VM_Analysis(){
 		  recEta->Fill(CPartEta);
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
-		  
-		  cout << "***** Event " << ievgen << ", found association index: " << simuAssoc[j] << "pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  " eta-gen: " << trueEta << " eta-rec: " << CPartEta << " \n";
+
+		  if( CPartEta < 0.00001 && CPartEta > -0.00001 )
+		    {
+		      cout << "***** Event " << ievgen << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
+		    }
 		  
 		  if( pdg == 11){
 		    nrec_electrons++;
@@ -584,7 +587,7 @@ void nHCal_VM_Analysis(){
 			}
 		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
 		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
-		      cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
+		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
 		      
 		    }// end of phi(1020) decay K1
 		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay k2 of the gen phi
@@ -600,7 +603,7 @@ void nHCal_VM_Analysis(){
 			  ndecay_phi_kaonpm_nHCal++;
 			}
 		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
-		      cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
+		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
 		    }// end of phi(1020) decay K2
 
 		} // end of phi(1020) decay into KK
