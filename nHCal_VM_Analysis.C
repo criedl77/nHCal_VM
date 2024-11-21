@@ -348,7 +348,7 @@ void nHCal_VM_Analysis(){
 	  // phi(1020) decays:
       	  else if( partPdg[i] == 333 )
 	    {
-	      cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
+	      //cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
 
 	      // count the 2-body phi(1020) decays:
 	      if( i_daughters == 2 )
