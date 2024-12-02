@@ -182,7 +182,7 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
   TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
 
-  TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,500.);
+  TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
   
   // phi (azimuthal angle)
   TH1D *partPhi = new TH1D("partPhi","Phi of thrown charged particles; #phi [rad]",150,-3.2,3.2);
