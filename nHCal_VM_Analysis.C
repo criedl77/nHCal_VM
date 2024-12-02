@@ -20,7 +20,11 @@ void nHCal_VM_Analysis(){
  //
   double eta_min_lfhcal = 1.18;			    
   double eta_max_lfhcal = 4.2;
-  //
+
+  // define constants:
+  double speedoflight = 299792458; // speed of light in m/s
+  double kpmlifetime = 0.00000001238; // charged kaon life time in s
+  double kpmmass = 0.493677; // charged kaon mass in GeV
   
   ////////////////////////////////////////////////////
   //// String definitions - modify here as needed ////
@@ -161,13 +165,12 @@ void nHCal_VM_Analysis(){
   TH1D *pipmfromrho0Eta = new TH1D("pipmfromrho0Eta","generated #eta of pi^{#pm} from rho^{0} decay;#eta",120,-6.,6.);
   TH1D *pipmfromrho0RecEta = new TH1D("pipmfromrho0RecEta","reconstructed #eta of pi^{#pm} from rho^{0} decay;#eta",120,-6.,6.);
   
-  // phi(1020)
+  // eta phi(1020)
   TH1D *phiEta = new TH1D("phiEta","Eta of thrown #phi(1020);#eta",120,-6.,6.);
   TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay;endpoint.z",120,-400.,500.); 
   TH1D *kpmfromphiEta = new TH1D("kpmfromphiEta","generated #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
   TH1D *kpmfromphiRecEta = new TH1D("kpmfromphiRecEta","reconstructed #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
 
-  
   TH1D *jpsiEta = new TH1D("jpsiEta","Eta of thrown J/#psi;#eta",120,-6.,6.);
   TH1D *epmfromjpsiEta = new TH1D("epmfromjpsiEta","generated #eta of e^{#pm} from J/#psi decay;#eta",120,-6.,6.);
   TH1D *epmfromjpsiRecEta = new TH1D("epmfromjpsiRecEta","reconstructed #eta of e^{#pm} from J/#psi decay;#eta",120,-6.,6.);
@@ -175,11 +178,17 @@ void nHCal_VM_Analysis(){
   // momentum
   TH1D *partMom = new TH1D("partMom","Mom of thrown particles; P [GeV]",150,0.,150.);
   TH1D *recP = new TH1D("recP","Momentum of reconstructed tracks; P [GeV]",150,0.,150.);
+
+  TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
+  TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
+
+  TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,500.);
   
-  // phi
+  // phi (azimuthal angle)
   TH1D *partPhi = new TH1D("partPhi","Phi of thrown charged particles; #phi [rad]",150,-3.2,3.2);
   TH1D *recPhi = new TH1D("recPhi","Phi of reconstructed tracks; #phi [rad]",150,-3.2,3.2);
-  
+
+  //// Reset global counters : 
   // count events:
   int ievgen = 0;
   // count generated particles:
@@ -252,13 +261,10 @@ void nHCal_VM_Analysis(){
 
 	// reset particle decays for each new generated particle:
 	is_kpmdecay_mupm = 0;
-	//
 	is_rho0decay_pp = 0;
 	is_rho0decay_mumu = 0;
 	is_rho0decay_ee = 0;
-	//
 	is_phidecay_kk = 0;
-	//
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
 	
@@ -364,13 +370,19 @@ void nHCal_VM_Analysis(){
 
 		      TVector3 trueMom_phi_k1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
 		      TVector3 trueMom_phi_k2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
+
+		      // phi meson level:
 		      TVector3 trueMom_phi_k12=trueMom_phi_k1 + trueMom_phi_k2;
-		      
+
+		      // kaon level:
 		      float trueEta_phi_k1 = trueMom_phi_k1.PseudoRapidity();
 		      float trueEta_phi_k2 = trueMom_phi_k2.PseudoRapidity();
 		      kpmfromphiEta->Fill(trueEta_phi_k1);
 		      kpmfromphiEta->Fill(trueEta_phi_k2);
 
+		      kpmfromphiMom->Fill(trueMom_phi_k1.Mag());
+		      kpmfromphiMom->Fill(trueMom_phi_k2.Mag());
+		      
 		      // continue here: XXX
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
@@ -447,7 +459,6 @@ void nHCal_VM_Analysis(){
 	  else if( pdg == 321 ){
 	    ngen_kaons++;
 	    kaonEta->Fill(trueEta);
-	    //cout << "**************Kaon \n";
 	  } // kaons_pm                                                                                                     
 	  else if( pdg == 113){
 	    ngen_rho0++;
@@ -511,7 +522,7 @@ void nHCal_VM_Analysis(){
 		  // this is all tracks:
 		  if( CPartEta < 0.00001 && CPartEta > -0.00001 )
 		    {
-		      cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
+		      cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
 		    }
 		  
 		  if( pdg == 11){
@@ -580,7 +591,11 @@ void nHCal_VM_Analysis(){
 		      float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
 		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
+		      kpmfromphiRecMom->Fill(recMom_phi_k1.Mag());
 
+		      float kpmfromphiDL_k1 = (recMom_phi_k1.Mag()/kpmmass)*kpmlifetime*speedoflight ;
+		      kpmfromphiRecDecayLength->Fill(kpmfromphiDL_k1);
+  
 		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
@@ -588,14 +603,14 @@ void nHCal_VM_Analysis(){
 			}
 
 		      if( recEta_phi_k1 < 0.00001 && recEta_phi_k1 > -0.00001 )
-		    {
-		      cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K1, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k1 << " \n";
-		    }
+		      {
+		        cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K1, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k1 << " \n";
+		      }
 		      
 		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
 		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
 		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
-		      
+		      cout << " K1 rec momentum: "  << recMom_phi_k1.Mag() << ", K1 decay length: " << kpmfromphiDL_k1 << " \n";
 		    }// end of phi(1020) decay K1
 		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay k2 of the gen phi
 		    {
@@ -603,6 +618,10 @@ void nHCal_VM_Analysis(){
 		      float recEta_phi_k2 = recMom_phi_k2.PseudoRapidity();
 		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
+		      kpmfromphiRecMom->Fill(recMom_phi_k2.Mag());
+
+		      float kpmfromphiDL_k2 = (recMom_phi_k2.Mag()/kpmmass)*kpmlifetime*speedoflight ;
+		      kpmfromphiRecDecayLength->Fill(kpmfromphiDL_k2);
 
 		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
@@ -612,13 +631,13 @@ void nHCal_VM_Analysis(){
 
 		      if( recEta_phi_k2 < 0.00001 && recEta_phi_k2 > -0.00001 )
 			{
-			  cout << "***** Event " << ievgen << "in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K2, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k2 << " \n";
+			  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K2, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k2 << " \n";
 			}
 		      
 		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
+		      cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << kpmfromphiDL_k2 << " \n";
 		    }// end of phi(1020) decay K2
-
 		} // end of phi(1020) decay into KK
 	      // jpsi into ee:
 	      if( is_jpsidecay_ee )
@@ -645,7 +664,7 @@ void nHCal_VM_Analysis(){
 		      float recPhi_jpsi_e2 = recMom_jpsi_e2.Phi();
 		      epmfromjpsiRecEta->Fill(recEta_jpsi_e2);
 
-		      // count the decay pions (reco level) that are within the nHCal acceptance, here electron2:
+		      // count the decay electrons (reco level) that are within the nHCal acceptance, here electron2:
 		      if( recEta_jpsi_e2 >= eta_min_nhcal && recEta_jpsi_e2 <= eta_max_nhcal )
 			{
 			  ndecay_jpsi_epm_nHCal++;
