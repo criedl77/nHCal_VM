@@ -609,6 +609,7 @@ void nHCal_VM_Analysis(){
 		      float recP_phi_k1 = recMom_phi_k1.Mag();
 		      float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
 		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
+		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
 		      float kpmfromphiDL_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
@@ -639,7 +640,7 @@ void nHCal_VM_Analysis(){
 		      float recEta_phi_k2 = recMom_phi_k2.PseudoRapidity();
 		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
 		      float recTheta_phi_k2 = recMom_phi_k2.Theta();
-		      float kpmfromphiDL_k2 = (recMom_phi_k2/kpmmass)*kpmlifetime*speedoflight;
+		      float kpmfromphiDL_k2 = (recP_phi_k2/kpmmass)*kpmlifetime*speedoflight;
 		      		      
 		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
