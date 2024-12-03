@@ -124,15 +124,16 @@ void nHCal_VM_Plotting()
   kpmfromphiRecMom_nHCal->Draw("same");  
   canvas7->Draw();
 
-  auto leg7 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header  
+  auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
   leg7->SetHeader("Kaon momenta from #phi decay", "C"); // option "C" allows to center the header
+  leg7->SetBorderSize(0);
   leg7->SetFillStyle(0);
+  leg7->SetTextSize(0.05);
   leg7->AddEntry(kpmfromphiRecMom,"all","l");
   leg7->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
   leg7->Draw();
   canvas7->Print(filename7, "pdf");          
   // end file 7
-  
 
   
   // FILE 1 - generated eta //
