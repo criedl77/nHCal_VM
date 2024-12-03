@@ -125,7 +125,7 @@ void nHCal_VM_Plotting()
   canvas7->Draw();
 
   auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg7->SetHeader("Kaons from #phi decay - momentum", "C"); // option "C" allows to center the header
+  leg7->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
   leg7->SetBorderSize(0);
   leg7->SetFillStyle(0);
   leg7->SetTextSize(0.05);
@@ -151,7 +151,7 @@ void nHCal_VM_Plotting()
   canvas8->Draw();
 
   auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg8->SetHeader("Kaons from #phi decay - decay length", "C"); // option "C" allows to center the header
+  leg8->SetHeader("Kaons from #phi(1020) decay - decay length", "C"); // option "C" allows to center the header
   leg8->SetBorderSize(0);
   leg8->SetFillStyle(0);
   leg8->SetTextSize(0.05);
@@ -177,7 +177,7 @@ void nHCal_VM_Plotting()
   canvas9->Draw();
 
   auto leg9 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg9->SetHeader("Kaons from #phi decay - z-location of kaon decay", "C"); // option "C" allows to center the header
+  leg9->SetHeader("Kaons from #phi(1020) decay - z-location of kaon decay", "C"); // option "C" allows to center the header
   leg9->SetBorderSize(0);
   leg9->SetFillStyle(0);
   leg9->SetTextSize(0.05);
@@ -187,7 +187,7 @@ void nHCal_VM_Plotting()
 
   // add vertical lines for nHCal z-min and z-max:
   Int_t binmax_9 = kpmfromphiRecZdecay->GetMaximumBin();
-  Double_t y_max9 = kpmfromphiRecZdecay->GetBinContent(binmax_9);
+  Double_t y_max9 = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax_9);
   TLine *z_min_nhcal_line9= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max9);  // (x1,y1,x2,y2)
   z_min_nhcal_line9->SetLineColor(kBlack);
   z_min_nhcal_line9->SetLineWidth(2);
