@@ -125,7 +125,7 @@ void nHCal_VM_Plotting()
   canvas7->Draw();
 
   auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg7->SetHeader("Kaon momenta from #phi decay", "C"); // option "C" allows to center the header
+  leg7->SetHeader("Kaons from #phi decay - momentum", "C"); // option "C" allows to center the header
   leg7->SetBorderSize(0);
   leg7->SetFillStyle(0);
   leg7->SetTextSize(0.05);
@@ -151,7 +151,7 @@ void nHCal_VM_Plotting()
   canvas8->Draw();
 
   auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg8->SetHeader("Kaon momenta from #phi decay", "C"); // option "C" allows to center the header
+  leg8->SetHeader("Kaons from #phi decay - decay length", "C"); // option "C" allows to center the header
   leg8->SetBorderSize(0);
   leg8->SetFillStyle(0);
   leg8->SetTextSize(0.05);
@@ -160,6 +160,48 @@ void nHCal_VM_Plotting()
   leg8->Draw();
   canvas8->Print(filename8, "pdf");          
   // end file 8
+
+   // FILE 9 - kpmfromphidecay z location of decay
+  
+  TString name9 = TString("kpmfromphi_zdecay");
+  TString filename9 = pdfdir + TString("/") + TString(name9) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas9 = new TCanvas(name8, strang, 800, 600);
+  kpmfromphiRecZdecay->SetTitle(strang);
+  kpmfromphiRecZdecay->SetLineColor(kBlack);
+  kpmfromphiRecZdecay->Draw();
+  kpmfromphiRecZdecay_nHCal->SetLineColor(kRed);
+  kpmfromphiRecZdecay_nHCal->Draw("same");  
+  canvas9->Draw();
+
+  auto leg9 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg9->SetHeader("Kaons from #phi decay - z-location of kaon decay", "C"); // option "C" allows to center the header
+  leg9->SetBorderSize(0);
+  leg9->SetFillStyle(0);
+  leg9->SetTextSize(0.05);
+  leg9->AddEntry(kpmfromphiRecZdecay,"all","l");
+  leg9->AddEntry(kpmfromphiRecZdecay_nHCal,"in nHCal acceptance","l");
+  leg9->Draw();
+
+  // add vertical lines for nHCal z-min and z-max:
+  Int_t binmax_9 = kpmfromphiRecZdecay->GetMaximumBin();
+  Double_t y_max9 = kpmfromphiRecZdecay->GetBinContent(binmax_9);
+  TLine *z_min_nhcal_line9= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max9);  // (x1,y1,x2,y2)
+  z_min_nhcal_line9->SetLineColor(kBlack);
+  z_min_nhcal_line9->SetLineWidth(2);
+  z_min_nhcal_line9->SetLineStyle(kDashed);
+  z_min_nhcal_line9->Draw("same");
+  TLine *z_max_nhcal_line9= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max9);  // (x1,y1,x2,y2)
+  z_max_nhcal_line9->SetLineColor(kBlack);
+  z_max_nhcal_line9->SetLineWidth(2);
+  z_max_nhcal_line9->SetLineStyle(kDashed);
+  z_max_nhcal_line9->Draw("same");
+  
+  canvas9->Print(filename9, "pdf");          
+  // end file 9
+  
   
   // FILE 1 - generated eta //
   
