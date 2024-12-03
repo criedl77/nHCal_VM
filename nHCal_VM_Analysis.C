@@ -191,6 +191,7 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
   TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [m]",150,0.,60.);
   TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [m]",150,-40,40.);
+  TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [m]",150,-40,40.);
 
   // theta (polar angle)
   TH1D *partTheta = new TH1D("partTheta","Theta of thrown charged particles; #theta [rad]",150,0.,3.2);
@@ -618,7 +619,7 @@ void nHCal_VM_Analysis(){
 		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
 		      float decaylength_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
 		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location of kaon decay - I actually t hink I don't need the sign of eta (as in TMath::Sign(1.0, kpmfromphiRecEta)) since it will be handled by  the sign of the cosine
-		       cout << "K1 z decay point: " << zdecay_k1 << " \n";
+		      cout << "K1 z decay point: " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
@@ -633,6 +634,7 @@ void nHCal_VM_Analysis(){
 			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
 			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
 			  kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k1);
+			  kpmfromphiRecZdecay_nHCal->Fill(zdecay_k1);
 			}
 
 		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
@@ -650,11 +652,13 @@ void nHCal_VM_Analysis(){
 		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
 		      float recTheta_phi_k2 = recMom_phi_k2.Theta();
 		      float decaylength_k2 = (recP_phi_k2/kpmmass)*kpmlifetime*speedoflight;
+		      float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2;
 		      		      
 		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k2);
 		      kpmfromphiRecDecayLength->Fill(decaylength_k2);
+		      kpmfromphiRecZdecay->Fill(zdecay_k2);
 
 		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
