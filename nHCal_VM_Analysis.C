@@ -194,8 +194,8 @@ void nHCal_VM_Analysis(){
   TH1D *partTheta = new TH1D("partTheta","Theta of thrown charged particles; #theta [rad]",150,0.,1.);
   TH1D *recTheta = new TH1D("recTheta","Theta of reconstructed tracks; #theta [rad]",150,0.,1.);
   TH1D *recTheta_nHCal = new TH1D("recTheta_nHCal","Theta of reconstructed tracks in the nHCal; #theta [rad]",150,0.,1.);
-  TH1D *kpmfromphiRecTheta = new TH1D("kpmfromphiRecTheta","Theta of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
-  TH1D *kpmfromphiRecTheta_nHCal = new TH1D("kpmfromphiRecTheta_nHCal","Theta of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,150.);
+  TH1D *kpmfromphiRecTheta = new TH1D("kpmfromphiRecTheta","Theta of reco K^{#pm} from #phi(1020) decay; #theta [rad]",150,0.,1.);
+  TH1D *kpmfromphiRecTheta_nHCal = new TH1D("kpmfromphiRecTheta_nHCal","Theta of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance;#theta [rad]",150,0.,1.);
    
   // phi (azimuthal angle)
   TH1D *partPhi = new TH1D("partPhi","Phi of thrown charged particles; #phi [rad]",150,-3.2,3.2);
