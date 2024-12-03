@@ -20,6 +20,8 @@ void nHCal_VM_Analysis(){
  //
   double eta_min_lfhcal = 1.18;			    
   double eta_max_lfhcal = 4.2;
+  //
+  double z_nhcal = -3.95; // assumed start of nHCal in z-direction, from $DETECTOR_PATH/compact/definitions.xml
 
   // define constants:
   double speedoflight = 299792458; // speed of light in m/s
@@ -524,7 +526,7 @@ void nHCal_VM_Analysis(){
 		  recP->Fill(recMom.Mag());
 
 		  // nHCal eta acceptance:
-		  if( recEta >= eta_min_nhcal && recEta <= eta_max_nhcal )
+		  if( CPartEta >= eta_min_nhcal && CPartEta <= eta_max_nhcal )
 			{
 			  recP_nHCal->Fill(recMom.Mag());
 			}
