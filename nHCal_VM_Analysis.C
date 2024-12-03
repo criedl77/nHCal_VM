@@ -606,12 +606,12 @@ void nHCal_VM_Analysis(){
 		    {
 		      TVector3 recMom_phi_k1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
 
-		      float recMom_phi_k1 = recMom_phi_k1.Mag();
+		      float recP_phi_k1 = recMom_phi_k1.Mag();
 		      float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
 		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
-		      float kpmfromphiDL_k1 = (recMom_phi_k1/kpmmass)*kpmlifetime*speedoflight;
+		      float kpmfromphiDL_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
 		      
-		      kpmfromphiRecMom->Fill(recMom_phi_k1);
+		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k1);
 		      kpmfromphiRecDecayLength->Fill(kpmfromphiDL_k1);
@@ -620,7 +620,7 @@ void nHCal_VM_Analysis(){
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
-			  kpmfromphiRecMom_nHCal->Fill(recMom_phi_k1);
+			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
 			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
 			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k1);
 			}
@@ -635,13 +635,13 @@ void nHCal_VM_Analysis(){
 		    {
 		      TVector3 recMom_phi_k2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
 
-		      float recMom_phi_k2 = recMom_phi_k2.Mag();
+		      float recP_phi_k2 = recMom_phi_k2.Mag();
 		      float recEta_phi_k2 = recMom_phi_k2.PseudoRapidity();
 		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
 		      float recTheta_phi_k2 = recMom_phi_k2.Theta();
 		      float kpmfromphiDL_k2 = (recMom_phi_k2/kpmmass)*kpmlifetime*speedoflight;
 		      		      
-		      kpmfromphiRecMom->Fill(recMom_phi_k2);
+		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k2);
 		      kpmfromphiRecDecayLength->Fill(kpmfromphiDL_k2);
@@ -650,7 +650,7 @@ void nHCal_VM_Analysis(){
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
-			  kpmfromphiRecMom_nHCal->Fill(recMom_phi_k2);
+			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
 			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
 			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k2);
 			}
