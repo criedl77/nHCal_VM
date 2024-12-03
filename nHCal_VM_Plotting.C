@@ -135,6 +135,31 @@ void nHCal_VM_Plotting()
   canvas7->Print(filename7, "pdf");          
   // end file 7
 
+  // FILE 8 - kpmfromphidecay decay length
+  
+  TString name8 = TString("kpmfromphi_decaylength");
+  TString filename8 = pdfdir + TString("/") + TString(name8) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas8 = new TCanvas(name8, strang, 800, 600);
+  kpmfromphiRecDecayLength->SetTitle(strang);
+  kpmfromphiRecDecayLength->SetLineColor(kBlack);
+  kpmfromphiRecDecayLength->Draw();
+  kpmfromphiRecDecayLength_nHCal->SetLineColor(kRed);
+  kpmfromphiRecDecayLength_nHCal->Draw("same");  
+  canvas8->Draw();
+
+  auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg8->SetHeader("Kaon momenta from #phi decay", "C"); // option "C" allows to center the header
+  leg8->SetBorderSize(0);
+  leg8->SetFillStyle(0);
+  leg8->SetTextSize(0.05);
+  leg8->AddEntry(kpmfromphiRecDecayLength,"all","l");
+  leg8->AddEntry(kpmfromphiRecDecayLength_nHCal,"in nHCal acceptance","l");
+  leg8->Draw();
+  canvas8->Print(filename8, "pdf");          
+  // end file 8
   
   // FILE 1 - generated eta //
   
