@@ -22,7 +22,9 @@ void nHCal_VM_Analysis(){
   double eta_min_lfhcal = 1.18;			    
   double eta_max_lfhcal = 4.2;
   //
-  double z_nhcal = -3.95; // (2024-12-03) assumed start of nHCal in z-direction, from $DETECTOR_PATH/compact/definitions.xml
+  double z_nhcal_min = -3.95; // (2024-12-03) assumed start of nHCal in z-direction [m], from $DETECTOR_PATH/compact/definitions.xml
+  double z_nhcal_thickness = 0.45; // nHCal thickness in z [m]
+  double z_nhcal_max = z_nhcal_min - z_nhcal_thickness;
 
   // define constants:
   double speedoflight = 299792458; // speed of light in m/s
@@ -667,6 +669,7 @@ void nHCal_VM_Analysis(){
 			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
 			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
 			  kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k2);
+			  kpmfromphiRecZdecay_nHCal->Fill(zdecay_k2);
 			}
 
 		      
