@@ -132,7 +132,7 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<unsigned int> parents_end(tree_reader, "MCParticles.parents_end");
   
   TTreeReaderArray<int> daughters_index(tree_reader, "_MCParticles_daughters.index");
-   TTreeReaderArray<unsigned int> daughters_begin(tree_reader, "MCParticles.daughters_begin");
+  TTreeReaderArray<unsigned int> daughters_begin(tree_reader, "MCParticles.daughters_begin");
   TTreeReaderArray<unsigned int> daughters_end(tree_reader, "MCParticles.daughters_end");  
   
   // Define Histograms
@@ -182,7 +182,9 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
   TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
 
+  // decay length
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
+   TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [m]",150,0.,60.);
   
   // phi (azimuthal angle)
   TH1D *partPhi = new TH1D("partPhi","Phi of thrown charged particles; #phi [rad]",150,-3.2,3.2);
@@ -221,7 +223,7 @@ void nHCal_VM_Analysis(){
   int ndecay_phi_kk = 0;
   int ndecay_jpsi_mumu = 0;
   int ndecay_jpsi_ee = 0;
-  // count number of decay particles (reco level) in nHCal acceptance:
+  // count number of decay particles (reco level) in nHCal eta acceptance:
   int ndecay_kpm_mupm_nHCal = 0;
   int ndecay_rho0_pionpm_nHCal = 0;
   int ndecay_phi_kaonpm_nHCal = 0;
@@ -600,6 +602,7 @@ void nHCal_VM_Analysis(){
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
+			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k1);
 			}
 
 		      if( recEta_phi_k1 < 0.00001 && recEta_phi_k1 > -0.00001 )
@@ -627,6 +630,7 @@ void nHCal_VM_Analysis(){
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
+			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k2);
 			}
 
 		      if( recEta_phi_k2 < 0.00001 && recEta_phi_k2 > -0.00001 )
