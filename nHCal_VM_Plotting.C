@@ -108,13 +108,6 @@ void nHCal_VM_Plotting()
   TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
   
   ///////////////////////////////////////////////////////////
-
-  TH1F *kpmfromphiRecMom = (TH1F*)ifile->Get("kpmfromphiRecMom"); 
-  TH1F *kpmfromphiRecMom_nHCal = (TH1F*)ifile->Get("kpmfromphiRecMom_nHCal"); 
-  TH1F *kpmfromphiRecDecayLength = (TH1F*)ifile->Get("kpmfromphiRecDecayLength"); 
-  TH1F *kpmfromphiRecDecayLength_nHCal = (TH1F*)ifile->Get("kpmfromphiRecDecayLength_nHCal");  
-  TH1F *kpmfromphiRecZdecay = (TH1F*)ifile->Get("kpmfromphiRecZdecay");  
-  TH1F *kpmfromphiRecZdecay_nHCal = (TH1F*)ifile->Get("kpmfromphiRecZdecay_nHCal"); 
   
   // FILE 7 - kpmfromphidecay momentum
   
