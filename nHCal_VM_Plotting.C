@@ -2,15 +2,28 @@ void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
 
-  // Define name of MC file:
+  //
+  double eta_min_nhcal = -4.05; 
+  double eta_max_nhcal = -1.2; 
+  //
+  double eta_min_bhcal = -1.2;
+  double eta_max_bhcal = 1.18;
+ //
+  double eta_min_lfhcal = 1.18;			    
+  double eta_max_lfhcal = 4.2;
+  //
+  double z_nhcal_min = -3.95; // (2024-12-03) assumed start of nHCal in z-direction [m], from $DETECTOR_PATH/compact/definitions.xml
+  double z_nhcal_thickness = 0.45; // nHCal thickness in z [m]
+  double z_nhcal_max = z_nhcal_min - z_nhcal_thickness;
+  //
+
+  // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_vtxfix_5.hepmc3.tree"); // has no tree "events"
   //TString strang_ram("sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic");
   //TString strang_ram("EpIC1.0.0-1.0_DVMP_10x100_1.0065.eicrecon.tree.edm4eic");
   //TString strang_ram("rho_10x100_uChannel_Q2of0to10_hiDiv.0047.eicrecon.tree.edm4eic");
-  //
   //TString strang_ram("pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic");
-  //
   //TString strang_ram("pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic");
@@ -18,17 +31,11 @@ void nHCal_VM_Plotting()
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic");
-  //
   //TString strang_ram("pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic");
-  //*
   //TString strang_ram("pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic");
-  //*  
-  //TString strang_ram("pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic");                        
-  //**                                                                                                                                     
-  //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic");                        
-  //**
+  //TString strang_ram("pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic");                         
+  //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic");
-  //
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1");
@@ -65,18 +72,10 @@ void nHCal_VM_Plotting()
   
   cout << "Reading infile:\n " << infile << " .\n";
 
-  // define nHCal acceptance (2024-07-16) - make sure this is consistent with nHCal_VM_Analysis.C:
-  double eta_min_nhcal = -4.14;
-  double eta_max_nhcal = -1.18;
-  //
-  
-  // FILE 1 - generated eta //
-  
-  // Define the name of the plot:
-  TString name1 = TString("trueEta_species");
-  // Define the name of the pdf file:
-  TString filename1 = pdfdir + TString("/") + TString(name1) + TString(".pdf");
 
+  ///////////////////////////////////////////////////////////
+  //Histograms to plot: 
+  
   TH1F *electronEta = (TH1F*)ifile->Get("electronEta");
   TH1F *muonEta = (TH1F*)ifile->Get("muonEta");
   TH1F *protonEta = (TH1F*)ifile->Get("protonEta");
@@ -85,6 +84,70 @@ void nHCal_VM_Plotting()
   TH1F *rho0Eta = (TH1F*)ifile->Get("rho0Eta");
   TH1F *phiEta = (TH1F*)ifile->Get("phiEta");
   TH1F *jpsiEta = (TH1F*)ifile->Get("jpsiEta");
+
+  TH1F *electronRecEta = (TH1F*)ifile->Get("electronRecEta");
+  TH1F *muonRecEta = (TH1F*)ifile->Get("muonRecEta");
+  TH1F *protonRecEta = (TH1F*)ifile->Get("protonRecEta");
+  TH1F *pionRecEta = (TH1F*)ifile->Get("pionRecEta");
+  TH1F *kaonRecEta = (TH1F*)ifile->Get("kaonRecEta");
+
+  TH1F *pipmfromrho0Eta = (TH1F*)ifile->Get("pipmfromrho0Eta");
+  TH1F *pipmfromrho0RecEta = (TH1F*)ifile->Get("pipmfromrho0RecEta");
+
+  TH1F *kpmfromphiEta = (TH1F*)ifile->Get("kpmfromphiEta");
+  TH1F *kpmfromphiRecEta = (TH1F*)ifile->Get("kpmfromphiRecEta");
+
+  TH1F *kpmfromphiRecMom = (TH1F*)ifile->Get("kpmfromphiRecMom"); 
+  TH1F *kpmfromphiRecMom_nHCal = (TH1F*)ifile->Get("kpmfromphiRecMom_nHCal"); 
+  TH1F *kpmfromphiRecDecayLength = (TH1F*)ifile->Get("kpmfromphiRecDecayLength"); 
+  TH1F *kpmfromphiRecDecayLength_nHCal = (TH1F*)ifile->Get("kpmfromphiRecDecayLength_nHCal");  
+  TH1F *kpmfromphiRecZdecay = (TH1F*)ifile->Get("kpmfromphiRecZdecay");  
+  TH1F *kpmfromphiRecZdecay_nHCal = (TH1F*)ifile->Get("kpmfromphiRecZdecay_nHCal"); 
+  
+  TH1F *epmfromjpsiEta = (TH1F*)ifile->Get("epmfromjpsiEta");
+  TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
+  
+  ///////////////////////////////////////////////////////////
+
+  TH1F *kpmfromphiRecMom = (TH1F*)ifile->Get("kpmfromphiRecMom"); 
+  TH1F *kpmfromphiRecMom_nHCal = (TH1F*)ifile->Get("kpmfromphiRecMom_nHCal"); 
+  TH1F *kpmfromphiRecDecayLength = (TH1F*)ifile->Get("kpmfromphiRecDecayLength"); 
+  TH1F *kpmfromphiRecDecayLength_nHCal = (TH1F*)ifile->Get("kpmfromphiRecDecayLength_nHCal");  
+  TH1F *kpmfromphiRecZdecay = (TH1F*)ifile->Get("kpmfromphiRecZdecay");  
+  TH1F *kpmfromphiRecZdecay_nHCal = (TH1F*)ifile->Get("kpmfromphiRecZdecay_nHCal"); 
+  
+  // FILE 7 - kpmfromphidecay momentum
+  
+  TString name7 = TString("kpmfromphi_momentum");
+  TString filename7 = pdfdir + TString("/") + TString(name7) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name7, strang, 800, 600);
+  kpmfromphiRecMom->SetTitle(strang);
+  kpmfromphiRecMom->SetLineColor(kBlack);
+  kpmfromphiRecMom->Draw();
+  kpmfromphiRecMom_nHCal->SetLineColor(kRed);
+  kpmfromphiRecMom_nHCal->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaon momenta from #phi decay", "C"); // option "C" allows to center the header
+  leg->SetFillStyle(0);
+  leg->AddEntry(kpmfromphiRecMom,"all","l");
+  leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+  canvas->Print(filename1, "pdf");          
+  // end file 7
+  
+
+  
+  // FILE 1 - generated eta //
+  
+  // Define the name of the plot:
+  TString name1 = TString("trueEta_species");
+  // Define the name of the pdf file:
+  TString filename1 = pdfdir + TString("/") + TString(name1) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -146,13 +209,6 @@ void nHCal_VM_Plotting()
   TString name2 = TString("recEta_species");
   // Define the name of the pdf file:
   TString filename2 = pdfdir + TString("/") + TString(name2) + TString(".pdf");
-
-  TH1F *electronRecEta = (TH1F*)ifile->Get("electronRecEta");
-  TH1F *muonRecEta = (TH1F*)ifile->Get("muonRecEta");
-  TH1F *protonRecEta = (TH1F*)ifile->Get("protonRecEta");
-  TH1F *pionRecEta = (TH1F*)ifile->Get("pionRecEta");
-  TH1F *kaonRecEta = (TH1F*)ifile->Get("kaonRecEta");
-  
 
   gStyle->SetOptStat(0); //no stats box    
 
@@ -372,11 +428,6 @@ void nHCal_VM_Plotting()
   // Define the name of the pdf file:
   TString filename4 = pdfdir + TString("/") + TString(name4) + TString(".pdf");
 
-  TH1F *pipmfromrho0Eta = (TH1F*)ifile->Get("pipmfromrho0Eta");
-  TH1F *pipmfromrho0RecEta = (TH1F*)ifile->Get("pipmfromrho0RecEta");
-  // exists already: 
-  //TH1F *rho0Eta = (TH1F*)ifile->Get("rho0Eta");
-
   gStyle->SetOptStat(0); //no stats box                 
 
   TCanvas *canvas4 = new TCanvas(name4, strang, 800, 600);
@@ -421,9 +472,6 @@ void nHCal_VM_Plotting()
   TString name5 = TString("Eta_decay_phi");
   // Define the name of the pdf file:
   TString filename5 = pdfdir + TString("/") + TString(name5) + TString(".pdf");
-
-  TH1F *kpmfromphiEta = (TH1F*)ifile->Get("kpmfromphiEta");
-  TH1F *kpmfromphiRecEta = (TH1F*)ifile->Get("kpmfromphiRecEta");
 
   gStyle->SetOptStat(0); //no stats box                 
 
@@ -479,9 +527,6 @@ void nHCal_VM_Plotting()
   TString name6 = TString("Eta_decay_jpsi");
   // Define the name of the pdf file:
   TString filename6 = pdfdir + TString("/") + TString(name6) + TString(".pdf");
-
-  TH1F *epmfromjpsiEta = (TH1F*)ifile->Get("epmfromjpsiEta");
-  TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
 
   gStyle->SetOptStat(0); //no stats box                 
 

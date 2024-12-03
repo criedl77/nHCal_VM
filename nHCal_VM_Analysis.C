@@ -621,7 +621,7 @@ void nHCal_VM_Analysis(){
 		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
 		      float decaylength_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
 		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location of kaon decay - I actually t hink I don't need the sign of eta (as in TMath::Sign(1.0, kpmfromphiRecEta)) since it will be handled by  the sign of the cosine
-		      cout << "K1 z decay point: " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
+		      //cout << "K1 z decay point: " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
