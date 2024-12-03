@@ -178,9 +178,11 @@ void nHCal_VM_Analysis(){
   // momentum
   TH1D *partMom = new TH1D("partMom","Mom of thrown particles; P [GeV]",150,0.,150.);
   TH1D *recP = new TH1D("recP","Momentum of reconstructed tracks; P [GeV]",150,0.,150.);
+  TH1D *recP_nHCal = new TH1D("recP_nHCal","Momentum of reconstructed tracks in nHCal eta acceptance; P [GeV]",150,0.,150.);
 
   TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
   TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
+  TH1D *kpmfromphiRecMom_nHCal = new TH1D("kpmfromphiRecMom_nHCal","Momentum of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,150.);
 
   // decay length
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
@@ -521,12 +523,12 @@ void nHCal_VM_Analysis(){
 		  recPhi->Fill(CPartPhi);
 		  recP->Fill(recMom.Mag());
 
-		  // this is all tracks:
-		  if( CPartEta < 0.00001 && CPartEta > -0.00001 )
-		    {
-		      cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", track energy: " << trackEnergy[recoAssoc[j]]<<  ", eta-gen: " << trueEta << ", eta-rec: " << CPartEta << " \n";
-		    }
-		  
+		  // nHCal eta acceptance:
+		  if( recEta >= eta_min_nhcal && recEta <= eta_max_nhcal )
+			{
+			  recP_nHCal->Fill(recMom.Mag());
+			}
+		  		  
 		  if( pdg == 11){
 		    nrec_electrons++;
 		    electronRecEta->Fill(CPartEta);
@@ -603,13 +605,9 @@ void nHCal_VM_Analysis(){
 			{
 			  ndecay_phi_kaonpm_nHCal++;
 			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k1);
+			  kpmfromphiRecMom_nHCal->Fill(recMom_phi_k1.Mag());
 			}
 
-		      if( recEta_phi_k1 < 0.00001 && recEta_phi_k1 > -0.00001 )
-		      {
-		        cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K1, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k1 << " \n";
-		      }
-		      
 		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
 		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
 		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
@@ -631,12 +629,9 @@ void nHCal_VM_Analysis(){
 			{
 			  ndecay_phi_kaonpm_nHCal++;
 			  kpmfromphiRecDecayLength_nHCal->Fill(kpmfromphiDL_k2);
+			  kpmfromphiRecMom_nHCal->Fill(recMom_phi_k2.Mag());
 			}
 
-		      if( recEta_phi_k2 < 0.00001 && recEta_phi_k2 > -0.00001 )
-			{
-			  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk K2, eta-gen (not correct): " << trueEta << ", eta-rec: " << recEta_phi_k2 << " \n";
-			}
 		      
 		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
