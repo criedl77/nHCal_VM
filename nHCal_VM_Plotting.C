@@ -168,7 +168,7 @@ void nHCal_VM_Plotting()
 
   gStyle->SetOptStat(0); //no stats box
   
-  TCanvas *canvas9 = new TCanvas(name8, strang, 800, 600);
+  TCanvas *canvas9 = new TCanvas(name9, strang, 800, 600);
   kpmfromphiRecZdecay->SetTitle(strang);
   kpmfromphiRecZdecay->SetLineColor(kBlack);
   kpmfromphiRecZdecay->Draw();
