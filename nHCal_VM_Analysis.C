@@ -178,13 +178,13 @@ void nHCal_VM_Analysis(){
   TH1D *epmfromjpsiRecEta = new TH1D("epmfromjpsiRecEta","reconstructed #eta of e^{#pm} from J/#psi decay;#eta",120,-6.,6.);
   
   // momentum
-  TH1D *partMom = new TH1D("partMom","Mom of thrown particles; P [GeV]",150,0.,150.);
-  TH1D *recP = new TH1D("recP","Momentum of reconstructed tracks; P [GeV]",150,0.,150.);
-  TH1D *recP_nHCal = new TH1D("recP_nHCal","Momentum of reconstructed tracks in nHCal eta acceptance; P [GeV]",150,0.,150.);
+  TH1D *partMom = new TH1D("partMom","Mom of thrown particles; P [GeV]",150,0.,40.);
+  TH1D *recP = new TH1D("recP","Momentum of reconstructed tracks; P [GeV]",150,0.,40.);
+  TH1D *recP_nHCal = new TH1D("recP_nHCal","Momentum of reconstructed tracks in nHCal eta acceptance; P [GeV]",150,0.,40.);
 
-  TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
-  TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,150.);
-  TH1D *kpmfromphiRecMom_nHCal = new TH1D("kpmfromphiRecMom_nHCal","Momentum of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,150.);
+  TH1D *kpmfromphiMom = new TH1D("kpmfromphiMom","Momentum of thrown K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,40.);
+  TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,40.);
+  TH1D *kpmfromphiRecMom_nHCal = new TH1D("kpmfromphiRecMom_nHCal","Momentum of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,40.);
 
   // decay length
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
