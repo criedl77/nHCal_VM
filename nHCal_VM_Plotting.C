@@ -125,7 +125,7 @@ void nHCal_VM_Plotting()
   
   ///////////////////////////////////////////////////////////
   // Plot:
-  plot_kpmfromphi_momentum(pdfdir, strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal); 
+  plot_kpmfromphi_momentum(&pdfdir, &strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal); 
   
   ///////////////////////////////////////////////////////////
   // FILE 8 - kpmfromphidecay decay length
