@@ -1,5 +1,34 @@
 #include "MyConstants.h"
 
+void plot_kpmfromphi_momentum(){
+// FILE 7 - kpmfromphidecay momentum
+  
+  TString name7 = TString("kpmfromphi_momentum");
+  TString filename7 = pdfdir + TString("/") + TString(name7) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas7 = new TCanvas(name7, strang, 800, 600);
+  kpmfromphiRecMom->SetTitle(strang);
+  kpmfromphiRecMom->SetLineColor(kBlack);
+  kpmfromphiRecMom->Draw();
+  kpmfromphiRecMom_nHCal->SetLineColor(kRed);
+  kpmfromphiRecMom_nHCal->Draw("same");  
+  canvas7->Draw();
+
+  auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg7->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
+  leg7->SetBorderSize(0);
+  leg7->SetFillStyle(0);
+  leg7->SetTextSize(0.05);
+  leg7->AddEntry(kpmfromphiRecMom,"all","l");
+  leg7->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
+  leg7->Draw();
+  canvas7->Print(filename7, "pdf");          
+  // end file 7
+  
+}
+
 void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
@@ -20,7 +49,7 @@ void nHCal_VM_Plotting()
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic");
-  //TString strang_ram("pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic");                         
+  //TString strang_ram("pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic");      
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic");
@@ -95,33 +124,10 @@ void nHCal_VM_Plotting()
   TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
   
   ///////////////////////////////////////////////////////////
+  // Plot:
+  plot_kpmfromphi_momentum(); 
   
-  // FILE 7 - kpmfromphidecay momentum
-  
-  TString name7 = TString("kpmfromphi_momentum");
-  TString filename7 = pdfdir + TString("/") + TString(name7) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas7 = new TCanvas(name7, strang, 800, 600);
-  kpmfromphiRecMom->SetTitle(strang);
-  kpmfromphiRecMom->SetLineColor(kBlack);
-  kpmfromphiRecMom->Draw();
-  kpmfromphiRecMom_nHCal->SetLineColor(kRed);
-  kpmfromphiRecMom_nHCal->Draw("same");  
-  canvas7->Draw();
-
-  auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg7->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
-  leg7->SetBorderSize(0);
-  leg7->SetFillStyle(0);
-  leg7->SetTextSize(0.05);
-  leg7->AddEntry(kpmfromphiRecMom,"all","l");
-  leg7->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
-  leg7->Draw();
-  canvas7->Print(filename7, "pdf");          
-  // end file 7
-
+  ///////////////////////////////////////////////////////////
   // FILE 8 - kpmfromphidecay decay length
   
   TString name8 = TString("kpmfromphi_decaylength");
