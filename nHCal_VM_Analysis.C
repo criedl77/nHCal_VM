@@ -6,30 +6,11 @@ void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
+  gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM") // can be made flexible with "flavor", see below
 
   // define flavor of this analysis macro:  
   const char flavor[]="nHCal_VM";
   cout << "Flavor is:" << flavor << " \n";
-  
-  // define HCal acceptances (2024-10-28) - make sure this is consistent with nHCal_VM_Plotting.C.
-  // TODO This should probably be put into an include file...
-  double eta_min_nhcal = -4.05; // old 2024-07-16: -4.14
-  double eta_max_nhcal = -1.2; // old 2024-07-16: -1.18
-  //
-  double eta_min_bhcal = -1.2;
-  double eta_max_bhcal = 1.18;
- //
-  double eta_min_lfhcal = 1.18;			    
-  double eta_max_lfhcal = 4.2;
-  //
-  double z_nhcal_min = -3.95; // (2024-12-03) assumed start of nHCal in z-direction [m], from $DETECTOR_PATH/compact/definitions.xml
-  double z_nhcal_thickness = 0.45; // nHCal thickness in z [m]
-  double z_nhcal_max = z_nhcal_min - z_nhcal_thickness;
-
-  // define constants:
-  double speedoflight = 299792458; // speed of light in m/s
-  double kpmlifetime = 0.00000001238; // charged kaon life time in s
-  double kpmmass = 0.493677; // charged kaon mass in GeV
   
   ////////////////////////////////////////////////////
   //// String definitions - modify here as needed ////
