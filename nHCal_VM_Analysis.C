@@ -6,7 +6,7 @@ void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
-  gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM") // can be made flexible with "flavor", see below
+  gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM"); // can be made flexible with "flavor", see below
 
   // define flavor of this analysis macro:  
   const char flavor[]="nHCal_VM";
