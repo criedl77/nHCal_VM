@@ -1,12 +1,10 @@
-// CKR 2024-08-20: clean up strang definitions (not complete yet)
-// CKR 2024-10-03: continue cleaning up; remove option of streaming 1 file - use runlist always (it's easy to generate a runlist with 1 file)
-// CKR 2024-10-28: continue cleaning up
-// CKR 2024-11-12: set up this code on github and set it up both on my laptop and on SDCC
+#include "MyConstants.h"
+
 void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
-  gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM"); // can be made flexible with "flavor", see below
+  //gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM"); // can be made flexible with "flavor", see below
 
   // define flavor of this analysis macro:  
   const char flavor[]="nHCal_VM";
