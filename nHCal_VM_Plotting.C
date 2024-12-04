@@ -1,21 +1,8 @@
+#include "MyConstants.h"
+
 void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
-
-  //
-  double eta_min_nhcal = -4.05; 
-  double eta_max_nhcal = -1.2; 
-  //
-  double eta_min_bhcal = -1.2;
-  double eta_max_bhcal = 1.18;
- //
-  double eta_min_lfhcal = 1.18;			    
-  double eta_max_lfhcal = 4.2;
-  //
-  double z_nhcal_min = -3.95; // (2024-12-03) assumed start of nHCal in z-direction [m], from $DETECTOR_PATH/compact/definitions.xml
-  double z_nhcal_thickness = 0.45; // nHCal thickness in z [m]
-  double z_nhcal_max = z_nhcal_min - z_nhcal_thickness;
-  //
 
   // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic");
