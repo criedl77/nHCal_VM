@@ -608,7 +608,7 @@ void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta,
   pionRecEta->Draw("same");
   kaonRecEta->SetLineColor(kCyan);
   kaonRecEta->Draw("same");
-  canvas2->Draw();
+  canvas->Draw();
 
   auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header 
   leg->SetHeader("Reconstructed particles", "C"); // option "C" allows to center the header
@@ -622,7 +622,7 @@ void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta,
 
   // add vertical lines for nHCal acceptance:                                                                                       
   Int_t binmax = electronRecEta->GetMaximumBin();
-  Double_t y_max = electronRecEta->GetBinContent(binmax_2);
+  Double_t y_max = electronRecEta->GetBinContent(binmax);
   TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);  // (x1,y1,x2,y2)
   eta_min_nhcal_line->SetLineColor(kBlack);
   eta_min_nhcal_line->SetLineWidth(2);
@@ -633,7 +633,7 @@ void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta,
   eta_max_nhcal_line->SetLineWidth(2);
   eta_max_nhcal_line->SetLineStyle(kDashed);
   eta_max_nhcal_line->Draw("same");
-  canvas2->Print(filename, "pdf");
+  canvas->Print(filename, "pdf");
   
 } // end of plot_recEta_species()
 
