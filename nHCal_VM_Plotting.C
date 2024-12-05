@@ -1,5 +1,6 @@
 #include "MyConstants.h"
 
+void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F *protonEta, TH1F *pionEta, TH1F *kaonEta, TH1F *rho0Eta, TH1F *jpsiEta, TH1F *phiEta);
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
@@ -89,71 +90,12 @@ void nHCal_VM_Plotting()
   
   ///////////////////////////////////////////////////////////
   // Plot:
+  plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
   plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
-  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
-  //
+  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
+  ///////////////////////////////////////////////////////////
   
-  // FILE 1 - generated eta //
-  
-  // Define the name of the plot:
-  TString name1 = TString("trueEta_species");
-  // Define the name of the pdf file:
-  TString filename1 = strang + TString("/") + TString(name1) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas = new TCanvas(name1, strang, 800, 600);
-  electronEta->SetTitle(strang);
-  electronEta->SetLineColor(kBlue);
-  electronEta->Draw();
-  muonEta->SetLineColor(kMagenta);
-  muonEta->Draw("same");
-  protonEta->SetLineColor(kRed);
-  protonEta->Draw("same");
-  pionEta->SetLineColor(kOrange+1);
-  pionEta->Draw("same");
-  kaonEta->SetLineColor(kCyan);
-  kaonEta->Draw("same");
-  rho0Eta->SetLineColor(kBlack);
-  rho0Eta->Draw("same");
-  jpsiEta->SetLineColor(kGreen+3);
-  jpsiEta->Draw("same");
-  phiEta->SetLineColor(kCyan+3);
-  phiEta->Draw("same");
-    
-  canvas->Draw();
-
-  auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header  
-  leg->SetHeader("Generated particles", "C"); // option "C" allows to center the header
-  leg->SetFillStyle(0);
-  leg->AddEntry(electronEta,"electrons (#pm)","l");
-  leg->AddEntry(muonEta,"muons (#pm)","l");
-  leg->AddEntry(pionEta,"pions (#pm)","l");
-  leg->AddEntry(kaonEta,"kaons (#pm)","l");
-  leg->AddEntry(protonEta,"protons (#pm)","l");
-  leg->AddEntry(rho0Eta,"#rho^{0} (770)","l");
-  leg->AddEntry(jpsiEta,"J/#psi","l");
-  leg->AddEntry(phiEta,"#phi(1020)","l");
-  leg->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_1 = electronEta->GetMaximumBin();
-  Double_t y_max1 = electronEta->GetBinContent(binmax_1);
-  TLine *eta_min_nhcal_line1= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max1);  // (x1,y1,x2,y2)
-  eta_min_nhcal_line1->SetLineColor(kBlack);
-  eta_min_nhcal_line1->SetLineWidth(2);
-  eta_min_nhcal_line1->SetLineStyle(kDashed);
-  eta_min_nhcal_line1->Draw("same");
-  TLine *eta_max_nhcal_line1= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max1);  // (x1,y1,x2,y2)
-  eta_max_nhcal_line1->SetLineColor(kBlack);
-  eta_max_nhcal_line1->SetLineWidth(2);
-  eta_max_nhcal_line1->SetLineStyle(kDashed);
-  eta_max_nhcal_line1->Draw("same");
-
-  //
-  canvas->Print(filename1, "pdf");          
-  // end of generated eta
 
   // FILE 2 - reconstructed eta //
   
@@ -527,6 +469,70 @@ void nHCal_VM_Plotting()
   
 } // end of main macro  
 //////////////////
+
+/////////////////
+// sub-macros:
+void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F *protonEta, TH1F *pionEta, TH1F *kaonEta, TH1F *rho0Eta, TH1F *jpsiEta, TH1F *phiEta){
+
+  TString name = TString("trueEta_species");
+  TString filename1 = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  electronEta->SetTitle(strang);
+  electronEta->SetLineColor(kBlue);
+  electronEta->Draw();
+  muonEta->SetLineColor(kMagenta);
+  muonEta->Draw("same");
+  protonEta->SetLineColor(kRed);
+  protonEta->Draw("same");
+  pionEta->SetLineColor(kOrange+1);
+  pionEta->Draw("same");
+  kaonEta->SetLineColor(kCyan);
+  kaonEta->Draw("same");
+  rho0Eta->SetLineColor(kBlack);
+  rho0Eta->Draw("same");
+  jpsiEta->SetLineColor(kGreen+3);
+  jpsiEta->Draw("same");
+  phiEta->SetLineColor(kCyan+3);
+  phiEta->Draw("same");
+    
+  canvas->Draw();
+
+  auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Generated particles", "C"); // option "C" allows to center the header
+  leg->SetFillStyle(0);
+  leg->AddEntry(electronEta,"electrons (#pm)","l");
+  leg->AddEntry(muonEta,"muons (#pm)","l");
+  leg->AddEntry(pionEta,"pions (#pm)","l");
+  leg->AddEntry(kaonEta,"kaons (#pm)","l");
+  leg->AddEntry(protonEta,"protons (#pm)","l");
+  leg->AddEntry(rho0Eta,"#rho^{0} (770)","l");
+  leg->AddEntry(jpsiEta,"J/#psi","l");
+  leg->AddEntry(phiEta,"#phi(1020)","l");
+  leg->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax = electronEta->GetMaximumBin();
+  Double_t y_max = electronEta->GetBinContent(binmax);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_min_nhcal_line->SetLineColor(kBlack);
+  eta_min_nhcal_line->SetLineWidth(2);
+  eta_min_nhcal_line->SetLineStyle(kDashed);
+  eta_min_nhcal_line->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_max_nhcal_line->SetLineColor(kBlack);
+  eta_max_nhcal_line->SetLineWidth(2);
+  eta_max_nhcal_line->SetLineStyle(kDashed);
+  eta_max_nhcal_line->Draw("same");
+
+  //
+  canvas->Print(filename, "pdf");          
+  
+}// end of plot_trueEta_species
+
+
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
   
