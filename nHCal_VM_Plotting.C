@@ -1,36 +1,8 @@
 #include "MyConstants.h"
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
-
-
-
-void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal){
-  
-  TString name = TString("kpmfromphi_decaylength");
-  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
-  kpmfromphiRecDecayLength->SetTitle(strang);
-  kpmfromphiRecDecayLength->SetLineColor(kBlack);
-  kpmfromphiRecDecayLength->Draw();
-  kpmfromphiRecDecayLength_nHCal->SetLineColor(kRed);
-  kpmfromphiRecDecayLength_nHCal->Draw("same");  
-  canvas->Draw();
-
-  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg->SetHeader("Kaons from #phi(1020) decay - decay length", "C"); // option "C" allows to center the header
-  leg->SetBorderSize(0);
-  leg->SetFillStyle(0);
-  leg->SetTextSize(0.05);
-  leg->AddEntry(kpmfromphiRecDecayLength,"all","l");
-  leg->AddEntry(kpmfromphiRecDecayLength_nHCal,"in nHCal acceptance","l");
-  leg->Draw();
-  canvas->Print(filename, "pdf");
-  
-} // end of plot_kpmfromphi_decaylength()
-
+void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
+void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
 
 void nHCal_VM_Plotting()
 {
@@ -70,7 +42,7 @@ void nHCal_VM_Plotting()
   TString strang = "Sartre_Au_phi_10runs";
 
   if (!strang.IsNull()) {
-    // Directory does not exist (): try to make it - this doesn't work as it should
+    // Directory does not exist (): try to make it - this doesn't work as it should...
     gSystem->mkdir(strang.Data(), kTRUE);
   }
   cout << "Output pdf directory = type of analyzed data:\n " << strang << " .\n";
@@ -118,52 +90,9 @@ void nHCal_VM_Plotting()
   ///////////////////////////////////////////////////////////
   // Plot:
   plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
-  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal); 
+  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
+  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
   //
-  
-  
-
-   // FILE 9 - kpmfromphidecay z location of decay
-  
-  TString name9 = TString("kpmfromphi_zdecay");
-  TString filename9 = strang + TString("/") + TString(name9) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas9 = new TCanvas(name9, strang, 800, 600);
-  kpmfromphiRecZdecay->SetTitle(strang);
-  kpmfromphiRecZdecay->SetLineColor(kBlack);
-  kpmfromphiRecZdecay->Draw();
-  kpmfromphiRecZdecay_nHCal->SetLineColor(kRed);
-  kpmfromphiRecZdecay_nHCal->Draw("same");  
-  canvas9->Draw();
-
-  auto leg9 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg9->SetHeader("Kaons from #phi(1020) decay - z-location of kaon decay", "C"); // option "C" allows to center the header
-  leg9->SetBorderSize(0);
-  leg9->SetFillStyle(0);
-  leg9->SetTextSize(0.05);
-  leg9->AddEntry(kpmfromphiRecZdecay,"all","l");
-  leg9->AddEntry(kpmfromphiRecZdecay_nHCal,"in nHCal acceptance","l");
-  leg9->Draw();
-
-  // add vertical lines for nHCal z-min and z-max:
-  Int_t binmax_9 = kpmfromphiRecZdecay->GetMaximumBin();
-  Double_t y_max9 = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax_9);
-  TLine *z_min_nhcal_line9= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max9);  // (x1,y1,x2,y2)
-  z_min_nhcal_line9->SetLineColor(kBlack);
-  z_min_nhcal_line9->SetLineWidth(2);
-  z_min_nhcal_line9->SetLineStyle(kDashed);
-  z_min_nhcal_line9->Draw("same");
-  TLine *z_max_nhcal_line9= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max9);  // (x1,y1,x2,y2)
-  z_max_nhcal_line9->SetLineColor(kBlack);
-  z_max_nhcal_line9->SetLineWidth(2);
-  z_max_nhcal_line9->SetLineStyle(kDashed);
-  z_max_nhcal_line9->Draw("same");
-  
-  canvas9->Print(filename9, "pdf");          
-  // end file 9
-  
   
   // FILE 1 - generated eta //
   
@@ -628,7 +557,76 @@ void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmf
   delete kpmfromphiRecMom_nHCal;
   
 } //end of plot_kpmfromphi_momentum()
-// All functions have to be declared before the main function :(
+
+void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal){
+  
+  TString name = TString("kpmfromphi_decaylength");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiRecDecayLength->SetTitle(strang);
+  kpmfromphiRecDecayLength->SetLineColor(kBlack);
+  kpmfromphiRecDecayLength->Draw();
+  kpmfromphiRecDecayLength_nHCal->SetLineColor(kRed);
+  kpmfromphiRecDecayLength_nHCal->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay - decay length", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecDecayLength,"all","l");
+  leg->AddEntry(kpmfromphiRecDecayLength_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+  canvas->Print(filename, "pdf");
+  
+} // end of plot_kpmfromphi_decaylength()
+
+void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal){
+  
+  TString name = TString("kpmfromphi_zdecay");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiRecZdecay->SetTitle(strang);
+  kpmfromphiRecZdecay->SetLineColor(kBlack);
+  kpmfromphiRecZdecay->Draw();
+  kpmfromphiRecZdecay_nHCal->SetLineColor(kRed);
+  kpmfromphiRecZdecay_nHCal->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay - z-location of kaon decay", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecZdecay,"all","l");
+  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+
+  // add vertical lines for nHCal z-min and z-max:
+  Int_t binmax = kpmfromphiRecZdecay->GetMaximumBin();
+  Double_t y_max = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax);
+  TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
+  z_min_nhcal_line->SetLineColor(kBlack);
+  z_min_nhcal_line->SetLineWidth(2);
+  z_min_nhcal_line->SetLineStyle(kDashed);
+  z_min_nhcal_line->Draw("same");
+  TLine *z_max_nhcal_line= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max);  // (x1,y1,x2,y2)
+  z_max_nhcal_line->SetLineColor(kBlack);
+  z_max_nhcal_line->SetLineWidth(2);
+  z_max_nhcal_line->SetLineStyle(kDashed);
+  z_max_nhcal_line->Draw("same");
+  
+  canvas->Print(filename, "pdf");          
+
+} // end of plot_kpmfromphi_zdecay()
+
 
   //TPaveText *t = new TPaveText(.05,.3,.95,.6, "NDC");                                                                                   
   //t->AddText("This line is blue"); ((TText*)t->GetListOfLines()->Last())->SetTextColor(kBlue);                                          
