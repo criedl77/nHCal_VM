@@ -29,13 +29,7 @@ void plot_kpmfromphi_momentum(TString pdfdir, const char *strang, TH1F *kpmfromp
 void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
-
-  // define flavor of this plotting macro:
-  //NEW:
   TString flavor = "nHCal_VM"; 
-  //OLD:
-  //TString flavor_ram("nHCal_VM");
-  //const char *flavor=flavor_ram.Data();
 
   // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic");
@@ -63,12 +57,16 @@ void nHCal_VM_Plotting()
   //TString strang_ram("pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39");
   //TString strang_ram("rho_10x100_uChannel_Q2of0to10_hiDiv");
   //TString strang_ram("sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs");
-  TString strang_ram("Sartre_Au_phi_10runs");
   //TString strang_ram("pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs");
   //TString strang_ram("podio_output_100events");
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files");   
+
+  //NEW:
+  TString strang = "Sartre_Au_phi_10runs";
   
-  const char *strang=strang_ram.Data();
+  //OLD:
+  //TString strang_ram("Sartre_Au_phi_10runs");
+  //const char *strang=strang_ram.Data();
 
   cout << "Analyzed data will be of the type:\n " << strang << " .\n";
 
