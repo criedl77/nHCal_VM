@@ -1,9 +1,9 @@
 #include "MyConstants.h"
 
-void plot_kpmfromphi_momentum(TString pdfdir, const char *strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
+void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
   
   TString name = TString("kpmfromphi_momentum");
-  TString filename = pdfdir + TString("/") + TString(name) + TString(".pdf");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -65,7 +65,8 @@ void nHCal_VM_Plotting()
 
   cout << "Analyzed data will be of the type:\n " << strang << " .\n";
 
-  TString pdfdir = strang;
+  //OLD:
+  //TString pdfdir = strang;
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it
     gSystem->mkdir(strang.Data(), kTRUE);
@@ -73,10 +74,6 @@ void nHCal_VM_Plotting()
   }
   
   // define and open input file:
-  //OLD:
-  //TString infile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
-  //const char *infile=infile_ram.Data();
-  // NEW:
   TString infile= TString("out.") + strang + TString("-") + flavor + TString(".root");
   TFile *ifile = TFile::Open(infile,"READ");
   
@@ -119,13 +116,13 @@ void nHCal_VM_Plotting()
   
   ///////////////////////////////////////////////////////////
   // Plot:
-  plot_kpmfromphi_momentum(pdfdir, strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal); 
+  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal); 
   
   ///////////////////////////////////////////////////////////
   // FILE 8 - kpmfromphidecay decay length
   
   TString name8 = TString("kpmfromphi_decaylength");
-  TString filename8 = pdfdir + TString("/") + TString(name8) + TString(".pdf");
+  TString filename8 = strang + TString("/") + TString(name8) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -151,7 +148,7 @@ void nHCal_VM_Plotting()
    // FILE 9 - kpmfromphidecay z location of decay
   
   TString name9 = TString("kpmfromphi_zdecay");
-  TString filename9 = pdfdir + TString("/") + TString(name9) + TString(".pdf");
+  TString filename9 = strang + TString("/") + TString(name9) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -195,7 +192,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name1 = TString("trueEta_species");
   // Define the name of the pdf file:
-  TString filename1 = pdfdir + TString("/") + TString(name1) + TString(".pdf");
+  TString filename1 = strang + TString("/") + TString(name1) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -256,7 +253,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name2 = TString("recEta_species");
   // Define the name of the pdf file:
-  TString filename2 = pdfdir + TString("/") + TString(name2) + TString(".pdf");
+  TString filename2 = strang + TString("/") + TString(name2) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box    
 
@@ -308,7 +305,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name3 = TString("gen-recEta_species");
   // Define the name of the pdf file:
-  TString filename3 = pdfdir + TString("/") + TString(name3) + TString(".pdf");
+  TString filename3 = strang + TString("/") + TString(name3) + TString(".pdf");
 
   TCanvas *canvas3 = new TCanvas(name3, strang, 1200, 600);
 
@@ -474,7 +471,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name4 = TString("Eta_decay_rho0");
   // Define the name of the pdf file:
-  TString filename4 = pdfdir + TString("/") + TString(name4) + TString(".pdf");
+  TString filename4 = strang + TString("/") + TString(name4) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box                 
 
@@ -519,7 +516,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name5 = TString("Eta_decay_phi");
   // Define the name of the pdf file:
-  TString filename5 = pdfdir + TString("/") + TString(name5) + TString(".pdf");
+  TString filename5 = strang + TString("/") + TString(name5) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box                 
 
@@ -574,7 +571,7 @@ void nHCal_VM_Plotting()
   // Define the name of the plot:
   TString name6 = TString("Eta_decay_jpsi");
   // Define the name of the pdf file:
-  TString filename6 = pdfdir + TString("/") + TString(name6) + TString(".pdf");
+  TString filename6 = strang + TString("/") + TString(name6) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box                 
 
