@@ -1,6 +1,6 @@
 #include "MyConstants.h"
 
-void plot_kpmfromphi_momentum(TString *pdfdir, const char *strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
+void plot_kpmfromphi_momentum(TString pdfdir, const char *strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
 // FILE 7 - kpmfromphidecay momentum
   
   TString name7 = TString("kpmfromphi_momentum");
