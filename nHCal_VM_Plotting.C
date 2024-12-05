@@ -1,35 +1,38 @@
 #include "MyConstants.h"
 
 void plot_kpmfromphi_momentum(TString pdfdir, const char *strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
-  TString name8 = TString("kpmfromphi_momentum");
-  TString filename8 = pdfdir + TString("/") + TString(name8) + TString(".pdf");
+  
+  TString name = TString("kpmfromphi_momentum");
+  TString filename = pdfdir + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
-  TCanvas *canvas8 = new TCanvas(name8, strang, 800, 600);
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
   kpmfromphiRecMom->SetTitle(strang);
   kpmfromphiRecMom->SetLineColor(kBlack);
   kpmfromphiRecMom->Draw();
   kpmfromphiRecMom_nHCal->SetLineColor(kRed);
   kpmfromphiRecMom_nHCal->Draw("same");  
-  canvas8->Draw();
+  canvas->Draw();
 
-  auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg8->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
-  leg8->SetBorderSize(0);
-  leg8->SetFillStyle(0);
-  leg8->SetTextSize(0.05);
-  leg8->AddEntry(kpmfromphiRecMom,"all","l");
-  leg8->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
-  leg8->Draw();
-  canvas8->Print(filename8, "pdf");          
-  // end file 7
-  
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecMom,"all","l");
+  leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+  canvas->Print(filename, "pdf");           
 }
 
 void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
+
+  // define flavor of this plotting macro:
+  TString flavor_ram("nHCal_VM");
+  const char *flavor=flavor_ram.Data();
 
   // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic");
@@ -65,11 +68,6 @@ void nHCal_VM_Plotting()
   const char *strang=strang_ram.Data();
 
   cout << "Analyzed data will be of the type:\n " << strang << " .\n";
-
-  // define flavor of this plotting macro:
-  
-  TString flavor_ram("nHCal_VM");
-  const char *flavor=flavor_ram.Data();
 
   //define and create, if not existing, pdf output directory:  
   TString pdfdir = strang;
