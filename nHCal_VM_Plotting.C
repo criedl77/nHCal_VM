@@ -96,17 +96,19 @@ void nHCal_VM_Plotting(){
   
   ///////////////////////////////////////////////////////////
   // Plot:
-  //plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
-  //plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
-  //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
-  //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
-  //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
+  plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
+  plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
+  
+  plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
+  plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
   plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
-  //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
-  //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
-  //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
+  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
+  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
+  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
+  
   ///////////////////////////////////////////////////////////
   
   cout << "Thank you for running Caro's macro.\n";
