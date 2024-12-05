@@ -1,9 +1,6 @@
 #include "MyConstants.h"
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
-
-  TH1F *kpmfromphiRecMom = (TH1F*)ifile->Get("kpmfromphiRecMom"); 
-  TH1F *kpmfromphiRecMom_nHCal = (TH1F*)ifile->Get("kpmfromphiRecMom_nHCal"); 
   
   TString name = TString("kpmfromphi_momentum");
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
@@ -82,6 +79,8 @@ void nHCal_VM_Plotting()
   TFile *ifile = TFile::Open(infile,"READ");
   
   cout << "Reading infile:\n " << infile << " .\n";
+
+   gSystem->Exec("date");
 
 
   ///////////////////////////////////////////////////////////
