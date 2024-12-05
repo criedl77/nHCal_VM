@@ -5,16 +5,16 @@ void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta,
 void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronRecEta, TH1F *muonEta, TH1F *muonRecEta, TH1F *pionEta, TH1F *pionRecEta, TH1F *protonEta, TH1F *protonRecEta, TH1F *kaonEta, TH1F *kaonRecEta);
 
 void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0RecEta);
+void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta);
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
 
-void nHCal_VM_Plotting()
-{
+void nHCal_VM_Plotting(){
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
-
+  
   // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang = "pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_vtxfix_5.hepmc3.tree"; // has no tree "events"
@@ -99,7 +99,8 @@ void nHCal_VM_Plotting()
   //plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
   //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
-  plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
+  //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
+  (strang, phiEta, kpmfromphiRecEta);
   
   //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
@@ -108,60 +109,7 @@ void nHCal_VM_Plotting()
   
   
 
-  // FILE 5 - eta decay phi to K+ K- //                                                                                                           
-  // Define the name of the plot:
-  TString name5 = TString("Eta_decay_phi");
-  // Define the name of the pdf file:
-  TString filename5 = strang + TString("/") + TString(name5) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box                 
-
-  TCanvas *canvas5 = new TCanvas(name5, strang, 800, 600);
-  // meager channels:
-  //phiEta->SetLineColor(kBlack);
-  //phiEta->SetLineStyle(1);
-  //phiEta->Draw();
-  //kpmfromphiRecEta->SetLineStyle(2);
-  //kpmfromphiRecEta->SetTitle(strang);
-  //kpmfromphiRecEta->SetLineColor(kRed);
-  //kpmfromphiRecEta->Draw("same");
-  // fat channels:
-  kpmfromphiRecEta->SetLineStyle(2);
-  kpmfromphiRecEta->SetTitle(strang);
-  kpmfromphiRecEta->SetLineColor(kRed);
-  kpmfromphiRecEta->Draw();
-  phiEta->SetLineStyle(1);
-  phiEta->SetLineColor(kBlack);
-  phiEta->SetLineStyle(1);
-  phiEta->Draw("same");
   
-  canvas5->Draw();
-
-  auto leg5 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header
-  leg5->SetBorderSize(0);
-  leg5->SetFillStyle(0);
-  leg5->SetTextSize(0.05);
-  leg5->SetHeader("generated #phi(1020) and decay kaons", "C"); 
-  leg5->AddEntry(kpmfromphiRecEta,"reco kaons (#pm)","l");
-  leg5->AddEntry(phiEta,"gen #phi","l");
-  leg5->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_5 = kpmfromphiEta->GetMaximumBin();
-  Double_t y_max5 = 0.6*kpmfromphiEta->GetBinContent(binmax_5);
-  TLine *eta_min_nhcal_line5= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max5);
-  eta_min_nhcal_line5->SetLineColor(kBlack);
-  eta_min_nhcal_line5->SetLineWidth(2);
-  eta_min_nhcal_line5->SetLineStyle(kDashed);
-  eta_min_nhcal_line5->Draw("same");
-  TLine *eta_max_nhcal_line5= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max5);
-  eta_max_nhcal_line5->SetLineColor(kBlack);
-  eta_max_nhcal_line5->SetLineWidth(2);
-  eta_max_nhcal_line5->SetLineStyle(kDashed);
-  eta_max_nhcal_line5->Draw("same");
-  //                                                                                                                                        
-  canvas5->Print(filename5, "pdf");
-  // end of decay phi to KK eta
 
   // FILE 6 - eta decay jpsi to e+ e- //                                                                                                           
   // Define the name of the plot:
@@ -494,7 +442,6 @@ void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronR
      
 } // end of plot_genVSrecEta_species()
 
-
 void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0RecEta){
 
   TString name = TString("Eta_decay_rho0");
@@ -538,6 +485,59 @@ void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0
   
 }// end of plot_Eta_decay_rho0_pipi()
 
+
+void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta){
+
+  TString name = TString("Eta_decay_phi");
+  TString filename5 = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box                 
+
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  // meager channels:
+  //phiEta->SetLineColor(kBlack);
+  //phiEta->SetLineStyle(1);
+  //phiEta->Draw();
+  //kpmfromphiRecEta->SetLineStyle(2);
+  //kpmfromphiRecEta->SetTitle(strang);
+  //kpmfromphiRecEta->SetLineColor(kRed);
+  //kpmfromphiRecEta->Draw("same");
+  // fat channels:
+  kpmfromphiRecEta->SetLineStyle(2);
+  kpmfromphiRecEta->SetTitle(strang);
+  kpmfromphiRecEta->SetLineColor(kRed);
+  kpmfromphiRecEta->Draw();
+  phiEta->SetLineStyle(1);
+  phiEta->SetLineColor(kBlack);
+  phiEta->SetLineStyle(1);
+  phiEta->Draw("same");
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->SetHeader("generated #phi(1020) and decay kaons", "C"); 
+  leg->AddEntry(kpmfromphiRecEta,"reco kaons (#pm)","l");
+  leg->AddEntry(phiEta,"gen #phi","l");
+  leg->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax = kpmfromphiRecEta->GetMaximumBin();
+  Double_t y_max = 0.6*kpmfromphiRecEta->GetBinContent(binmax);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);
+  eta_min_nhcal_line->SetLineColor(kBlack);
+  eta_min_nhcal_line->SetLineWidth(2);
+  eta_min_nhcal_line->SetLineStyle(kDashed);
+  eta_min_nhcal_line->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);
+  eta_max_nhcal_line->SetLineColor(kBlack);
+  eta_max_nhcal_line->SetLineWidth(2);
+  eta_max_nhcal_line->SetLineStyle(kDashed);
+  eta_max_nhcal_line->Draw("same");   
+  canvas->Print(filename, "pdf");
+  
+} // end of plot_Eta_decay_phi_KK()
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
   
