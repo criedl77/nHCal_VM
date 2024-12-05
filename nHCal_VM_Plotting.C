@@ -492,7 +492,7 @@ void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta)
 void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecEta){
                                                                                                          
   TString name = TString("Eta_decay_jpsi");
-  TString filename6 = strang + TString("/") + TString(name) + TString(".pdf");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box                 
 
