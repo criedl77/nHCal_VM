@@ -489,12 +489,12 @@ void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronR
   // add vertical lines for nHCal acceptance 
   Int_t binmax1 = electronEta->GetMaximumBin();
   Double_t y_max1 = electronEta->GetBinContent(binmax1);
-  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max1);  // (x1,y1,x2,y2)
+  TLine *eta_min_nhcal_line1= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max1);  // (x1,y1,x2,y2)
   eta_min_nhcal_line1->SetLineColor(kBlack);
   eta_min_nhcal_line1->SetLineWidth(2);
   eta_min_nhcal_line1->SetLineStyle(kDashed);
   eta_min_nhcal_line1->Draw("same");
-  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max1);  // (x1,y1,x2,y2)
+  TLine *eta_max_nhcal_line1= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max1);  // (x1,y1,x2,y2)
   eta_max_nhcal_line1->SetLineColor(kBlack);
   eta_max_nhcal_line1->SetLineWidth(2);
   eta_max_nhcal_line1->SetLineStyle(kDashed);
