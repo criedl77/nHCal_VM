@@ -2,6 +2,7 @@
 
 void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F *protonEta, TH1F *pionEta, TH1F *kaonEta, TH1F *rho0Eta, TH1F *jpsiEta, TH1F *phiEta);
 void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta, TH1F *protonRecEta, TH1F *pionRecEta, TH1F *kaonRecEta);
+void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronRecEta, TH1F *muonEta, TH1F *muonRecEta, TH1F *pionEta, TH1F *pionRecEta, TH1F *protonEta, TH1F *protonRecEta, TH1F *kaonEta, TH1F *kaonRecEta);
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
@@ -93,193 +94,14 @@ void nHCal_VM_Plotting()
   ///////////////////////////////////////////////////////////
   // Plot:
   //plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
-  plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  //plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
-  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
-  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
-  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
+  //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
+  //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
+  //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
   ///////////////////////////////////////////////////////////
   
-
- 
-
-  // FILE 3 - gen & rec eta: //                                                                                                         
-
-  // Define the name of the plot:
-  TString name3 = TString("gen-recEta_species");
-  // Define the name of the pdf file:
-  TString filename3 = strang + TString("/") + TString(name3) + TString(".pdf");
-
-  TCanvas *canvas3 = new TCanvas(name3, strang, 1200, 600);
-
-  //devide the canvas into several pads (x,y):
-  canvas3->Divide(3,2);
-
-  gStyle->SetOptStat(1111); //now we want some stat boxes  
-  
-  // go to the first one and do your thing
-  canvas3->cd(1);
-  electronEta->SetTitle(strang);
-  electronEta->SetLineColor(kBlue);
-  electronEta->Draw();
-  electronRecEta->SetLineStyle(2);
-  electronRecEta->Draw("same");
-
-  auto leg31 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
-  leg31->SetBorderSize(0);
-  leg31->SetTextSize(0.05);
-  leg31->SetFillStyle(0);
-  leg31->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
-  leg31->AddEntry(electronEta,"electrons (#pm) gen","l");
-  leg31->AddEntry(electronRecEta,"electrons (#pm) rec","l");
-  leg31->Draw();
-
-  // add vertical lines for nHCal acceptance 
-  Int_t binmax = electronEta->GetMaximumBin();
-  Double_t y_max = electronEta->GetBinContent(binmax);
-  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);  // (x1,y1,x2,y2)
-  eta_min_nhcal_line->SetLineColor(kBlack);
-  eta_min_nhcal_line->SetLineWidth(2);
-  eta_min_nhcal_line->SetLineStyle(kDashed);
-  eta_min_nhcal_line->Draw("same");
-  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);  // (x1,y1,x2,y2)
-  eta_max_nhcal_line->SetLineColor(kBlack);
-  eta_max_nhcal_line->SetLineWidth(2);
-  eta_max_nhcal_line->SetLineStyle(kDashed);
-  eta_max_nhcal_line->Draw("same");
-  
-  // pad 2
-  canvas3->cd(2);
-  muonEta->SetTitle(strang);
-  muonEta->SetLineColor(kMagenta);
-  muonEta->Draw();
-  muonRecEta->SetLineStyle(2);
-  muonRecEta->Draw("same");
-
-  auto leg32 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header                                                                       
-  leg32->SetBorderSize(0);
-  leg32->SetTextSize(0.05);
-  leg32->SetFillStyle(0);
-  leg32->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
-  leg32->AddEntry(muonEta,"muons (#pm) gen","l");
-  leg32->AddEntry(muonRecEta,"muons (#pm) rec","l");
-  leg32->Draw();
-
-// add vertical lines for nHCal acceptance
-  Int_t binmax_32 = muonEta->GetMaximumBin();
-  Double_t y_max32 = muonEta->GetBinContent(binmax_32);
-  TLine *eta_min_nhcal_line32= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max32);
-  eta_min_nhcal_line32->SetLineColor(kBlack);
-  eta_min_nhcal_line32->SetLineWidth(2);
-  eta_min_nhcal_line32->SetLineStyle(kDashed);
-  eta_min_nhcal_line32->Draw("same");
-  TLine *eta_max_nhcal_line32= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max32);
-  eta_max_nhcal_line32->SetLineColor(kBlack);
-  eta_max_nhcal_line32->SetLineWidth(2);
-  eta_max_nhcal_line32->SetLineStyle(kDashed);
-  eta_max_nhcal_line32->Draw("same");
-
-  // pad 3
-  canvas3->cd(3);
-  pionEta->SetTitle(strang);
-  pionEta->SetLineColor(kOrange+1);
-  pionEta->Draw();
-  pionRecEta->SetLineStyle(2);
-  pionRecEta->Draw("same");
-
-  auto leg33 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
-                                                                                                                                          
-  leg33->SetBorderSize(0);
-  leg33->SetTextSize(0.05);
-  leg33->SetFillStyle(0);
-  leg33->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header                                          
-  leg33->AddEntry(pionEta,"pions (#pm) gen","l");
-  leg33->AddEntry(pionRecEta,"pions (#pm) rec","l");
-  leg33->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_33 = pionEta->GetMaximumBin();
-  Double_t y_max33 = pionEta->GetBinContent(binmax_33);
-  TLine *eta_min_nhcal_line33= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max33);  
-  eta_min_nhcal_line33->SetLineColor(kBlack);
-  eta_min_nhcal_line33->SetLineWidth(2);
-  eta_min_nhcal_line33->SetLineStyle(kDashed);
-  eta_min_nhcal_line33->Draw("same");
-  TLine *eta_max_nhcal_line33= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max33);  
-  eta_max_nhcal_line33->SetLineColor(kBlack);
-  eta_max_nhcal_line33->SetLineWidth(2);
-  eta_max_nhcal_line33->SetLineStyle(kDashed);
-  eta_max_nhcal_line33->Draw("same");
-  
-  // pad 4
-  canvas3->cd(4);
-  protonEta->SetTitle(strang);
-  protonEta->SetLineColor(kRed);
-  protonEta->Draw();
-  protonRecEta->SetLineStyle(2);
-  protonRecEta->Draw("same");
-
-  auto leg34 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
-					      
-  leg34->SetBorderSize(0);
-  leg34->SetTextSize(0.05);
-  leg34->SetFillStyle(0);
-  leg34->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
-  leg34->AddEntry(protonEta,"protons (#pm) gen","l");
-  leg34->AddEntry(protonRecEta,"protons (#pm) rec","l");
-  leg34->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_34 = protonEta->GetMaximumBin();
-  Double_t y_max34 = protonEta->GetBinContent(binmax_34);
-  TLine *eta_min_nhcal_line34= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max34);
-  eta_min_nhcal_line34->SetLineColor(kBlack);
-  eta_min_nhcal_line34->SetLineWidth(2);
-  eta_min_nhcal_line34->SetLineStyle(kDashed);
-  eta_min_nhcal_line34->Draw("same");
-  TLine *eta_max_nhcal_line34= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max34);
-  eta_max_nhcal_line34->SetLineColor(kBlack);
-  eta_max_nhcal_line34->SetLineWidth(2);
-  eta_max_nhcal_line34->SetLineStyle(kDashed);
-  eta_max_nhcal_line34->Draw("same");
-
-  // pad 5
-  canvas3->cd(5);
-  kaonEta->SetTitle(strang);
-  kaonEta->SetLineColor(kCyan);
-  kaonEta->Draw();
-  kaonRecEta->SetLineStyle(2);
-  kaonRecEta->Draw("same");
-
-  auto leg35 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
-  						  
-  leg35->SetBorderSize(0);
-  leg35->SetTextSize(0.05);
-  leg35->SetFillStyle(0);
-  leg35->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
-  leg35->AddEntry(kaonEta,"kaons (#pm) gen","l");
-  leg35->AddEntry(kaonRecEta,"kaons (#pm) rec","l");
-  leg35->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_35 = kaonEta->GetMaximumBin();
-  Double_t y_max35 = kaonEta->GetBinContent(binmax_35);
-  TLine *eta_min_nhcal_line35= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max35);
-  eta_min_nhcal_line35->SetLineColor(kBlack);
-  eta_min_nhcal_line35->SetLineWidth(2);
-  eta_min_nhcal_line35->SetLineStyle(kDashed);
-  eta_min_nhcal_line35->Draw("same");
-  TLine *eta_max_nhcal_line35= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max35);
-  eta_max_nhcal_line35->SetLineColor(kBlack);
-  eta_max_nhcal_line35->SetLineWidth(2);
-  eta_max_nhcal_line35->SetLineStyle(kDashed);
-  eta_max_nhcal_line35->Draw("same");
-  
-  // draw canvas and print to pdf
-  canvas3->Draw();
-  canvas3->Print(filename3, "pdf");
-  // end of gen & rec eta       
-
   // FILE 4 - eta decay rho0 to pi+ pi- //                                                                                                           
   // Define the name of the plot:
   TString name4 = TString("Eta_decay_rho0");
@@ -636,6 +458,176 @@ void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta,
   canvas->Print(filename, "pdf");
   
 } // end of plot_recEta_species()
+
+void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronRecEta, TH1F *muonEta, TH1F *muonRecEta, TH1F *pionEta, TH1F *pionRecEta, TH1F *protonEta, TH1F *protonRecEta, TH1F *kaonEta, TH1F *kaonRecEta){
+
+  TString name = TString("gen-recEta_species");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+  TCanvas *canvas = new TCanvas(name, strang, 1200, 600);
+
+  //devide the canvas into several pads (x,y):
+  canvas->Divide(3,2);
+  gStyle->SetOptStat(1111); //now we want some stat boxes  
+  
+  // go to the first one and do your thing
+  canvas->cd(1);
+  electronEta->SetTitle(strang);
+  electronEta->SetLineColor(kBlue);
+  electronEta->Draw();
+  electronRecEta->SetLineStyle(2);
+  electronRecEta->Draw("same");
+
+  auto leg1 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
+  leg1->SetBorderSize(0);
+  leg1->SetTextSize(0.05);
+  leg1->SetFillStyle(0);
+  leg1->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
+  leg1->AddEntry(electronEta,"electrons (#pm) gen","l");
+  leg1->AddEntry(electronRecEta,"electrons (#pm) rec","l");
+  leg1->Draw();
+
+  // add vertical lines for nHCal acceptance 
+  Int_t binmax1 = electronEta->GetMaximumBin();
+  Double_t y_max1 = electronEta->GetBinContent(binmax1);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max1);  // (x1,y1,x2,y2)
+  eta_min_nhcal_line1->SetLineColor(kBlack);
+  eta_min_nhcal_line1->SetLineWidth(2);
+  eta_min_nhcal_line1->SetLineStyle(kDashed);
+  eta_min_nhcal_line1->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max1);  // (x1,y1,x2,y2)
+  eta_max_nhcal_line1->SetLineColor(kBlack);
+  eta_max_nhcal_line1->SetLineWidth(2);
+  eta_max_nhcal_line1->SetLineStyle(kDashed);
+  eta_max_nhcal_line1->Draw("same");
+  
+  // pad 2
+  canvas->cd(2);
+  muonEta->SetTitle(strang);
+  muonEta->SetLineColor(kMagenta);
+  muonEta->Draw();
+  muonRecEta->SetLineStyle(2);
+  muonRecEta->Draw("same");
+
+  auto leg2 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header    
+  leg2->SetBorderSize(0);
+  leg2->SetTextSize(0.05);
+  leg2->SetFillStyle(0);
+  leg2->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
+  leg2->AddEntry(muonEta,"muons (#pm) gen","l");
+  leg2->AddEntry(muonRecEta,"muons (#pm) rec","l");
+  leg2->Draw();
+
+// add vertical lines for nHCal acceptance
+  Int_t binmax_2 = muonEta->GetMaximumBin();
+  Double_t y_max2 = muonEta->GetBinContent(binmax_2);
+  TLine *eta_min_nhcal_line2= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max2);
+  eta_min_nhcal_line2->SetLineColor(kBlack);
+  eta_min_nhcal_line2->SetLineWidth(2);
+  eta_min_nhcal_line2->SetLineStyle(kDashed);
+  eta_min_nhcal_line2->Draw("same");
+  TLine *eta_max_nhcal_line2= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max2);
+  eta_max_nhcal_line2->SetLineColor(kBlack);
+  eta_max_nhcal_line2->SetLineWidth(2);
+  eta_max_nhcal_line2->SetLineStyle(kDashed);
+  eta_max_nhcal_line2->Draw("same");
+
+  // pad 3
+  canvas->cd(3);
+  pionEta->SetTitle(strang);
+  pionEta->SetLineColor(kOrange+1);
+  pionEta->Draw();
+  pionRecEta->SetLineStyle(2);
+  pionRecEta->Draw("same");
+
+  auto leg3 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header
+  leg3->SetBorderSize(0);
+  leg3->SetTextSize(0.05);
+  leg3->SetFillStyle(0);
+  leg3->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header  
+  leg3->AddEntry(pionEta,"pions (#pm) gen","l");
+  leg3->AddEntry(pionRecEta,"pions (#pm) rec","l");
+  leg3->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax_3 = pionEta->GetMaximumBin();
+  Double_t y_max3 = pionEta->GetBinContent(binmax_3);
+  TLine *eta_min_nhcal_line3= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max3);  
+  eta_min_nhcal_line3->SetLineColor(kBlack);
+  eta_min_nhcal_line3->SetLineWidth(2);
+  eta_min_nhcal_line3->SetLineStyle(kDashed);
+  eta_min_nhcal_line3->Draw("same");
+  TLine *eta_max_nhcal_line3= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max3);  
+  eta_max_nhcal_line3->SetLineColor(kBlack);
+  eta_max_nhcal_line3->SetLineWidth(2);
+  eta_max_nhcal_line3->SetLineStyle(kDashed);
+  eta_max_nhcal_line3->Draw("same");
+  
+  // pad 4
+  canvas->cd(4);
+  protonEta->SetTitle(strang);
+  protonEta->SetLineColor(kRed);
+  protonEta->Draw();
+  protonRecEta->SetLineStyle(2);
+  protonRecEta->Draw("same");
+
+  auto leg4 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header					      
+  leg4->SetBorderSize(0);
+  leg4->SetTextSize(0.05);
+  leg4->SetFillStyle(0);
+  leg4->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
+  leg4->AddEntry(protonEta,"protons (#pm) gen","l");
+  leg4->AddEntry(protonRecEta,"protons (#pm) rec","l");
+  leg4->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax_4 = protonEta->GetMaximumBin();
+  Double_t y_max4 = protonEta->GetBinContent(binmax_4);
+  TLine *eta_min_nhcal_line4= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max4);
+  eta_min_nhcal_line4->SetLineColor(kBlack);
+  eta_min_nhcal_line4->SetLineWidth(2);
+  eta_min_nhcal_line4->SetLineStyle(kDashed);
+  eta_min_nhcal_line4->Draw("same");
+  TLine *eta_max_nhcal_line4= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max4);
+  eta_max_nhcal_line4->SetLineColor(kBlack);
+  eta_max_nhcal_line4->SetLineWidth(2);
+  eta_max_nhcal_line4->SetLineStyle(kDashed);
+  eta_max_nhcal_line4->Draw("same");
+
+  // pad 5
+  canvas->cd(5);
+  kaonEta->SetTitle(strang);
+  kaonEta->SetLineColor(kCyan);
+  kaonEta->Draw();
+  kaonRecEta->SetLineStyle(2);
+  kaonRecEta->Draw("same");
+
+  auto leg5 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header						  
+  leg5->SetBorderSize(0);
+  leg5->SetTextSize(0.05);
+  leg5->SetFillStyle(0);
+  leg5->SetHeader("Generated vs. reconstructed", "C"); // option "C" allows to center the header
+  leg5->AddEntry(kaonEta,"kaons (#pm) gen","l");
+  leg5->AddEntry(kaonRecEta,"kaons (#pm) rec","l");
+  leg5->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax_5 = kaonEta->GetMaximumBin();
+  Double_t y_max5 = kaonEta->GetBinContent(binmax_5);
+  TLine *eta_min_nhcal_line5= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max5);
+  eta_min_nhcal_line5->SetLineColor(kBlack);
+  eta_min_nhcal_line5->SetLineWidth(2);
+  eta_min_nhcal_line5->SetLineStyle(kDashed);
+  eta_min_nhcal_line5->Draw("same");
+  TLine *eta_max_nhcal_line5= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max5);
+  eta_max_nhcal_line5->SetLineColor(kBlack);
+  eta_max_nhcal_line5->SetLineWidth(2);
+  eta_max_nhcal_line5->SetLineStyle(kDashed);
+  eta_max_nhcal_line5->Draw("same");
+  
+  canvas->Draw();
+  canvas->Print(filename, "pdf");
+     
+} // end of plot_genVSrecEta_species()
 
 
   //TPaveText *t = new TPaveText(.05,.3,.95,.6, "NDC");                                                                                   
