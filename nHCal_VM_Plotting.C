@@ -65,19 +65,19 @@ void nHCal_VM_Plotting()
 
   cout << "Analyzed data will be of the type:\n " << strang << " .\n";
 
-  //define and create, if not existing, pdf output directory:  
   TString pdfdir = strang;
-  //OLD:
-  //if (!pdfdir.IsNull()) {
   if (!strang.IsNull()) {
-    // Directory does not exist: try to make it
+    // Directory does not exist (): try to make it
     gSystem->mkdir(strang.Data(), kTRUE);
     cout << "Created output pdf directory:\n " << strang << " .\n";
   }
   
   // define and open input file:
-  TString infile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
-  const char *infile=infile_ram.Data();
+  //OLD:
+  //TString infile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
+  //const char *infile=infile_ram.Data();
+  // NEW:
+  TString infile= TString("out.") + strang + TString("-") + flavor + TString(".root");
   TFile *ifile = TFile::Open(infile,"READ");
   
   cout << "Reading infile:\n " << infile << " .\n";
