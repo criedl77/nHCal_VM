@@ -100,7 +100,7 @@ void nHCal_VM_Plotting(){
   //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
   //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
-  (strang, phiEta, kpmfromphiRecEta);
+  plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
   
   //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
@@ -489,7 +489,7 @@ void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0
 void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta){
 
   TString name = TString("Eta_decay_phi");
-  TString filename5 = strang + TString("/") + TString(name) + TString(".pdf");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box                 
 
