@@ -1,6 +1,9 @@
 #include "MyConstants.h"
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
+
+  TH1F *kpmfromphiRecMom = (TH1F*)ifile->Get("kpmfromphiRecMom"); 
+  TH1F *kpmfromphiRecMom_nHCal = (TH1F*)ifile->Get("kpmfromphiRecMom_nHCal"); 
   
   TString name = TString("kpmfromphi_momentum");
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
@@ -23,7 +26,11 @@ void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmf
   leg->AddEntry(kpmfromphiRecMom,"all","l");
   leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
   leg->Draw();
-  canvas->Print(filename, "pdf");           
+  canvas->Print(filename, "pdf");
+
+  delete kpmfromphiRecMom;
+  delete kpmfromphiRecMom_nHCal;
+  
 }
 
 void nHCal_VM_Plotting()
@@ -63,15 +70,12 @@ void nHCal_VM_Plotting()
 
   TString strang = "Sartre_Au_phi_10runs";
 
-  cout << "Analyzed data will be of the type:\n " << strang << " .\n";
-
-  //OLD:
-  //TString pdfdir = strang;
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it
     gSystem->mkdir(strang.Data(), kTRUE);
-    cout << "Created output pdf directory:\n " << strang << " .\n";
   }
+  cout << "Output pdf directory = type of analyzed data:\n " << strang << " .\n";
+
   
   // define and open input file:
   TString infile= TString("out.") + strang + TString("-") + flavor + TString(".root");
