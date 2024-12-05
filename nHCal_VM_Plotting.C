@@ -69,7 +69,7 @@ void nHCal_VM_Plotting()
   TString pdfdir = strang;
   //OLD:
   //if (!pdfdir.IsNull()) {
-  if (!strang.equals("null")) {
+  if (!strang.IsNull()) {
     // Directory does not exist: try to make it
     gSystem->mkdir(strang.Data(), kTRUE);
     cout << "Created output pdf directory:\n " << strang << " .\n";
