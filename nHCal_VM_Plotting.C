@@ -502,7 +502,7 @@ void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0
 
   gStyle->SetOptStat(0); //no stats box                 
 
-  TCanvas *canvas = new TCanvas(name4, strang, 800, 600);
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
   rho0Eta->SetLineColor(kBlack);
   rho0Eta->SetLineStyle(1);
   rho0Eta->Draw();
@@ -522,8 +522,8 @@ void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0
   leg->Draw();
 
   // add vertical lines for nHCal acceptance
-  Int_t binmax = pipmfromrho0Eta->GetMaximumBin();
-  Double_t y_max = 0.6*pipmfromrho0Eta->GetBinContent(binmax);
+  Int_t binmax = pipmfromrho0RecEta->GetMaximumBin();
+  Double_t y_max = 0.6*pipmfromrho0RecEta->GetBinContent(binmax);
   TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max); 
   eta_min_nhcal_line->SetLineColor(kBlack);
   eta_min_nhcal_line->SetLineWidth(2);
