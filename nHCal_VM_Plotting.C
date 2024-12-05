@@ -180,9 +180,19 @@ void nHCal_VM_Plotting()
   leg31->AddEntry(electronRecEta,"electrons (#pm) rec","l");
   leg31->Draw();
 
-  // add vertical lines for nHCal acceptance (use existing lines for generated eta)
-  eta_min_nhcal_line1->Draw("same");
-  eta_max_nhcal_line1->Draw("same");
+  // add vertical lines for nHCal acceptance 
+  Int_t binmax = electronEta->GetMaximumBin();
+  Double_t y_max = electronEta->GetBinContent(binmax);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_min_nhcal_line->SetLineColor(kBlack);
+  eta_min_nhcal_line->SetLineWidth(2);
+  eta_min_nhcal_line->SetLineStyle(kDashed);
+  eta_min_nhcal_line->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_max_nhcal_line->SetLineColor(kBlack);
+  eta_max_nhcal_line->SetLineWidth(2);
+  eta_max_nhcal_line->SetLineStyle(kDashed);
+  eta_max_nhcal_line->Draw("same");
   
   // pad 2
   canvas3->cd(2);
@@ -475,7 +485,7 @@ void nHCal_VM_Plotting()
 void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F *protonEta, TH1F *pionEta, TH1F *kaonEta, TH1F *rho0Eta, TH1F *jpsiEta, TH1F *phiEta){
 
   TString name = TString("trueEta_species");
-  TString filename1 = strang + TString("/") + TString(name) + TString(".pdf");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
@@ -497,7 +507,6 @@ void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F
   jpsiEta->Draw("same");
   phiEta->SetLineColor(kCyan+3);
   phiEta->Draw("same");
-    
   canvas->Draw();
 
   auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header  
@@ -526,13 +535,9 @@ void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F
   eta_max_nhcal_line->SetLineWidth(2);
   eta_max_nhcal_line->SetLineStyle(kDashed);
   eta_max_nhcal_line->Draw("same");
-
-  //
   canvas->Print(filename, "pdf");          
   
 }// end of plot_trueEta_species
-
-
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
   
@@ -558,9 +563,6 @@ void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmf
   leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
   leg->Draw();
   canvas->Print(filename, "pdf");
-
-  delete kpmfromphiRecMom;
-  delete kpmfromphiRecMom_nHCal;
   
 } //end of plot_kpmfromphi_momentum()
 
