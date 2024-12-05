@@ -1,30 +1,28 @@
 #include "MyConstants.h"
 
 void plot_kpmfromphi_momentum(TString pdfdir, const char *strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
-// FILE 7 - kpmfromphidecay momentum
-  
-  TString name7 = TString("kpmfromphi_momentum");
-  TString filename7 = pdfdir + TString("/") + TString(name7) + TString(".pdf");
+  TString name8 = TString("kpmfromphi_momentum");
+  TString filename8 = pdfdir + TString("/") + TString(name8) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
   
-  TCanvas *canvas7 = new TCanvas(name7, strang, 800, 600);
+  TCanvas *canvas8 = new TCanvas(name8, strang, 800, 600);
   kpmfromphiRecMom->SetTitle(strang);
   kpmfromphiRecMom->SetLineColor(kBlack);
   kpmfromphiRecMom->Draw();
   kpmfromphiRecMom_nHCal->SetLineColor(kRed);
   kpmfromphiRecMom_nHCal->Draw("same");  
-  canvas7->Draw();
+  canvas8->Draw();
 
-  auto leg7 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg7->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
-  leg7->SetBorderSize(0);
-  leg7->SetFillStyle(0);
-  leg7->SetTextSize(0.05);
-  leg7->AddEntry(kpmfromphiRecMom,"all","l");
-  leg7->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
-  leg7->Draw();
-  canvas7->Print(filename7, "pdf");          
+  auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg8->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
+  leg8->SetBorderSize(0);
+  leg8->SetFillStyle(0);
+  leg8->SetTextSize(0.05);
+  leg8->AddEntry(kpmfromphiRecMom,"all","l");
+  leg8->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
+  leg8->Draw();
+  canvas8->Print(filename8, "pdf");          
   // end file 7
   
 }
