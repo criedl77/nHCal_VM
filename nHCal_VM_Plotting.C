@@ -6,6 +6,7 @@ void plot_genVSrecEta_species(TString strang, TH1F *electronEta, TH1F *electronR
 
 void plot_Eta_decay_rho0_pipi( TString strang, TH1F *rho0Eta, TH1F *pipmfromrho0RecEta);
 void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta);
+void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecEta);
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
@@ -100,65 +101,14 @@ void nHCal_VM_Plotting(){
   //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
   //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
-  plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
+  //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
+  plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
   //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
   //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
   ///////////////////////////////////////////////////////////
   
-  
-
-  
-
-  // FILE 6 - eta decay jpsi to e+ e- //                                                                                                           
-  // Define the name of the plot:
-  TString name6 = TString("Eta_decay_jpsi");
-  // Define the name of the pdf file:
-  TString filename6 = strang + TString("/") + TString(name6) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box                 
-
-  TCanvas *canvas6 = new TCanvas(name6, strang, 800, 600);
-  // fat channels:
-  epmfromjpsiRecEta->SetLineStyle(2);
-  epmfromjpsiRecEta->SetTitle(strang);
-  epmfromjpsiRecEta->SetLineColor(kRed);
-  epmfromjpsiRecEta->Draw();
-  jpsiEta->SetLineStyle(1);
-  jpsiEta->SetLineColor(kBlack);
-  jpsiEta->SetLineStyle(1);
-  jpsiEta->Draw("same");
-  
-  canvas6->Draw();
-
-  auto leg6 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header
-  leg6->SetBorderSize(0);
-  leg6->SetFillStyle(0);
-  leg6->SetTextSize(0.05);
-  leg6->SetHeader("generated J/#psi and decay electrons", "C"); 
-  leg6->AddEntry(epmfromjpsiRecEta,"reco electrons (#pm)","l");
-  leg6->AddEntry(jpsiEta,"gen J/#psi","l");
-  leg6->Draw();
-
-  // add vertical lines for nHCal acceptance
-  Int_t binmax_6 = epmfromjpsiEta->GetMaximumBin();
-  Double_t y_max6 = 0.6*epmfromjpsiEta->GetBinContent(binmax_6);
-  TLine *eta_min_nhcal_line6= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max6);
-  eta_min_nhcal_line6->SetLineColor(kBlack);
-  eta_min_nhcal_line6->SetLineWidth(2);
-  eta_min_nhcal_line6->SetLineStyle(kDashed);
-  eta_min_nhcal_line6->Draw("same");
-  TLine *eta_max_nhcal_line6= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max6);
-  eta_max_nhcal_line6->SetLineColor(kBlack);
-  eta_max_nhcal_line6->SetLineWidth(2);
-  eta_max_nhcal_line6->SetLineStyle(kDashed);
-  eta_max_nhcal_line6->Draw("same");
-  //                                                                                                                                        
-  canvas6->Print(filename6, "pdf");
-  // end of decay jspi to ee eta   
-  
-  //
   cout << "Thank you for running Caro's macro.\n";
   gSystem->Exec("date");
   
@@ -538,6 +488,51 @@ void plot_Eta_decay_phi_KK(TString strang, TH1F *phiEta, TH1F *kpmfromphiRecEta)
   canvas->Print(filename, "pdf");
   
 } // end of plot_Eta_decay_phi_KK()
+
+void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecEta){
+                                                                                                         
+  TString name = TString("Eta_decay_jpsi");
+  TString filename6 = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box                 
+
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  // fat channels:
+  epmfromjpsiRecEta->SetLineStyle(2);
+  epmfromjpsiRecEta->SetTitle(strang);
+  epmfromjpsiRecEta->SetLineColor(kRed);
+  epmfromjpsiRecEta->Draw();
+  jpsiEta->SetLineStyle(1);
+  jpsiEta->SetLineColor(kBlack);
+  jpsiEta->SetLineStyle(1);
+  jpsiEta->Draw("same");
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header
+  leg6->SetBorderSize(0);
+  leg6->SetFillStyle(0);
+  leg6->SetTextSize(0.05);
+  leg6->SetHeader("generated J/#psi and decay electrons", "C"); 
+  leg6->AddEntry(epmfromjpsiRecEta,"reco electrons (#pm)","l");
+  leg6->AddEntry(jpsiEta,"gen J/#psi","l");
+  leg6->Draw();
+
+  // add vertical lines for nHCal acceptance
+  Int_t binmax = epmfromjpsiRecEta->GetMaximumBin();
+  Double_t y_max = 0.6*epmfromjpsiRecEta->GetBinContent(binmax);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);
+  eta_min_nhcal_line->SetLineColor(kBlack);
+  eta_min_nhcal_line->SetLineWidth(2);
+  eta_min_nhcal_line->SetLineStyle(kDashed);
+  eta_min_nhcal_line->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);
+  eta_max_nhcal_line->SetLineColor(kBlack);
+  eta_max_nhcal_line->SetLineWidth(2);
+  eta_max_nhcal_line->SetLineStyle(kDashed);
+  eta_max_nhcal_line->Draw("same");       
+  canvas6->Print(filename, "pdf");
+ 
+} // end of plot_Eta_decay_jpsi_ee()
 
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
   
