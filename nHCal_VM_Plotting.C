@@ -1,6 +1,8 @@
 #include "MyConstants.h"
 
 void plot_trueEta_species(TString strang, TH1F *electronEta, TH1F *muonEta, TH1F *protonEta, TH1F *pionEta, TH1F *kaonEta, TH1F *rho0Eta, TH1F *jpsiEta, TH1F *phiEta);
+void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta, TH1F *protonRecEta, TH1F *pionRecEta, TH1F *kaonRecEta);
+
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
@@ -90,64 +92,16 @@ void nHCal_VM_Plotting()
   
   ///////////////////////////////////////////////////////////
   // Plot:
-  plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
+  //plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
+  plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  
   plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
   plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal); 
   ///////////////////////////////////////////////////////////
   
 
-  // FILE 2 - reconstructed eta //
-  
-  // Define the name of the plot:
-  TString name2 = TString("recEta_species");
-  // Define the name of the pdf file:
-  TString filename2 = strang + TString("/") + TString(name2) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box    
-
-  TCanvas *canvas2 = new TCanvas(name2, strang, 800, 600);
-  electronRecEta->SetTitle(strang);
-  electronRecEta->SetLineColor(kBlue);
-  electronRecEta->Draw();
-  muonRecEta->SetLineColor(kMagenta);
-  muonRecEta->Draw("same");
-  protonRecEta->SetLineColor(kRed);
-  protonRecEta->Draw("same");
-  pionRecEta->SetLineColor(kOrange+1);
-  pionRecEta->Draw("same");
-  kaonRecEta->SetLineColor(kCyan);
-  kaonRecEta->Draw("same");
-
-  canvas2->Draw();
-
-  auto leg2 = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header                                                                         
-  leg2->SetHeader("Reconstructed particles", "C"); // option "C" allows to center the header
-  leg2->SetFillStyle(0);
-  leg2->AddEntry(electronRecEta,"electrons (#pm)","l");
-  leg2->AddEntry(muonRecEta,"muons (#pm)","l");
-  leg2->AddEntry(pionRecEta,"pions (#pm)","l");
-  leg2->AddEntry(kaonRecEta,"kaons (#pm)","l");
-  leg2->AddEntry(protonRecEta,"protons (#pm)","l");
-  leg2->Draw();
-
-  // add vertical lines for nHCal acceptance                                                                                              
-  Int_t binmax_2 = electronRecEta->GetMaximumBin();
-  Double_t y_max2 = electronRecEta->GetBinContent(binmax_2);
-  TLine *eta_min_nhcal_line2= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max2);  // (x1,y1,x2,y2)
-  eta_min_nhcal_line2->SetLineColor(kBlack);
-  eta_min_nhcal_line2->SetLineWidth(2);
-  eta_min_nhcal_line2->SetLineStyle(kDashed);
-  eta_min_nhcal_line2->Draw("same");
-  TLine *eta_max_nhcal_line2= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max2);  // (x1,y1,x2,y2)
-  eta_max_nhcal_line2->SetLineColor(kBlack);
-  eta_max_nhcal_line2->SetLineWidth(2);
-  eta_max_nhcal_line2->SetLineStyle(kDashed);
-  eta_max_nhcal_line2->Draw("same");
-  
-  //
-  canvas2->Print(filename2, "pdf");
-  // end of reconstructed eta  
+ 
 
   // FILE 3 - gen & rec eta: //                                                                                                         
 
@@ -634,6 +588,54 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
   canvas->Print(filename, "pdf");          
 
 } // end of plot_kpmfromphi_zdecay()
+
+void plot_recEta_species(TString strang, TH1F *electronRecEta, TH1F *muonRecEta, TH1F *protonRecEta, TH1F *pionRecEta, TH1F *kaonRecEta){
+
+  TString name = TString("recEta_species");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box    
+
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  electronRecEta->SetTitle(strang);
+  electronRecEta->SetLineColor(kBlue);
+  electronRecEta->Draw();
+  muonRecEta->SetLineColor(kMagenta);
+  muonRecEta->Draw("same");
+  protonRecEta->SetLineColor(kRed);
+  protonRecEta->Draw("same");
+  pionRecEta->SetLineColor(kOrange+1);
+  pionRecEta->Draw("same");
+  kaonRecEta->SetLineColor(kCyan);
+  kaonRecEta->Draw("same");
+  canvas2->Draw();
+
+  auto leg = new TLegend(0.48,0.6,0.68,0.88); //x1,y1,x2,y2,header 
+  leg->SetHeader("Reconstructed particles", "C"); // option "C" allows to center the header
+  leg->SetFillStyle(0);
+  leg->AddEntry(electronRecEta,"electrons (#pm)","l");
+  leg->AddEntry(muonRecEta,"muons (#pm)","l");
+  leg->AddEntry(pionRecEta,"pions (#pm)","l");
+  leg->AddEntry(kaonRecEta,"kaons (#pm)","l");
+  leg->AddEntry(protonRecEta,"protons (#pm)","l");
+  leg->Draw();
+
+  // add vertical lines for nHCal acceptance:                                                                                       
+  Int_t binmax = electronRecEta->GetMaximumBin();
+  Double_t y_max = electronRecEta->GetBinContent(binmax_2);
+  TLine *eta_min_nhcal_line= new TLine(eta_min_nhcal,0.,eta_min_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_min_nhcal_line->SetLineColor(kBlack);
+  eta_min_nhcal_line->SetLineWidth(2);
+  eta_min_nhcal_line->SetLineStyle(kDashed);
+  eta_min_nhcal_line->Draw("same");
+  TLine *eta_max_nhcal_line= new TLine(eta_max_nhcal,0.,eta_max_nhcal,y_max);  // (x1,y1,x2,y2)
+  eta_max_nhcal_line->SetLineColor(kBlack);
+  eta_max_nhcal_line->SetLineWidth(2);
+  eta_max_nhcal_line->SetLineStyle(kDashed);
+  eta_max_nhcal_line->Draw("same");
+  canvas2->Print(filename, "pdf");
+  
+} // end of plot_recEta_species()
 
 
   //TPaveText *t = new TPaveText(.05,.3,.95,.6, "NDC");                                                                                   
