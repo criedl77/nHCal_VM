@@ -31,8 +31,11 @@ void nHCal_VM_Plotting()
   gSystem->Exec("date");
 
   // define flavor of this plotting macro:
-  TString flavor_ram("nHCal_VM");
-  const char *flavor=flavor_ram.Data();
+  //NEW:
+  TString flavor = "nHCal_VM"; 
+  //OLD:
+  //TString flavor_ram("nHCal_VM");
+  //const char *flavor=flavor_ram.Data();
 
   // Define name of input file (= output file of nHCal_VM_Analysis.C):
   //TString strang_ram("pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic");
