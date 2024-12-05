@@ -509,13 +509,13 @@ void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecE
   canvas->Draw();
 
   auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header
-  leg6->SetBorderSize(0);
-  leg6->SetFillStyle(0);
-  leg6->SetTextSize(0.05);
-  leg6->SetHeader("generated J/#psi and decay electrons", "C"); 
-  leg6->AddEntry(epmfromjpsiRecEta,"reco electrons (#pm)","l");
-  leg6->AddEntry(jpsiEta,"gen J/#psi","l");
-  leg6->Draw();
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->SetHeader("generated J/#psi and decay electrons", "C"); 
+  leg->AddEntry(epmfromjpsiRecEta,"reco electrons (#pm)","l");
+  leg->AddEntry(jpsiEta,"gen J/#psi","l");
+  leg->Draw();
 
   // add vertical lines for nHCal acceptance
   Int_t binmax = epmfromjpsiRecEta->GetMaximumBin();
@@ -530,7 +530,7 @@ void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecE
   eta_max_nhcal_line->SetLineWidth(2);
   eta_max_nhcal_line->SetLineStyle(kDashed);
   eta_max_nhcal_line->Draw("same");       
-  canvas6->Print(filename, "pdf");
+  canvas->Print(filename, "pdf");
  
 } // end of plot_Eta_decay_jpsi_ee()
 
