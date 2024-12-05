@@ -1,35 +1,5 @@
 #include "MyConstants.h"
 
-void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
-  
-  TString name = TString("kpmfromphi_momentum");
-  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
-  kpmfromphiRecMom->SetTitle(strang);
-  kpmfromphiRecMom->SetLineColor(kBlack);
-  kpmfromphiRecMom->Draw();
-  kpmfromphiRecMom_nHCal->SetLineColor(kRed);
-  kpmfromphiRecMom_nHCal->Draw("same");  
-  canvas->Draw();
-
-  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
-  leg->SetBorderSize(0);
-  leg->SetFillStyle(0);
-  leg->SetTextSize(0.05);
-  leg->AddEntry(kpmfromphiRecMom,"all","l");
-  leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
-  leg->Draw();
-  canvas->Print(filename, "pdf");
-
-  delete kpmfromphiRecMom;
-  delete kpmfromphiRecMom_nHCal;
-  
-}
-
 void nHCal_VM_Plotting()
 {
   gSystem->Exec("date");
@@ -68,23 +38,19 @@ void nHCal_VM_Plotting()
   TString strang = "Sartre_Au_phi_10runs";
 
   if (!strang.IsNull()) {
-    // Directory does not exist (): try to make it
+    // Directory does not exist (): try to make it - this doesn't work as it should
     gSystem->mkdir(strang.Data(), kTRUE);
   }
   cout << "Output pdf directory = type of analyzed data:\n " << strang << " .\n";
 
-  
   // define and open input file:
   TString infile= TString("out.") + strang + TString("-") + flavor + TString(".root");
   TFile *ifile = TFile::Open(infile,"READ");
   
   cout << "Reading infile:\n " << infile << " .\n";
 
-   gSystem->Exec("date");
-
-
   ///////////////////////////////////////////////////////////
-  //Histograms to plot: 
+  //Get the histograms to plot: 
   
   TH1F *electronEta = (TH1F*)ifile->Get("electronEta");
   TH1F *muonEta = (TH1F*)ifile->Get("muonEta");
@@ -119,34 +85,11 @@ void nHCal_VM_Plotting()
   
   ///////////////////////////////////////////////////////////
   // Plot:
-  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal); 
+  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
+  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal); 
+  //
   
-  ///////////////////////////////////////////////////////////
-  // FILE 8 - kpmfromphidecay decay length
   
-  TString name8 = TString("kpmfromphi_decaylength");
-  TString filename8 = strang + TString("/") + TString(name8) + TString(".pdf");
-
-  gStyle->SetOptStat(0); //no stats box
-  
-  TCanvas *canvas8 = new TCanvas(name8, strang, 800, 600);
-  kpmfromphiRecDecayLength->SetTitle(strang);
-  kpmfromphiRecDecayLength->SetLineColor(kBlack);
-  kpmfromphiRecDecayLength->Draw();
-  kpmfromphiRecDecayLength_nHCal->SetLineColor(kRed);
-  kpmfromphiRecDecayLength_nHCal->Draw("same");  
-  canvas8->Draw();
-
-  auto leg8 = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg8->SetHeader("Kaons from #phi(1020) decay - decay length", "C"); // option "C" allows to center the header
-  leg8->SetBorderSize(0);
-  leg8->SetFillStyle(0);
-  leg8->SetTextSize(0.05);
-  leg8->AddEntry(kpmfromphiRecDecayLength,"all","l");
-  leg8->AddEntry(kpmfromphiRecDecayLength_nHCal,"in nHCal acceptance","l");
-  leg8->Draw();
-  canvas8->Print(filename8, "pdf");          
-  // end file 8
 
    // FILE 9 - kpmfromphidecay z location of decay
   
@@ -621,8 +564,69 @@ void nHCal_VM_Plotting()
   cout << "Thank you for running Caro's macro.\n";
   gSystem->Exec("date");
   
-} // end of macro  
+} // end of main macro  
 //////////////////
+
+// sub-macros:
+
+void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal){
+  
+  TString name = TString("kpmfromphi_momentum");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiRecMom->SetTitle(strang);
+  kpmfromphiRecMom->SetLineColor(kBlack);
+  kpmfromphiRecMom->Draw();
+  kpmfromphiRecMom_nHCal->SetLineColor(kRed);
+  kpmfromphiRecMom_nHCal->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay - momentum", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecMom,"all","l");
+  leg->AddEntry(kpmfromphiRecMom_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+  canvas->Print(filename, "pdf");
+
+  delete kpmfromphiRecMom;
+  delete kpmfromphiRecMom_nHCal;
+  
+} //end of plot_kpmfromphi_momentum()
+
+void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal){
+  
+  TString name = TString("kpmfromphi_decaylength");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiRecDecayLength->SetTitle(strang);
+  kpmfromphiRecDecayLength->SetLineColor(kBlack);
+  kpmfromphiRecDecayLength->Draw();
+  kpmfromphiRecDecayLength_nHCal->SetLineColor(kRed);
+  kpmfromphiRecDecayLength_nHCal->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay - decay length", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecDecayLength,"all","l");
+  leg->AddEntry(kpmfromphiRecDecayLength_nHCal,"in nHCal acceptance","l");
+  leg->Draw();
+  canvas->Print(filename, "pdf");
+  
+} // end of plot_kpmfromphi_decaylength()
+
+
 
   //TPaveText *t = new TPaveText(.05,.3,.95,.6, "NDC");                                                                                   
   //t->AddText("This line is blue"); ((TText*)t->GetListOfLines()->Last())->SetTextColor(kBlue);                                          
