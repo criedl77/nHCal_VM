@@ -30,7 +30,8 @@ void nHCal_VM_Analysis(){
   // >>>>> If streaming a runlist from SDCC:
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
-  const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
+  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
+  const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //const char strang[]="pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
   //const char strang[]="pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //const char strang[]="pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
@@ -237,7 +238,11 @@ void nHCal_VM_Analysis(){
   while(tree_reader.Next()) { // Loop over events
 
     ievgen++;
-    //cout << "+ Entering event #: " << ievgen << " \n";    
+    
+    //cout << "+ Entering event #: " << ievgen << " \n";
+    if(ievgen % 10000 == 0 && ievgen != 0 ){
+      cout << "+ processed " << ievgen << " events \n";
+      }
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
