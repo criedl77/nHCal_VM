@@ -9,19 +9,15 @@ void nHCal_VM_Analysis(){
   ////////////////////////////////////////////////////
   //// String definitions - modify here as needed ////
   /////////////////////////////////////////////////////
-  
+
+  // Reading locally hasn't been modified
   // Define input directory if reading locally (can leave outcommented if streaming, has no effect):
   const char indir[]="test"; 
   //  cout << "Input directory is: " << indir << " \n";
-
-  // Define general path to MC file:
-  const char pathtomc[]="s3https://eics3.sdcc.bnl.gov:9000/eictest/EPIC/RECO"; 
-  
-  //If reading 1 local file:
+  // Reading 1 local file:
   //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic"; // this works! (if I have no parameters in my void()...)
   //TString infile_ram=indir + TString("/") + strang + TString(".root");
   //const char *infile=infile_ram.Data();
-  //
   //cout << "Analyzed MC file will be: " << infile << " \n";
 
   // >>>>> If streaming a runlist from SDCC:
@@ -44,23 +40,24 @@ void nHCal_VM_Analysis(){
   // and others. Some trees have been renamed since then. Take hepmc generated runs and reproduce with latest geometry: mc ls  S3/eictest/EPIC/EVGEN/EXCLUSIVE/DIFFRACTIVE_JPSI_ABCONV/Sartre/Coherent/sartre_bnonsat_Au_jpsi_ab_eAu_2_000.hepmc.gz
   //const char strang[]="sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
   
-  //const char strang[]="Sartre_Au_phi_10runs"; // local runlist
-  
-  cout << "Analyzed data is of the type: \n " << strang << " \n";
-
+ 
+  ///////////
+  // locally:
+  // const char strang[]="Sartre_Au_phi_10runs"; // local runlist
   // TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
-  TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");
+  ///////////
   
+  TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");  
   const char *runlist=runlist_ram.Data();
-  
-  cout << "+ Runlist: " << runlist << " \n";
-  //
 
   // Output file:  
   TString outfile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
   const char *outfile=outfile_ram.Data();
   TFile *ofile = TFile::Open(outfile,"RECREATE"); // RECREATE overwrites an existing file of the same name
-  //
+
+  cout << "Analyzed data is of the type: \n " << strang << " \n";
+  cout << "+ Runlist: " << runlist << " \n";
+  cout << "+ Output file: " << outfile << " \n";
 
   ////////////////////////////////////
   //// end of string definitions ////
