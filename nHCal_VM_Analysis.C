@@ -656,6 +656,11 @@ void nHCal_VM_Analysis(){
 		      //cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << decaylength_k2 << " \n";
 		      
 		    }// end of phi(1020) decay K2
+		  if( abs(recEta_phi_k1) < 0.00001 || recEta_phi_k2 < -0.00001 )
+		    {
+		      cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K1 eta-rec: " << recEta_phi_k1 << ", K2 eta-rec: " << recEta_phi_k2 <<" \n";
+		    }
+		  
 		} // end of phi(1020) decay into KK
 	      // jpsi into ee:
 	      if( is_jpsidecay_ee )
@@ -693,10 +698,7 @@ void nHCal_VM_Analysis(){
 		} // end of jpsi decay into ee
 
 
-	      if( is_phidecay_kk && (abs(recEta_phi_k1) < 0.00001 || recEta_phi_k2 < -0.00001) )
-		{
-		  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K1 eta-rec: " << recEta_phi_k1 << ", K2 eta-rec: " << recEta_phi_k2 <<" \n";
-		}
+	      
 
 	      
 	    }// End loop over associations    
