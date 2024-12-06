@@ -48,7 +48,7 @@ void nHCal_VM_Plotting(){
 
   //TString strang = "Sartre_Au_phi_10runs";
 
-  TString strang = pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files;
+  TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
   
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it - this doesn't work as it should...
@@ -99,13 +99,13 @@ void nHCal_VM_Plotting(){
   ///////////////////////////////////////////////////////////
   // Plot:
   
-  plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
-  plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
-  plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
+  //plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
+  //plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
-  plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
-  plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
-  plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
+  //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
+  //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
+  //plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
   plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
