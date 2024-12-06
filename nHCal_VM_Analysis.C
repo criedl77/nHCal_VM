@@ -5,10 +5,6 @@ void nHCal_VM_Analysis(){
 
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
-  
-  ////////////////////////////////////////////////////
-  //// String definitions - modify here as needed ////
-  /////////////////////////////////////////////////////
 
   //  >>>>> Reading locally is not the standard way of using this macro
   // Define input directory if reading locally:
@@ -57,10 +53,6 @@ void nHCal_VM_Analysis(){
   cout << "+ Runlist: " << runlist << " \n";
   cout << "+ Output file: " << outfile << " \n";
 
-  ////////////////////////////////////
-  //// end of string definitions ////
-  ///////////////////////////////////
-  
   TChain *mychain = new TChain("events");
 
   // if reading a single local file: (locally or streaming)
@@ -71,7 +63,6 @@ void nHCal_VM_Analysis(){
   std::string file("");
   while (in >> file) mychain->Add(file.data());
 
-  
   ///////////////////////////////////////
   //// end of "automated" definitions ////
   //////////////////////////////////////  
