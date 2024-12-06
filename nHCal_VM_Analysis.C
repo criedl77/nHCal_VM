@@ -28,7 +28,7 @@ void nHCal_VM_Analysis(){
   //cout << "Analyzed MC file will be: " << infile << " \n";
 
   // >>>>> If streaming a runlist from SDCC:
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
+  const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
   //const char strang[]="pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
@@ -46,12 +46,12 @@ void nHCal_VM_Analysis(){
   // and others. Some trees have been renamed since then. Take hepmc generated runs and reproduce with latest geometry: mc ls  S3/eictest/EPIC/EVGEN/EXCLUSIVE/DIFFRACTIVE_JPSI_ABCONV/Sartre/Coherent/sartre_bnonsat_Au_jpsi_ab_eAu_2_000.hepmc.gz
   //const char strang[]="sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
   
-  const char strang[]="Sartre_Au_phi_10runs"; // local runlist
+  //const char strang[]="Sartre_Au_phi_10runs"; // local runlist
   
   cout << "Analyzed data is of the type: \n " << strang << " \n";
 
-  TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
-  //TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");
+  // TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
+  TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");
   
   const char *runlist=runlist_ram.Data();
   
