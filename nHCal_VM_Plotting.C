@@ -48,7 +48,7 @@ void nHCal_VM_Plotting(){
 
   //TString strang = "Sartre_Au_phi_10runs";
 
-  TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
+  TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
   
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it - this doesn't work as it should...
