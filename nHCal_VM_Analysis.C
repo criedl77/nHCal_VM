@@ -693,7 +693,7 @@ void nHCal_VM_Analysis(){
 		} // end of jpsi decay into ee
 
 
-	      if( if( is_phidecay_kk ) && (abs(recEta_phi_k1) < 0.00001 || recEta_phi_k2 < -0.00001) )
+	      if( is_phidecay_kk && (abs(recEta_phi_k1) < 0.00001 || recEta_phi_k2 < -0.00001) )
 		{
 		  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K1 eta-rec: " << recEta_phi_k1 << ", K2 eta-rec: " << recEta_phi_k2 <<" \n";
 		}
