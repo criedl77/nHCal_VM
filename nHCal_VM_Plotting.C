@@ -13,6 +13,7 @@ void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength,
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
 
 void nHCal_VM_Plotting(){
+  
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
   
@@ -49,7 +50,8 @@ void nHCal_VM_Plotting(){
   //TString strang = "Sartre_Au_phi_10runs";
 
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
-  TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
+  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
+  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
   
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it - this doesn't work as it should...
