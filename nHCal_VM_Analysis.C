@@ -44,11 +44,13 @@ void nHCal_VM_Analysis(){
   // TString strang = "Sartre_Au_phi_10runs"; // local runlist
   // TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
-  
+
+  ///////////
+  // streaming runlist (default): 
   TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
- 
-  TString outfile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
-  const char *outfile=outfile_ram.Data();
+  ///////////
+  
+  TString outfile = TString("out.") + strang + TString("-") + flavor + TString(".root");
   TFile *ofile = TFile::Open(outfile,"RECREATE"); // RECREATE overwrites an existing file of the same name
 
   cout << "Analyzed data is of the type: \n " << strang << " \n";
