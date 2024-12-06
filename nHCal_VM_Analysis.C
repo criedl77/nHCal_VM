@@ -66,11 +66,11 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<float> partMomZ(tree_reader, "MCParticles.momentum.z");
   TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
   TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
-  TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.x");
-  TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.y");
+  TTreeReaderArray<double> partEndpointX(tree_reader, "MCParticles.endpoint.x");
+  TTreeReaderArray<double> partEndpointY(tree_reader, "MCParticles.endpoint.y");
   TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.z");
-  TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.x");
-  TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.y");
+  TTreeReaderArray<double> partVertexX(tree_reader, "MCParticles.vertex.x");
+  TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
   // Get reconstructed track information:
@@ -94,8 +94,9 @@ void nHCal_VM_Analysis(){
   
   // Define Histograms
 
-  //generatorStatus
+  //generatorStatus and simulatorStatus
   TH1D *generatorStatus = new TH1D("generatorStatus","Status of generated particles, all; generatorStatus",101,0,100);
+  TH1D *simulatorStatus = new TH1D("simulatorStatus","Status of simulated particles, all; simulatorStatus",1000001,0,1000000);
   
   // eta (pseudorapidity)
   TH1D *partEta = new TH1D("partEta","Eta of thrown particles; #eta",120,-6.,6.);
@@ -234,6 +235,7 @@ void nHCal_VM_Analysis(){
 	float trueTheta = trueMom.Theta();
 
 	generatorStatus->Fill(partGenStat[i]);
+	simulatorStatus->Fill(partSimStat[i]);
 
 	// reset particle decays for each new generated particle:
 	is_kpmdecay_mupm = 0;
@@ -331,7 +333,6 @@ void nHCal_VM_Analysis(){
       	  else if( partPdg[i] == 333 )
 	    {
 	      //cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
-
 	      // count the 2-body phi(1020) decays:
 	      if( i_daughters == 2 )
 		{
@@ -366,7 +367,9 @@ void nHCal_VM_Analysis(){
 		      //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
-		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n"; 
+		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
+		      cout << "           generator / simulator status K1: " <<  , partGenStat[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]  << ", generator / simulator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
+		   
 		    
 		    } // end of phi to k+k- decays
 		} // end of 2-body decays
