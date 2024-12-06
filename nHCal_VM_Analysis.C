@@ -4,10 +4,7 @@ void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
-
-  // define flavor of this analysis macro:  
-  const char flavor[]="nHCal_VM";
-  cout << "Flavor is:" << flavor << " \n";
+  TString flavor = "nHCal_VM"; 
   
   ////////////////////////////////////////////////////
   //// String definitions - modify here as needed ////
@@ -31,11 +28,11 @@ void nHCal_VM_Analysis(){
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
   //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
-  const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
+  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //const char strang[]="pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
   //const char strang[]="pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //const char strang[]="pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
-  //const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
+  const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
   //const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv";
   //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
