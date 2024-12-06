@@ -4,7 +4,6 @@ void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
-  //gSystem->AddIncludePath(" -I$HOME/eic/nHCal_VM/nHCal_VM"); // can be made flexible with "flavor", see below
 
   // define flavor of this analysis macro:  
   const char flavor[]="nHCal_VM";
@@ -692,6 +691,13 @@ void nHCal_VM_Analysis(){
 		      cout << "          reco daughter-2 eta: " << recEta_jpsi_e2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		    }// end of jpsi decay e2
 		} // end of jpsi decay into ee
+
+
+	      if( if( is_phidecay_kk ) && (abs(recEta_phi_k1) < 0.00001 || recEta_phi_k2 < -0.00001) )
+		{
+		  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K1 eta-rec: " << recEta_phi_k1 << ", K2 eta-rec: " << recEta_phi_k2 <<" \n";
+		}
+
 	      
 	    }// End loop over associations    
 	  } // End stable or decay particles condition
