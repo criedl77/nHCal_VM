@@ -125,7 +125,7 @@ void nHCal_VM_Analysis(){
   
   // eta phi(1020)
   TH1D *phiEta = new TH1D("phiEta","Eta of thrown #phi(1020);#eta",120,-6.,6.);
-  TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay;endpoint.z",120,-400.,500.); 
+  TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay;endpoint.z [cm]",150,-4000.,4000.); 
   TH1D *kpmfromphiEta = new TH1D("kpmfromphiEta","generated #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
   TH1D *kpmfromphiRecEta = new TH1D("kpmfromphiRecEta","reconstructed #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
 
@@ -143,10 +143,10 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiRecMom_nHCal = new TH1D("kpmfromphiRecMom_nHCal","Momentum of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,40.);
 
   // decay length
-  TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [m]",150,0.,60.);
-  TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [m]",150,0.,60.);
-  TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [m]",150,-40,40.);
-  TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [m]",150,-40,40.);
+  TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [cm]",150,0.,6000.);
+  TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [cm]",150,0.,6000.);
+  TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000,4000.);
+  TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [cm]",150,-4000,4000.);
 
   // theta (polar angle)
   TH1D *partTheta = new TH1D("partTheta","Theta of thrown charged particles; #theta [rad]",150,0.,3.2);
@@ -578,8 +578,8 @@ void nHCal_VM_Analysis(){
 		      float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
 		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
 		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
-		      float decaylength_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
-		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location of kaon decay - I actually t hink I don't need the sign of eta (as in TMath::Sign(1.0, kpmfromphiRecEta)) since it will be handled by  the sign of the cosine
+		      float decaylength_k1 = 100*(recP_phi_k1/kpmmass)*kpmlifetime*speedoflight; // [cm]
+		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location [cm] of kaon decay - its sign is handled by  the sign of the cosine
 		      cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
