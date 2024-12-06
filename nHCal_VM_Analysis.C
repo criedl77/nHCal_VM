@@ -45,8 +45,7 @@ void nHCal_VM_Analysis(){
   // TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
   
-  TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");  
-  const char *runlist=runlist_ram.Data();
+  TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
  
   TString outfile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
   const char *outfile=outfile_ram.Data();
