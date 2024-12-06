@@ -6,16 +6,7 @@ void nHCal_VM_Analysis(){
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
 
-  //  >>>>> Reading locally is not the standard way of using this macro
-  // Define input directory if reading locally:
-  //TString indir = "test"; 
-  //cout << "Input directory is: " << indir << " \n";
-  // Reading 1 local file: this works! (if I have no parameters in my void()...
-  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic"; 
-  //TString infile = indir + TString("/") + strang + TString(".root");
-  //cout << "Analyzed MC file will be: " << infile << " \n";
-
-  // >>>>> If streaming a runlist from SDCC (default):
+  // >>>>> If streaming a runlist from SDCC:
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
@@ -23,27 +14,24 @@ void nHCal_VM_Analysis(){
   //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
   //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
-  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
+  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
   //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
   //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
   //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
   //TString strang = "EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
-
-  // sartre J/Psi, old 2022 data: "The tree does not have a branch called ReconstructedChargedParticleAssociations.recID"
-  // and others. Some trees have been renamed since then. Take hepmc generated runs and reproduce with latest geometry: mc ls  S3/eictest/EPIC/EVGEN/EXCLUSIVE/DIFFRACTIVE_JPSI_ABCONV/Sartre/Coherent/sartre_bnonsat_Au_jpsi_ab_eAu_2_000.hepmc.gz
   //TString strang = "sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
   
   ///////////
-  // local runlist:
-  // TString strang = "Sartre_Au_phi_10runs"; // local runlist
-  // TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
+  // >>>>> If using local runlist (reading locally stored files):
+  TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
   ///////////
   // streaming runlist (default): 
-  TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
+  //TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
   ///////////
   
   TString outfile = TString("out.") + strang + TString("-") + flavor + TString(".root");
@@ -63,10 +51,7 @@ void nHCal_VM_Analysis(){
   std::string file("");
   while (in >> file) mychain->Add(file.data());
 
-  ///////////////////////////////////////
-  //// end of "automated" definitions ////
   //////////////////////////////////////  
-
   // Initialize reader
   TTreeReader tree_reader(mychain);
 
