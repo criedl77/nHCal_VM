@@ -60,12 +60,17 @@ void nHCal_VM_Analysis(){
   
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
+  TTreeReaderArray<int> partSimStat(tree_reader, "MCParticles.simulatorStatus");
   TTreeReaderArray<float> partMomX(tree_reader, "MCParticles.momentum.x");
   TTreeReaderArray<float> partMomY(tree_reader, "MCParticles.momentum.y");
   TTreeReaderArray<float> partMomZ(tree_reader, "MCParticles.momentum.z");
   TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
   TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
+  TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.x");
+  TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.y");
   TTreeReaderArray<double> partEndpointZ(tree_reader, "MCParticles.endpoint.z");
+  TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.x");
+  TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
   // Get reconstructed track information:
@@ -572,7 +577,7 @@ void nHCal_VM_Analysis(){
 		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
 		      float decaylength_k1 = (recP_phi_k1/kpmmass)*kpmlifetime*speedoflight;
 		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location of kaon decay - I actually t hink I don't need the sign of eta (as in TMath::Sign(1.0, kpmfromphiRecEta)) since it will be handled by  the sign of the cosine
-		      //cout << "K1 z decay point: " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
+		      cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
@@ -611,6 +616,8 @@ void nHCal_VM_Analysis(){
 		      float recTheta_phi_k2 = recMom_phi_k2.Theta();
 		      float decaylength_k2 = (recP_phi_k2/kpmmass)*kpmlifetime*speedoflight;
 		      float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2;
+
+		      cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
 		      		      
 		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
