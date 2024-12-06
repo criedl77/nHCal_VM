@@ -368,7 +368,7 @@ void nHCal_VM_Analysis(){
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
 		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
-		      cout << "           generator / simulator status K1: " <<  , partGenStat[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]  << ", generator / simulator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
+		      cout << "           generator / simulator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]  << ", generator / simulator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
 		   
 		    
 		    } // end of phi to k+k- decays
