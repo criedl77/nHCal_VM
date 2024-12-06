@@ -10,47 +10,44 @@ void nHCal_VM_Analysis(){
   //// String definitions - modify here as needed ////
   /////////////////////////////////////////////////////
 
-  // Reading locally hasn't been modified
-  // Define input directory if reading locally (can leave outcommented if streaming, has no effect):
-  const char indir[]="test"; 
-  //  cout << "Input directory is: " << indir << " \n";
-  // Reading 1 local file:
-  //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic"; // this works! (if I have no parameters in my void()...)
-  //TString infile_ram=indir + TString("/") + strang + TString(".root");
-  //const char *infile=infile_ram.Data();
+  //  >>>>> Reading locally is not the standard way of using this macro
+  // Define input directory if reading locally:
+  //TString indir = "test"; 
+  //cout << "Input directory is: " << indir << " \n";
+  // Reading 1 local file: this works! (if I have no parameters in my void()...
+  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic"; 
+  //TString infile = indir + TString("/") + strang + TString(".root");
   //cout << "Analyzed MC file will be: " << infile << " \n";
 
-  // >>>>> If streaming a runlist from SDCC:
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //const char strang[]="pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
-  //const char strang[]="pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //const char strang[]="pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
-  const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-  //const char strang[]="pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
-  //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv";
-  //const char strang[]="rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
-  //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
-  //const char strang[]="sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
-  //const char strang[]="EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
+  // >>>>> If streaming a runlist from SDCC (default):
+  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
+  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
+  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
+  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
+  //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
+  //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
+  //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
+  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
+  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
+  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
+  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
+  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
+  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
+  //TString strang = "EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
 
   // sartre J/Psi, old 2022 data: "The tree does not have a branch called ReconstructedChargedParticleAssociations.recID"
   // and others. Some trees have been renamed since then. Take hepmc generated runs and reproduce with latest geometry: mc ls  S3/eictest/EPIC/EVGEN/EXCLUSIVE/DIFFRACTIVE_JPSI_ABCONV/Sartre/Coherent/sartre_bnonsat_Au_jpsi_ab_eAu_2_000.hepmc.gz
-  //const char strang[]="sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
+  //TString strang = "sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
   
- 
   ///////////
-  // locally:
-  // const char strang[]="Sartre_Au_phi_10runs"; // local runlist
-  // TString runlist_ram=TString("local_runlists/") + strang + TString("_runlist.txt");
+  // local runlist:
+  // TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  // TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
   
   TString runlist_ram=TString("runlists/") + strang + TString("_runlist.txt");  
   const char *runlist=runlist_ram.Data();
-
-  // Output file:  
+ 
   TString outfile_ram= TString("out.") + strang + TString("-") + flavor + TString(".root");
   const char *outfile=outfile_ram.Data();
   TFile *ofile = TFile::Open(outfile,"RECREATE"); // RECREATE overwrites an existing file of the same name
