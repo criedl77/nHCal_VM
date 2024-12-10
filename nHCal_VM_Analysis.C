@@ -149,7 +149,7 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000.,4000.);
   TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [cm]",150,-4000.,4000.);
   TH2D *kpmfromphiRecZdecay_EndpointZ =new TH2D("kpmfromphiRecZdecay_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its Z of decay; endpoint.z [cm]; z_{decay} [cm]", 150,-4000.,4000., 150,-4000.,4000.);
-  TH2D *kpmfromphiSimstatus_EndpointZ =new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; simulator status; z_{decay} [cm]", 1000,50000000,200000000, 150,-4000.,4000.);
+  TH2D *kpmfromphiSimstatus_EndpointZ =new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; endpoint.z [cm]; simulator status", 150,-4000.,4000., 1000,50000000,200000000);
 
 
   // theta (polar angle)
@@ -366,8 +366,8 @@ void nHCal_VM_Analysis(){
 		      kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]+1]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
-		      kpmfromphiSimstatus_EndpointZ->Fill(partSimStat[daughters_index[i_daughters_begin]], partEndpointZ[daughters_index[i_daughters_begin]]);
-		      kpmfromphiSimstatus_EndpointZ->Fill(partSimStat[daughters_index[i_daughters_begin]+1], partEndpointZ[daughters_index[i_daughters_begin]+1]);
+		      kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]);
+		      kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1]);
 
 		      //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
