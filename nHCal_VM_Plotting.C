@@ -647,7 +647,7 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
 
 void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ){
   
-  TString name = TString("kpmfromphi_zdecay");
+  TString name = TString("kpmfromphi_zdecay_endpointz");
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
