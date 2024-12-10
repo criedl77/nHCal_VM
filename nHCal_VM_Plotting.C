@@ -100,8 +100,8 @@ void nHCal_VM_Plotting(){
   TH1F *kpmfromphiRecZdecay = (TH1F*)ifile->Get("kpmfromphiRecZdecay");  
   TH1F *kpmfromphiRecZdecay_nHCal = (TH1F*)ifile->Get("kpmfromphiRecZdecay_nHCal"); 
   TH1F *kpmfromphiEndpointZ = (TH1F*)ifile->Get("kpmfromphiEndpointZ");
-  TH2D *kpmfromphiRecZdecay_EndpointZ = (TH2F*)ifile->Get("kpmfromphiRecZdecay_EndpointZ");
-  TH2D *kpmfromphiSimstatus_EndpointZ = (TH2F*)ifile->Get("kpmfromphiSimstatus_EndpointZ");
+  TH2F *kpmfromphiRecZdecay_EndpointZ = (TH2F*)ifile->Get("kpmfromphiRecZdecay_EndpointZ");
+  TH2F *kpmfromphiSimstatus_EndpointZ = (TH2F*)ifile->Get("kpmfromphiSimstatus_EndpointZ");
   
   TH1F *epmfromjpsiEta = (TH1F*)ifile->Get("epmfromjpsiEta");
   TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
