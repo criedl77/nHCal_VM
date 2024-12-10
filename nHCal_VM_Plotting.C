@@ -11,6 +11,7 @@ void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecE
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
+void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ);
 
 void nHCal_VM_Plotting(){
   
@@ -47,14 +48,14 @@ void nHCal_VM_Plotting(){
   //TString strang = "podio_output_100events";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files";   
 
-  //TString strang = "Sartre_Au_phi_10runs";
+  TString strang = "Sartre_Au_phi_10runs";
 
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
 
   // Link instead of having to change here all the time: (doesn't work conveniently like this - then I overwrite all my plots in the current directory...)
-  TString strang = "current";
+  //TString strang = "current";
   
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it - this doesn't work as it should...
@@ -98,6 +99,9 @@ void nHCal_VM_Plotting(){
   TH1F *kpmfromphiRecDecayLength_nHCal = (TH1F*)ifile->Get("kpmfromphiRecDecayLength_nHCal");  
   TH1F *kpmfromphiRecZdecay = (TH1F*)ifile->Get("kpmfromphiRecZdecay");  
   TH1F *kpmfromphiRecZdecay_nHCal = (TH1F*)ifile->Get("kpmfromphiRecZdecay_nHCal"); 
+  TH1F *kpmfromphiEndpointZ = (TH1F*)ifile->Get("kpmfromphiEndpointZ");
+  TH2D *kpmfromphiRecZdecay_EndpointZ = (TH2F*)ifile->Get("kpmfromphiRecZdecay_EndpointZ");
+  TH2D *kpmfromphiSimstatus_EndpointZ = (TH2F*)ifile->Get("kpmfromphiSimstatus_EndpointZ");
   
   TH1F *epmfromjpsiEta = (TH1F*)ifile->Get("epmfromjpsiEta");
   TH1F *epmfromjpsiRecEta = (TH1F*)ifile->Get("epmfromjpsiRecEta");
@@ -116,6 +120,7 @@ void nHCal_VM_Plotting(){
   plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
   plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
+  plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ);
   
   ///////////////////////////////////////////////////////////
   
@@ -640,7 +645,47 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
 
 } // end of plot_kpmfromphi_zdecay()
 
+void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ){
+  
+  TString name = TString("kpmfromphi_zdecay");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
+  gStyle->SetOptStat(0); //no stats box
+  
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiRecZdecay->SetTitle(strang);
+  kpmfromphiRecZdecay->SetLineColor(kBlack);
+  kpmfromphiRecZdecay->Draw();
+  kpmfromphiEndpointZ->SetLineColor(kBlue);
+  kpmfromphiEndpointZ->Draw("same");  
+  canvas->Draw();
+
+  auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
+  leg->SetHeader("Kaons from #phi(1020) decay", "C"); // option "C" allows to center the header
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->AddEntry(kpmfromphiRecZdecay,"z-position of decay","l");
+  leg->AddEntry(kpmfromphiEndpointZ,"z endpoint (generator level)","l");
+  leg->Draw();
+
+  // add vertical lines for nHCal z-min and z-max:
+  Int_t binmax = kpmfromphiRecZdecay->GetMaximumBin();
+  Double_t y_max = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax);
+  TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
+  z_min_nhcal_line->SetLineColor(kBlack);
+  z_min_nhcal_line->SetLineWidth(2);
+  z_min_nhcal_line->SetLineStyle(kDashed);
+  z_min_nhcal_line->Draw("same");
+  TLine *z_max_nhcal_line= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max);  // (x1,y1,x2,y2)
+  z_max_nhcal_line->SetLineColor(kBlack);
+  z_max_nhcal_line->SetLineWidth(2);
+  z_max_nhcal_line->SetLineStyle(kDashed);
+  z_max_nhcal_line->Draw("same");
+  
+  canvas->Print(filename, "pdf");          
+
+} // end of plot_kpmfromphi_zdecay_endpointz()
 
 
   //TPaveText *t = new TPaveText(.05,.3,.95,.6, "NDC");                                                                                   

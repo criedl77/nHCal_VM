@@ -148,8 +148,8 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [cm]",150,0.,6000.);
   TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000.,4000.);
   TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [cm]",150,-4000.,4000.);
-  TH2D *kpmfromphiRecZdecay_EndpointZ =new TH2D("kpmfromphiRecZdecay_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its Z of decay; endpoint.z [cm]; z_{decay} [cm]", 150,-4000.,4000., 150,-4000.,4000.);
-  TH2D *kpmfromphiSimstatus_EndpointZ =new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; endpoint.z [cm]; simulator status", 150,-4000.,4000., 1000,50000000,200000000);
+  TH2D *kpmfromphiRecZdecay_EndpointZ = new TH2D("kpmfromphiRecZdecay_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its Z of decay; endpoint.z [cm]; z_{decay} [cm]", 150,-4000.,4000., 150,-4000.,4000.);
+  TH2D *kpmfromphiSimstatus_EndpointZ = new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; endpoint.z [cm]; simulator status", 150,-4000.,4000., 1000,50000000,200000000);
 
 
   // theta (polar angle)

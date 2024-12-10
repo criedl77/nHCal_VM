@@ -13,8 +13,8 @@ const double eta_min_lfhcal = 1.18;
 const double eta_max_lfhcal = 4.2;
 
 // from $DETECTOR_PATH/compact/definitions.xml:
-const double z_nhcal_min = -3.95; // (2024-12-03) start of nHCal in z-direction [m]
-const double z_nhcal_thickness = 0.45; // nHCal thickness in z [m]
+const double z_nhcal_min = -395; // (2024-12-03) start of nHCal in z-direction [cm]
+const double z_nhcal_thickness = 45; // nHCal thickness in z [cm]
 const double z_nhcal_max = z_nhcal_min - z_nhcal_thickness;
 
 // define physical constants:
