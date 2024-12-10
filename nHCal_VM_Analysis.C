@@ -373,7 +373,7 @@ void nHCal_VM_Analysis(){
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
 		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
-		      cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
+		      //cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
 		   
 		    
 		    } // end of phi to k+k- decays
@@ -585,7 +585,7 @@ void nHCal_VM_Analysis(){
 		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
 		      float decaylength_k1 = 100*(recP_phi_k1/kpmmass)*kpmlifetime*speedoflight; // [cm]
 		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location [cm] of kaon decay - its sign is handled by  the sign of the cosine
-		      cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
+		      //cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
 		      
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
@@ -626,7 +626,7 @@ void nHCal_VM_Analysis(){
 		      float decaylength_k2 = 100*(recP_phi_k2/kpmmass)*kpmlifetime*speedoflight; // [cm]
 		      float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2; // [cm]
 
-		      cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
+		      //cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
 		      		      
 		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
