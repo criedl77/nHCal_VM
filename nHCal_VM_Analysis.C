@@ -96,8 +96,9 @@ void nHCal_VM_Analysis(){
 
   //generatorStatus and simulatorStatus
   TH1D *generatorStatus = new TH1D("generatorStatus","Status of generated particles, all; generatorStatus",101,0,100);
-  TH1D *simulatorStatus = new TH1D("simulatorStatus","Status of simulated particles, all; simulatorStatus",1000001,0,1000000);
-  
+  TH1D *simulatorStatus = new TH1D("simulatorStatus","Status of simulated particles, all; simulatorStatus",1000,500000,200000000);
+  TH1D *kpmfromphi_simulatorStatus = new TH1D("kpmfromphi_simulatorStatus","Status of simulated K^{#pm} from #phi(1020) decay; simulatorStatus",1000,500000,200000000);
+
   // eta (pseudorapidity)
   TH1D *partEta = new TH1D("partEta","Eta of thrown particles; #eta",120,-6.,6.);
   TH1D *recEta = new TH1D("recEta","Eta of reconstructed tracks that have matching thrown particle; #eta",120,-6.,6.);
@@ -125,7 +126,6 @@ void nHCal_VM_Analysis(){
   
   // eta phi(1020)
   TH1D *phiEta = new TH1D("phiEta","Eta of thrown #phi(1020);#eta",120,-6.,6.);
-  TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay;endpoint.z [cm]",150,-4000.,4000.); 
   TH1D *kpmfromphiEta = new TH1D("kpmfromphiEta","generated #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
   TH1D *kpmfromphiRecEta = new TH1D("kpmfromphiRecEta","reconstructed #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
 
@@ -142,11 +142,15 @@ void nHCal_VM_Analysis(){
   TH1D *kpmfromphiRecMom = new TH1D("kpmfromphiRecMom","Momentum of reco K^{#pm} from #phi(1020) decay; p [GeV]",150,0.,40.);
   TH1D *kpmfromphiRecMom_nHCal = new TH1D("kpmfromphiRecMom_nHCal","Momentum of reco K^{#pm} from #phi(1020) decay in nHCal eta acceptance; p [GeV]",150,0.,40.);
 
-  // decay length
+  // endpoint z, decay length, and related studies - for decay kaons from phi(1020)
+  TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay; endpoint.z [cm]",150,-4000.,4000.); 
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [cm]",150,0.,6000.);
   TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [cm]",150,0.,6000.);
-  TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000,4000.);
-  TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [cm]",150,-4000,4000.);
+  TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000.,4000.);
+  TH1D *kpmfromphiRecZdecay_nHCal = new TH1D("kpmfromphiRecZdecay_nHCal","Z of decay of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; z_{decay} [cm]",150,-4000.,4000.);
+  TH2D *kpmfromphiRecZdecay_EndpointZ =new TH2D("kpmfromphiRecZdecay_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its Z of decay; endpoint.z [cm]; z_{decay} [cm]", 150,-4000.,4000., 150,-4000.,4000.);
+  TH2D *kpmfromphiSimstatus_EndpointZ =new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; simulator status; z_{decay} [cm]", 1000,50000000,200000000, 150,-4000.,4000.);
+
 
   // theta (polar angle)
   TH1D *partTheta = new TH1D("partTheta","Theta of thrown charged particles; #theta [rad]",150,0.,3.2);
@@ -356,13 +360,14 @@ void nHCal_VM_Analysis(){
 		      float trueEta_phi_k2 = trueMom_phi_k2.PseudoRapidity();
 		      kpmfromphiEta->Fill(trueEta_phi_k1);
 		      kpmfromphiEta->Fill(trueEta_phi_k2);
-
 		      kpmfromphiMom->Fill(trueMom_phi_k1.Mag());
 		      kpmfromphiMom->Fill(trueMom_phi_k2.Mag());
-		      
-		      // continue here: XXX
+		      kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]]);
+		      kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]+1]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
+		      kpmfromphiSimstatus_EndpointZ->Fill(partSimStat[daughters_index[i_daughters_begin]], partEndpointZ[daughters_index[i_daughters_begin]]);
+		      kpmfromphiSimstatus_EndpointZ->Fill(partSimStat[daughters_index[i_daughters_begin]+1], partEndpointZ[daughters_index[i_daughters_begin]+1]);
 
 		      //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
 		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
@@ -587,8 +592,9 @@ void nHCal_VM_Analysis(){
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k1);
 		      kpmfromphiRecDecayLength->Fill(decaylength_k1);
 		      kpmfromphiRecZdecay->Fill(zdecay_k1);
+		      kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
 		
-		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
+		      // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
@@ -627,8 +633,9 @@ void nHCal_VM_Analysis(){
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k2);
 		      kpmfromphiRecDecayLength->Fill(decaylength_k2);
 		      kpmfromphiRecZdecay->Fill(zdecay_k2);
+		      kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k2);
 
-		      // count the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
+		      // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
 		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
 			{
 			  ndecay_phi_kaonpm_nHCal++;
