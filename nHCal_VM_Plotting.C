@@ -117,9 +117,9 @@ void nHCal_VM_Plotting(){
   //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
   //plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
-  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
-  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
-  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
+  //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
+  //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
+  //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
   plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ);
   
   ///////////////////////////////////////////////////////////
@@ -653,11 +653,11 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   gStyle->SetOptStat(0); //no stats box
   
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiEndpointZ->SetLineColor(kBlue);
+  kpmfromphiEndpointZ->Draw();  
   kpmfromphiRecZdecay->SetTitle(strang);
   kpmfromphiRecZdecay->SetLineColor(kBlack);
-  kpmfromphiRecZdecay->Draw();
-  kpmfromphiEndpointZ->SetLineColor(kBlue);
-  kpmfromphiEndpointZ->Draw("same");  
+  kpmfromphiRecZdecay->Draw("same");
   canvas->Draw();
 
   auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
@@ -670,8 +670,8 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   leg->Draw();
 
   // add vertical lines for nHCal z-min and z-max:
-  Int_t binmax = kpmfromphiRecZdecay->GetMaximumBin();
-  Double_t y_max = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax);
+  Int_t binmax = kpmfromphiEndpointZ->GetMaximumBin();
+  Double_t y_max = 0.45*kpmfromphiEndpointZ->GetBinContent(binmax);
   TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
   z_min_nhcal_line->SetLineColor(kBlack);
   z_min_nhcal_line->SetLineWidth(2);
