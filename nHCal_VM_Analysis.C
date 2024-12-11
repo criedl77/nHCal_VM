@@ -144,7 +144,7 @@ void nHCal_VM_Analysis(){
 
   // endpoint z, decay length, and related studies - for decay kaons from phi(1020)
   TH1D *kpmfromphiEndpointZ = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay; endpoint.z [cm]",150,-4000.,4000.);
-  TH1D *kpmfromphiEndpointZ_nHCal = new TH1D("kpmfromphiEndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay in the nHCal acceptance; endpoint.z [cm]",150,-4000.,4000.);
+  TH1D *kpmfromphiEndpointZ_nHCal = new TH1D("kpmfromphiEndpointZ_nHCal","generated endpoint.z of K^{#pm} from #phi(1020) decay in the nHCal acceptance; endpoint.z [cm]",150,-4000.,4000.);
   TH1D *kpmfromphiRecDecayLength = new TH1D("kpmfromphiRecDecayLength","Decay length of reco K^{#pm} from #phi(1020) decay; L [cm]",150,0.,6000.);
   TH1D *kpmfromphiRecDecayLength_nHCal = new TH1D("kpmfromphiRecDecayLength_nHCal","Decay length of reco K^{#pm} from #phi(1020) decay in nHCal #eta acc; L [cm]",150,0.,6000.);
   TH1D *kpmfromphiRecZdecay = new TH1D("kpmfromphiRecZdecay","Z of decay of reco K^{#pm} from #phi(1020) decay; z_{decay} [cm]",150,-4000.,4000.);
