@@ -11,7 +11,7 @@ void plot_Eta_decay_jpsi_ee(TString strang, TH1F *jpsiEta, TH1F *epmfromjpsiRecE
 void plot_kpmfromphi_momentum(TString strang, TH1F *kpmfromphiRecMom, TH1F *kpmfromphiRecMom_nHCal);
 void plot_kpmfromphi_decaylength(TString strang, TH1F *kpmfromphiRecDecayLength, TH1F *kpmfromphiRecDecayLength_nHCal);
 void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiRecZdecay_nHCal);
-void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ);
+void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ, TH1F *kpmfromphiRecZdecay_nHCal, TH1F *kpmfromphiEndpointZ_nHCal);
 void plot_kpmfromphi_zdecay_endpointz_nHCal(TString strang, TH1F *kpmfromphiRecZdecay_nHCal, TH1F *kpmfromphiEndpointZ_nHCal);
 
 void nHCal_VM_Plotting(){
@@ -122,8 +122,8 @@ void nHCal_VM_Plotting(){
   //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
   //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
-  //plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ);
-  plot_kpmfromphi_zdecay_endpointz_nHCal(strang, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
+  plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
+  //plot_kpmfromphi_zdecay_endpointz_nHCal(strang, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
   
   ///////////////////////////////////////////////////////////
   
@@ -648,7 +648,7 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
 
 } // end of plot_kpmfromphi_zdecay()
 
-void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ){
+void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ, TH1F *kpmfromphiRecZdecay_nHCal, TH1F *kpmfromphiEndpointZ_nHCal){
   
   TString name = TString("kpmfromphi_zdecay_endpointz");
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
@@ -656,11 +656,18 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   gStyle->SetOptStat(0); //no stats box
   
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+  kpmfromphiEndpointZ->SetTitle(strang);
   kpmfromphiEndpointZ->SetLineColor(kBlue);
-  kpmfromphiEndpointZ->Draw();  
-  kpmfromphiRecZdecay->SetTitle(strang);
+  kpmfromphiEndpointZ->Draw();
+  kpmfromphiEndpointZ_nHCal->SetLineColor(kRed);
+  kpmfromphiEndpointZ_nHCal->SetLineStyle(2);
+  kpmfromphiEndpointZ_nHCal->Draw("same");
   kpmfromphiRecZdecay->SetLineColor(kBlack);
   kpmfromphiRecZdecay->Draw("same");
+  kpmfromphiRecZdecay_nHCal->SetLineStyle(10);
+  kpmfromphiRecZdecay_nHCal->SetLineColor(6);
+  kpmfromphiRecZdecay_nHCal->Draw("same");
+    
   canvas->Draw();
 
   auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
@@ -669,7 +676,9 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   leg->SetFillStyle(0);
   leg->SetTextSize(0.05);
   leg->AddEntry(kpmfromphiRecZdecay,"z-position of decay","l");
+  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"z-position of decay for kaons in #eta acc","l");
   leg->AddEntry(kpmfromphiEndpointZ,"z endpoint (generator level)","l");
+  leg->AddEntry(kpmfromphiEndpointZ_nHCal,"z endpoint for kaons in #eta acc (generator level)","l");
   leg->Draw();
 
   // add vertical lines for nHCal z-min and z-max:
