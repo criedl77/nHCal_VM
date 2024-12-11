@@ -671,14 +671,14 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   canvas->Draw();
 
   auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg->SetHeader("Kaons from #phi(1020) decay", "C"); // option "C" allows to center the header
+  leg->SetHeader("Kaons from#phi(1020) decay", "C"); // option "C" allows to center the header
   leg->SetBorderSize(0);
   leg->SetFillStyle(0);
-  leg->SetTextSize(0.05);
+  leg->SetTextSize(0.04);
   leg->AddEntry(kpmfromphiRecZdecay,"z-position of decay","l");
-  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"z-position of decay for kaons in #eta acc","l");
-  leg->AddEntry(kpmfromphiEndpointZ,"z endpoint (generator level)","l");
-  leg->AddEntry(kpmfromphiEndpointZ_nHCal,"z endpoint for kaons in #eta acc (generator level)","l");
+  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"z-position of decay kaons in#eta acc","l");
+  leg->AddEntry(kpmfromphiEndpointZ,"z-endpoint (gen level)","l");
+  leg->AddEntry(kpmfromphiEndpointZ_nHCal,"z-endpoint kaons in#eta acc (gen level)","l");
   leg->Draw();
 
   // add vertical lines for nHCal z-min and z-max:
