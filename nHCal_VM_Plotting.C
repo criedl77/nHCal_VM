@@ -49,7 +49,9 @@ void nHCal_VM_Plotting(){
   //TString strang = "podio_output_100events";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files";   
 
-  TString strang = "Sartre_Au_phi_10runs";
+  //TString strang = "Sartre_Au_phi_10runs";
+
+  TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
 
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
@@ -111,18 +113,18 @@ void nHCal_VM_Plotting(){
   ///////////////////////////////////////////////////////////
   // Plot:
   
-  //plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
-  //plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
-  //plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
+  plot_trueEta_species(strang, electronEta, muonEta, protonEta, pionEta, kaonEta, rho0Eta, jpsiEta, phiEta);
+  plot_recEta_species(strang, electronRecEta, muonRecEta, protonRecEta, pionRecEta, kaonRecEta);
+  plot_genVSrecEta_species(strang, electronEta, electronRecEta, muonEta, muonRecEta, pionEta, pionRecEta, protonEta, protonRecEta, kaonEta, kaonRecEta);
   
   //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
   //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
-  //plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
+  plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
   //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
   //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
   //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
-  plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
+  //plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
   //plot_kpmfromphi_zdecay_endpointz_nHCal(strang, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
   
   ///////////////////////////////////////////////////////////
@@ -671,14 +673,14 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   canvas->Draw();
 
   auto leg = new TLegend(0.25,0.6,0.75,0.88); //x1,y1,x2,y2,header  
-  leg->SetHeader("Kaons from#phi(1020) decay", "C"); // option "C" allows to center the header
+  leg->SetHeader("Kaons from #phi(1020) decay", "C"); // option "C" allows to center the header
   leg->SetBorderSize(0);
   leg->SetFillStyle(0);
   leg->SetTextSize(0.04);
   leg->AddEntry(kpmfromphiRecZdecay,"z-position of decay","l");
-  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"z-position of decay kaons in#eta acc","l");
+  leg->AddEntry(kpmfromphiRecZdecay_nHCal,"z-position of decay kaons in #eta acc","l");
   leg->AddEntry(kpmfromphiEndpointZ,"z-endpoint (gen level)","l");
-  leg->AddEntry(kpmfromphiEndpointZ_nHCal,"z-endpoint kaons in#eta acc (gen level)","l");
+  leg->AddEntry(kpmfromphiEndpointZ_nHCal,"z-endpoint kaons in #eta acc (gen level)","l");
   leg->Draw();
 
   // add vertical lines for nHCal z-min and z-max:
