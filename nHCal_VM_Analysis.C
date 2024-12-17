@@ -22,16 +22,17 @@ void nHCal_VM_Analysis(){
   //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
   //TString strang = "EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
   //TString strang = "sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
+  TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
-  TString strang = "Sartre_Au_phi_10runs"; // local runlist
-  TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
+  //TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  //TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
   ///////////
   // streaming runlist (default): 
-  //TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
+  TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
   ///////////
   
   TString outfile = TString("out.") + strang + TString("-") + flavor + TString(".root");
