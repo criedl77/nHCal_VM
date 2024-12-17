@@ -22,7 +22,8 @@ void nHCal_VM_Analysis(){
   //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
   //TString strang = "EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
   //TString strang = "sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
-  TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
+  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
+  TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
