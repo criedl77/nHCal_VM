@@ -34,6 +34,7 @@ void nHCal_VM_Plotting(){
   //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic";
   //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic";
+  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
   //TString strang = "pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic";
   //TString strang = "pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic";      
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic";
@@ -54,7 +55,7 @@ void nHCal_VM_Plotting(){
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x100";
-  TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
+  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
   
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
