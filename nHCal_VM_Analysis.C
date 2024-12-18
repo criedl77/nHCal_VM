@@ -14,7 +14,7 @@ void nHCal_VM_Analysis(){
   //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
   //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
+  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
   //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
@@ -25,7 +25,7 @@ void nHCal_VM_Analysis(){
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x100";
-  TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
+  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
