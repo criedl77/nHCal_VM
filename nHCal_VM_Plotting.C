@@ -123,13 +123,13 @@ void nHCal_VM_Plotting(){
   
   //plot_Eta_decay_rho0_pipi( strang, rho0Eta, pipmfromrho0RecEta);
   //plot_Eta_decay_phi_KK(strang, phiEta, kpmfromphiRecEta);
-  plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
+  //plot_Eta_decay_jpsi_ee(strang, jpsiEta, epmfromjpsiRecEta);
   
-  //plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
-  //plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
-  //plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
-  //plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
-  //plot_kpmfromphi_zdecay_endpointz_nHCal(strang, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
+  plot_kpmfromphi_momentum(strang, kpmfromphiRecMom, kpmfromphiRecMom_nHCal);
+  plot_kpmfromphi_decaylength(strang, kpmfromphiRecDecayLength, kpmfromphiRecDecayLength_nHCal);
+  plot_kpmfromphi_zdecay(strang, kpmfromphiRecZdecay, kpmfromphiRecZdecay_nHCal);
+  plot_kpmfromphi_zdecay_endpointz(strang, kpmfromphiRecZdecay, kpmfromphiEndpointZ, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
+  plot_kpmfromphi_zdecay_endpointz_nHCal(strang, kpmfromphiRecZdecay_nHCal, kpmfromphiEndpointZ_nHCal);
   
   ///////////////////////////////////////////////////////////
   
