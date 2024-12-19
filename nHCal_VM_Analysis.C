@@ -15,7 +15,7 @@ void nHCal_VM_Analysis(){
   //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
   //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
   //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-  TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
+  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
   //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
   //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
@@ -29,13 +29,13 @@ void nHCal_VM_Analysis(){
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
-  //TString strang = "Sartre_Au_phi_10runs"; // local runlist
-  //TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
+  TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
   ///////////
   // streaming runlist (default): 
-  TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
+  //TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
   ///////////
   
   TString outfile = TString("out.") + strang + TString("-") + flavor + TString(".root");
@@ -267,7 +267,7 @@ void nHCal_VM_Analysis(){
 	//Consider only selected generated particles:
 	if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
 	{
-	  //cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
+	  cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
 
 	  // Bookkeeping of decay particles:
 	  
