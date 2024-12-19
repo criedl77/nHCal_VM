@@ -518,6 +518,7 @@ void nHCal_VM_Analysis(){
 		  float CPartEta = recMom.PseudoRapidity();
 		  float CPartPhi = recMom.Phi();
 		  float CPartTheta = recMom.Theta();
+		  float CPartEnergy = trackEnergy[recoAssoc[j]];
 
 		  recP->Fill(CPartMom);
 		  recEta->Fill(CPartEta);
@@ -534,6 +535,10 @@ void nHCal_VM_Analysis(){
 		  if( pdg == 11){
 		    nrec_electrons++;
 		    electronRecEta->Fill(CPartEta);
+		    if( partGenStat[i]==1 )
+		      {
+			cout << "*** Event " << ievgen << ", scattered electron energy " << trackEnergy[recoAssoc[j]] << " \n";   
+		      }
 		  }// electrons	       
 		  else if( pdg == 13){
 		    nrec_muons++;
