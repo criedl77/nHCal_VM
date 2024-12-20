@@ -535,10 +535,11 @@ void nHCal_VM_Analysis(){
 		  if( pdg == 11){
 		    nrec_electrons++;
 		    electronRecEta->Fill(CPartEta);
-		    if( partGenStat[i]==1 )
-		      {
-			cout << "*** Event " << ievgen << ", scattered electron energy " << trackEnergy[recoAssoc[j]] << " \n";   
-		      }
+		    // XXX Here, navigate to scattered reco electron - this has to be developed further. Also check out if the branch ReconstrcutedElectrons contains useful info. How does ePIC get the scattered beam electron, what is the technical recipe? 
+		    //if( partGenStat[i]==1 ) // also want the parent be the incoming beam electron. This is straight forward in Sartre, but looks more tricky in pythia. 
+			// {
+			//cout << "*** Event " << ievgen << ", scattered electron energy " << trackEnergy[recoAssoc[j]] << " \n";   
+		    //}
 		  }// electrons	       
 		  else if( pdg == 13){
 		    nrec_muons++;
