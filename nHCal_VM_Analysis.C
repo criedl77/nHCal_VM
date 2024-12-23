@@ -271,8 +271,6 @@ void nHCal_VM_Analysis(){
 	is_phidecay_kk = 0;
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
-	
-
 
 	//Consider only selected generated particles:
 	//if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
@@ -283,7 +281,7 @@ void nHCal_VM_Analysis(){
 	  // Bookkeeping of decay particles:
 	  
 	  // charged-kaon decays (do NOT request partGenStat[i] == 2 - they may be tagged as "stable", yet have daughters...):
-	  if( partPdg[i] == 321 && i_daughters > 0 ) 
+	if( ( partPdg[i] == 321 || partPdg[i] == -321 ) && i_daughters > 0 ) 
 	    {
 	      cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
 
