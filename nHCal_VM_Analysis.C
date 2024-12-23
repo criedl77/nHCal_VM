@@ -213,6 +213,8 @@ void nHCal_VM_Analysis(){
   // tag decays on generated particle level ( 0 or 1 for a given generated particle ):
   int is_kpmdecay_mupm = 0;
   int is_kpmdecay_pipm = 0;
+  int is_kpmdecay_em = 0;
+  int is_kpmdecay_baryon = 0;
   int is_rho0decay_pp = 0; 
   int is_rho0decay_mumu = 0;
   int is_rho0decay_ee = 0;
@@ -274,6 +276,8 @@ void nHCal_VM_Analysis(){
 	// reset particle decays for each new generated particle:
 	is_kpmdecay_mupm = 0;
 	is_kpmdecay_pipm = 0;
+	is_kpmdecay_em = 0;
+	is_kpmdecay_baryon = 0;
 	is_rho0decay_pp = 0;
 	is_rho0decay_mumu = 0;
 	is_rho0decay_ee = 0;
@@ -320,12 +324,17 @@ void nHCal_VM_Analysis(){
 		  if( partPdg[daughters_index[i_daughters_begin]] == 2112 || partPdg[daughters_index[i_daughters_begin]] == 2212 )
 		    {
 		      ndecay_kpm_baryon++;
+		      is_kpmdecay_baryon = 1;
 		    } // end "first daughter is a baryon"
 		  else if( partPdg[daughters_index[i_daughters_begin]] == 11 || partPdg[daughters_index[i_daughters_begin]] == -11 || partPdg[daughters_index[i_daughters_begin]] == 22 )
 		    {
 		      ndecay_kpm_em++;
+		      is_kpmdecay_em = 1;
 		    }// end "first daughter is electron or photon"
 		}// end of non-zero number of daughters
+
+	      cout << "Event " << ievgen << ", generated kaon with SimStat: " <<  partSimStat[i] << "ismupm: " << is_kpmdecay_mupm << ", ispipm: " << is_kpmdecay_pipm << ", isem: " << is_kpmdecay_em << ", isbaryon: " << is_kpmdecay_baryon << "  \n";
+	      
 	    } // end of charged-kaon decays
 	// *** rho decays: 
 	else if( partPdg[i] == 113 )
@@ -443,7 +452,7 @@ void nHCal_VM_Analysis(){
 		    //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
 		    //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
 		    //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
-		    cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
+		    //cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
 		    
 		    
 		  } // end of phi to k+k- decays
