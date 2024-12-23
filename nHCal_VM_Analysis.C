@@ -125,6 +125,8 @@ void nHCal_VM_Analysis(){
   TH1D *kaonEta = new TH1D("kaonEta","Eta of thrown K;#eta",120,-6.,6.);
   TH1D *kaonRecEta = new TH1D("kaonRecEta","Eta of reco K;#eta",120,-6.,6.);
   TH1D *h_idaughters_kaon = new TH1D("h_idaughters_kaon","Number of daughters, K^{#pm}; Number of daughters for K^{#pm}",11,0,10);
+  TH1D *EndpointZ_kpm_mupm = new TH1D("EndpointZ_kpm_mupm","generated endpoint.z of K^{#pm} decaying to #mu^{#pm}; endpoint.z [cm]",150,-4000.,4000.);
+  TH1D *EndpointZ_kpm_pipm = new TH1D("EndpointZ_kpm_pipm","generated endpoint.z of K^{#pm} decaying to #pi^{#pm}; endpoint.z [cm]",150,-4000.,4000.);
   
   TH1D *rho0Eta = new TH1D("rho0Eta","Eta of thrown #rho^{0};#eta",120,-6.,6.);
   TH1D *pipmfromrho0Eta = new TH1D("pipmfromrho0Eta","generated #eta of pi^{#pm} from rho^{0} decay;#eta",120,-6.,6.);
@@ -282,10 +284,10 @@ void nHCal_VM_Analysis(){
 	//Consider only selected generated particles:
 	//if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
 	//{
-	if(ievgen==11741)
-	  {
-	    cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
-	  }	  
+	//if(ievgen==11741)
+	//{
+	//  cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
+	//}	  
 
 	  // Bookkeeping of decay particles:
 	  
@@ -305,12 +307,14 @@ void nHCal_VM_Analysis(){
 		  if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 13 || partPdg[daughters_index[i_daughters_begin]] == -13 ))
 		    {
 		      ndecay_kpm_mupm++;
-		      is_kpmdecay_mupm = 1;  
+		      is_kpmdecay_mupm = 1;
+		      EndpointZ_kpm_mupm->Fill(partEndpointZ[i])
 		    } // end of K+-->mu+- decay
 		  else if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 211 || partPdg[daughters_index[i_daughters_begin]] == -211 ))
 		    {
 		      ndecay_kpm_pipm++;
 		      is_kpmdecay_pipm = 1;
+		      EndpointZ_kpm_pipm->Fill(partEndpointZ[i])
 		    }// end of K+-->pi+- decay
 		  // count the appreances that the first daughter is a baryon (whatever that means...), an electron or a photon:
 		  if( partPdg[daughters_index[i_daughters_begin]] == 2112 || partPdg[daughters_index[i_daughters_begin]] == 2212 )
