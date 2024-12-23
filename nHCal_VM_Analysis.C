@@ -282,16 +282,17 @@ void nHCal_VM_Analysis(){
 
 	  // Bookkeeping of decay particles:
 	  
-	  // charged-kaon decays:
-	  if( partPdg[i] == 321 && partGenStat[i] == 2 ) // only kpm that decay
+	  // charged-kaon decays (do NOT request partGenStat[i] == 2 - they may be tagged as "stable", yet have daughters...):
+	  if( partPdg[i] == 321 && i_daughters > 0 ) 
 	    {
-	      //cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
+	      cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
 
-	      // count the kpm to mupm decays:
-	      ndecay_kpm_mupm++;
-	      // tag it:
-	      is_kpmdecay_mupm = 1;  
-	      
+	      // count the kpm to mupm decays - for now require exactly 1 daughter (which may mean some decays are escaping):
+	      if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 13 || partPdg[daughters_index[i_daughters_begin]] == -13 ))
+		{
+		  ndecay_kpm_mupm++;
+		  is_kpmdecay_mupm = 1;  
+		} // end of K+-->mu+- decay
 	    } // end of charged-kaon decays
 	  // rho decays: 
 	  else if( partPdg[i] == 113 )
@@ -767,7 +768,7 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated muons +-: " << ngen_muons << " \n";
   cout << "Number of generated pions +-: " << ngen_pions << " \n";
   cout << "Number of generated pi0: " << ngen_pi0 << ", of which decay into 2 gamma: " << ndecay_pi0_gg <<  " \n";
-  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " << ndecay_kpm_mupm << " \n";
+  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " <<  << " \n";
   cout << "Number of generated rho0: " << ngen_rho0 << ", of which decay into pi+ pi-: " << ndecay_rho0_pp << ", into mu+ mu-: " << ndecay_rho0_mumu << ", into e+ e-: " << ndecay_rho0_ee << " \n";
   cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
   cout << "Number of generated rho+: " << ngen_rhop << " \n";
