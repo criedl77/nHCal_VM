@@ -351,7 +351,7 @@ void nHCal_VM_Analysis(){
 	      //cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
 	      if( i_daughters != 2 )
 		{
-		  /cout << "Event " << ievgen << " with gen phi(1020), i_daughters= " << i_daughters << " \n";
+		  cout << "Event " << ievgen << " with gen phi(1020), i_daughters= " << i_daughters << " \n";
 		}
 	      
 	      // count the 2-body phi(1020) decays:
