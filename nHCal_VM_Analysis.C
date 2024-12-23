@@ -192,7 +192,7 @@ void nHCal_VM_Analysis(){
   int nrec_muons = 0;
   int nrec_pions = 0;
   int nrec_kaons = 0;
-  // count number of decays:
+  // count number of decays (generated level):
   int ndecay_pi0_gg = 0;
   int ndecay_kpm_mupm = 0;
   int ndecay_rho0_pp = 0;
@@ -201,12 +201,6 @@ void nHCal_VM_Analysis(){
   int ndecay_phi_kk = 0;
   int ndecay_jpsi_mumu = 0;
   int ndecay_jpsi_ee = 0;
-  // count number of decay particles (reco level) in nHCal eta acceptance:
-  int ndecay_kpm_mupm_nHCal = 0;
-  int ndecay_rho0_pionpm_nHCal = 0;
-  int ndecay_phi_kaonpm_nHCal = 0;
-  int ndecay_jpsi_epm_nHCal = 0;
-  int ndecay_jpsi_muonpm_nHCal = 0;
   // tag decays on generated particle level ( 0 or 1 for a given generated particle ):
   int is_kpmdecay_mupm = 0; 
   int is_rho0decay_pp = 0; 
@@ -215,6 +209,19 @@ void nHCal_VM_Analysis(){
   int is_phidecay_kk = 0;
   int is_jpsidecay_mumu = 0;
   int is_jpsidecay_ee = 0;
+  // count number of decay particles (reco level):
+  int ndecay_kpm_mupm_rec = 0; // not yet used
+  int ndecay_rho0_pionpm_rec = 0; // not yet used
+  int ndecay_phi_kaonpm_rec = 0; // not yet used
+  int ndecay_jpsi_epm_rec = 0; // not yet used
+  int ndecay_jpsi_muonpm_rec = 0; // not yet used
+  // count number of decay particles (reco level) in nHCal eta acceptance:
+  int ndecay_kpm_mupm_nHCal = 0;
+  int ndecay_rho0_pionpm_nHCal = 0;
+  int ndecay_phi_kaonpm_nHCal = 0;
+  int ndecay_jpsi_epm_nHCal = 0;
+  int ndecay_jpsi_muonpm_nHCal = 0;
+  
 
   cout << "+ Ready to run over events... \n"; 
   
@@ -608,14 +615,16 @@ void nHCal_VM_Analysis(){
 		      float decaylength_k1 = 100*(recP_phi_k1/kpmmass)*kpmlifetime*speedoflight; // [cm]
 		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location [cm] of kaon decay - its sign is handled by  the sign of the cosine
 		      //cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
-		      
+
+		      // count and fill the decay kaons (reco level), here kaon1:
+		      ndecay_phi_kaonpm_rec++;
 		      kpmfromphiRecMom->Fill(recP_phi_k1);
 		      kpmfromphiRecEta->Fill(recEta_phi_k1);
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k1);
 		      kpmfromphiRecDecayLength->Fill(decaylength_k1);
 		      kpmfromphiRecZdecay->Fill(zdecay_k1);
 		      kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
-		
+
 		      // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
 		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
 			{
@@ -649,7 +658,9 @@ void nHCal_VM_Analysis(){
 		      float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2; // [cm]
 
 		      //cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
-		      		      
+
+		      // count and fill the decay kaons (reco level), here kaon2:
+		      ndecay_phi_kaonpm_rec++;
 		      kpmfromphiRecMom->Fill(recP_phi_k2);
 		      kpmfromphiRecEta->Fill(recEta_phi_k2);
 		      kpmfromphiRecTheta->Fill(recTheta_phi_k2);
@@ -753,7 +764,8 @@ void nHCal_VM_Analysis(){
   cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
   cout << "Number of generated rho+: " << ngen_rhop << " \n";
   cout << "Number of generated phi: " << ngen_phi <<", of which decay into K+ K-: " << ndecay_phi_kk << " \n";
-  cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_phi_kaonpm_nHCal << " \n";
+  cout << "         Of these " << 2*ndecay_phi_kk << " decay K+ K-, " << ndecay_phi_kaonpm_rec << " are reconstructed by ePIC, and \n ";
+  cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction (of generated decay K+ K-) " << fraction_phi_kaonpm_nHCal << " \n";
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
   cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
