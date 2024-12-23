@@ -203,6 +203,8 @@ void nHCal_VM_Analysis(){
   int ndecay_phi_kk = 0;
   int ndecay_jpsi_mumu = 0;
   int ndecay_jpsi_ee = 0;
+  // count number of particles with non-zero daughters (gen level):
+  int nonzero_daughters_kpm = 0;
   // tag decays on generated particle level ( 0 or 1 for a given generated particle ):
   int is_kpmdecay_mupm = 0; 
   int is_rho0decay_pp = 0; 
@@ -283,6 +285,7 @@ void nHCal_VM_Analysis(){
 	  // charged-kaon decays (do NOT request partGenStat[i] == 2 - they may be tagged as "stable", yet have daughters...):
 	if( ( partPdg[i] == 321 || partPdg[i] == -321 ) && i_daughters > 0 ) 
 	    {
+	      nonzero_daughters_kpm++;
 	      cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
 
 	      // count the kpm to mupm decays - for now require exactly 1 daughter (which may mean some decays are escaping):
@@ -766,7 +769,7 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated muons +-: " << ngen_muons << " \n";
   cout << "Number of generated pions +-: " << ngen_pions << " \n";
   cout << "Number of generated pi0: " << ngen_pi0 << ", of which decay into 2 gamma: " << ndecay_pi0_gg <<  " \n";
-  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " << ndecay_kpm_mupm << " \n";
+  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which have non-zero daughters:" << nonzero_daughters_kpm << ", of which decay into mu+-: " << ndecay_kpm_mupm << " \n";
   cout << "Number of generated rho0: " << ngen_rho0 << ", of which decay into pi+ pi-: " << ndecay_rho0_pp << ", into mu+ mu-: " << ndecay_rho0_mumu << ", into e+ e-: " << ndecay_rho0_ee << " \n";
   cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
   cout << "Number of generated rho+: " << ngen_rhop << " \n";
