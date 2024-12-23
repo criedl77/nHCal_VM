@@ -212,7 +212,7 @@ void nHCal_VM_Analysis(){
   // count number of decay particles (reco level):
   int ndecay_kpm_mupm_rec = 0; // not yet used
   int ndecay_rho0_pionpm_rec = 0; // not yet used
-  int ndecay_phi_kaonpm_rec = 0; // not yet used
+  int ndecay_phi_kaonpm_rec = 0; 
   int ndecay_jpsi_epm_rec = 0; // not yet used
   int ndecay_jpsi_muonpm_rec = 0; // not yet used
   // count number of decay particles (reco level) in nHCal eta acceptance:
@@ -222,7 +222,6 @@ void nHCal_VM_Analysis(){
   int ndecay_jpsi_epm_nHCal = 0;
   int ndecay_jpsi_muonpm_nHCal = 0;
   
-
   cout << "+ Ready to run over events... \n"; 
   
   while(tree_reader.Next()) { // Loop over events
@@ -358,7 +357,7 @@ void nHCal_VM_Analysis(){
 		  cout << "Event " << ievgen << " with gen phi(1020), pdg of daughter1= " << partPdg[daughters_index[i_daughters_begin]] << ", pdg daughter2: " << partPdg[daughters_index[i_daughters_begin]+1] << " \n";
 		}
 	      
-	      // count the 2-body phi(1020) decays (checked Sartre - they all have exactly 2 daughters):
+	      // count the 2-body phi(1020) decays (checked Sartre - they all have exactly 2 daughters, and they ALL decay to kaons, even when all genstatus types are allowed):
 	      if( i_daughters == 2 )
 		{
 		  if( (partPdg[daughters_index[i_daughters_begin]] == 321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -321 ) || (partPdg[daughters_index[i_daughters_begin]] == -321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 321) )
@@ -462,15 +461,17 @@ void nHCal_VM_Analysis(){
 	  else if( pdg == 13){
 	    ngen_muons++;
 	    muonEta->Fill(trueEta);
+	    cout << "*** Event " << ievgen << ", generated muon \n";    
 	  }// muons                                                                                                         
 	  else if( pdg == 211){
 	    ngen_pions++;
 	    pionEta->Fill(trueEta);
+	    cout << "*** Event " << ievgen << ", generated pi+- \n";    
 	  }//pions_pm
 	  else if( pdg == 111){
 	    ngen_pi0++;
 	    pi0Eta->Fill(trueEta);
-	  }//pions_pm  
+	  }//pi0  
 	  else if( pdg == 321 ){
 	    ngen_kaons++;
 	    kaonEta->Fill(trueEta);
@@ -648,12 +649,7 @@ void nHCal_VM_Analysis(){
 		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
 		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
 		      //cout << " K1 rec momentum: "  << recMom_phi_k1.Mag() << ", K1 decay length: " << decaylength_k1 << " \n";
-		      
-		      if( abs(recEta_phi_k1) < 0.00001 )
-			{
-			  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K1 eta-rec: " << recEta_phi_k1 << " \n";
-			}
-		      
+		      		      
 		    }// end of phi(1020) decay K1
 		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay k2 of the gen phi
 		    {
@@ -691,11 +687,6 @@ void nHCal_VM_Analysis(){
 		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
 		      //cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << decaylength_k2 << " \n";
-
-		      if( abs(recEta_phi_k2) < 0.00001 )
-			{
-			  cout << "***** Event " << ievgen << " in run: " << file << ", found association index: " << simuAssoc[j] << ", pdg: " << pdg << ", is_phidecay_kk,  K2 eta-rec: " << recEta_phi_k2 << " \n";
-			}
 		      
 		    }// end of phi(1020) decay K2
        		} // end of phi(1020) decay into KK
