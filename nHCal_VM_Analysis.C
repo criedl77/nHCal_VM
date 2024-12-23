@@ -273,7 +273,10 @@ void nHCal_VM_Analysis(){
 	//Consider only selected generated particles:
 	//if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
 	//{
-	//cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
+	if ( ievgen == 11884 || ievgen == 12040 )
+	  {
+	    cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
+	  }
 
 	  // Bookkeeping of decay particles:
 	  
@@ -461,12 +464,12 @@ void nHCal_VM_Analysis(){
 	  else if( pdg == 13){
 	    ngen_muons++;
 	    muonEta->Fill(trueEta);
-	    cout << "*** Event " << ievgen << ", generated muon \n";    
+	    //cout << "*** Event " << ievgen << ", generated muon \n";    
 	  }// muons                                                                                                         
 	  else if( pdg == 211){
 	    ngen_pions++;
 	    pionEta->Fill(trueEta);
-	    cout << "*** Event " << ievgen << ", generated pi+- \n";    
+	    //cout << "*** Event " << ievgen << ", generated pi+- \n";    
 	  }//pions_pm
 	  else if( pdg == 111){
 	    ngen_pi0++;
