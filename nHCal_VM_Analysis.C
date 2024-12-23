@@ -768,7 +768,7 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated muons +-: " << ngen_muons << " \n";
   cout << "Number of generated pions +-: " << ngen_pions << " \n";
   cout << "Number of generated pi0: " << ngen_pi0 << ", of which decay into 2 gamma: " << ndecay_pi0_gg <<  " \n";
-  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " <<  << " \n";
+  cout << "Number of generated kaons +-: " << ngen_kaons << ", of which decay into mu+-: " << ndecay_kpm_mupm << " \n";
   cout << "Number of generated rho0: " << ngen_rho0 << ", of which decay into pi+ pi-: " << ndecay_rho0_pp << ", into mu+ mu-: " << ndecay_rho0_mumu << ", into e+ e-: " << ndecay_rho0_ee << " \n";
   cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
   cout << "Number of generated rho+: " << ngen_rhop << " \n";
