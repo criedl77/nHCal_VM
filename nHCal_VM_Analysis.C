@@ -98,10 +98,11 @@ void nHCal_VM_Analysis(){
   
   // Define Histograms
 
-  //generatorStatus and simulatorStatus
+  //generatorStatus, simulatorStatus, number of daughters
   TH1D *generatorStatus = new TH1D("generatorStatus","Status of generated particles, all; generatorStatus",101,0,100);
   TH1D *simulatorStatus = new TH1D("simulatorStatus","Status of simulated particles, all; simulatorStatus",1000,500000,200000000);
   TH1D *kpmfromphi_simulatorStatus = new TH1D("kpmfromphi_simulatorStatus","Status of simulated K^{#pm} from #phi(1020) decay; simulatorStatus",1000,500000,200000000);
+  TH1D *h_idaughters = new TH1D("h_idaughters","Number of daughters, all; Number of daughters",11,0,10);
 
   // eta (pseudorapidity)
   TH1D *partEta = new TH1D("partEta","Eta of thrown particles; #eta",120,-6.,6.);
@@ -123,6 +124,7 @@ void nHCal_VM_Analysis(){
   
   TH1D *kaonEta = new TH1D("kaonEta","Eta of thrown K;#eta",120,-6.,6.);
   TH1D *kaonRecEta = new TH1D("kaonRecEta","Eta of reco K;#eta",120,-6.,6.);
+  TH1D *h_idaughters_kaon = new TH1D("h_idaughters_kaon","Number of daughters, K^{#pm}; Number of daughters for K^{#pm}",11,0,10);
   
   TH1D *rho0Eta = new TH1D("rho0Eta","Eta of thrown #rho^{0};#eta",120,-6.,6.);
   TH1D *pipmfromrho0Eta = new TH1D("pipmfromrho0Eta","generated #eta of pi^{#pm} from rho^{0} decay;#eta",120,-6.,6.);
@@ -244,13 +246,22 @@ void nHCal_VM_Analysis(){
 	
 	int pdg = TMath::Abs(partPdg[i]);
 	TVector3 trueMom(partMomX[i],partMomY[i],partMomZ[i]);
-	
 	float trueEta = trueMom.PseudoRapidity();
 	float truePhi = trueMom.Phi();
 	float trueTheta = trueMom.Theta();
 
+	// according to Wouter, "end" is exclusive for daughters - so no "+1" and stop 1 before "end" (can't do it for parents, otherwise we get negative indices)
+	int i_parents_begin = parents_begin[i];
+        int i_parents_end = parents_end[i];
+	int i_parents = parents_end[i] - parents_begin[i];
+
+	int i_daughters_begin = daughters_begin[i]; 
+        int i_daughters_end = daughters_end[i] - 1;	
+	int i_daughters = daughters_end[i] - daughters_begin[i];
+
 	generatorStatus->Fill(partGenStat[i]);
 	simulatorStatus->Fill(partSimStat[i]);
+	h_idaughters->Fill(i_daughters);
 
 	// reset particle decays for each new generated particle:
 	is_kpmdecay_mupm = 0;
@@ -261,22 +272,13 @@ void nHCal_VM_Analysis(){
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
 	
-	// according to Wouter, "end" is exclusive for daughters - so no "+1" and stop 1 before "end" (can't do it for parents, otherwise we get negative indices)
-	int i_parents_begin = parents_begin[i];
-        int i_parents_end = parents_end[i];
-	int i_parents = parents_end[i] - parents_begin[i];
 
-	int i_daughters_begin = daughters_begin[i]; 
-        int i_daughters_end = daughters_end[i] - 1;	
-	int i_daughters = daughters_end[i] - daughters_begin[i];
 
 	//Consider only selected generated particles:
 	//if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
 	//{
-	if ( ievgen == 11884 || ievgen == 12040 )
-	  {
-	    cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
-	  }
+	//cout << "Ev#: " << ievgen << ", P-index: " << i <<", PDG: " << partPdg[i] << ", GenStatus:" << partGenStat[i] << ", z-momentum: " << partMomZ[i] << ", y-momentum: " << partMomY[i] << ", x-momentum: " << partMomX[i] << ", i_parents: "<< i_parents<<", i_daughters: " << i_daughters << ", pb: " << parents_index[i_parents_begin] << ", pe: " << parents_index[i_parents_end] <<  ", db: " << daughters_index[i_daughters_begin] << ", de: " << daughters_index[i_daughters_end] << " \n";
+	  
 
 	  // Bookkeeping of decay particles:
 	  
@@ -478,6 +480,7 @@ void nHCal_VM_Analysis(){
 	  else if( pdg == 321 ){
 	    ngen_kaons++;
 	    kaonEta->Fill(trueEta);
+	    h_idaughters_kaon->Fill(i_daughters);
 	  } // kaons_pm                                                                                                     
 	  else if( pdg == 113){
 	    ngen_rho0++;
