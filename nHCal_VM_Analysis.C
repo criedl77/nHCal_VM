@@ -308,13 +308,13 @@ void nHCal_VM_Analysis(){
 		    {
 		      ndecay_kpm_mupm++;
 		      is_kpmdecay_mupm = 1;
-		      EndpointZ_kpm_mupm->Fill(partEndpointZ[i])
+		      EndpointZ_kpm_mupm->Fill(partEndpointZ[i]);
 		    } // end of K+-->mu+- decay
 		  else if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 211 || partPdg[daughters_index[i_daughters_begin]] == -211 ))
 		    {
 		      ndecay_kpm_pipm++;
 		      is_kpmdecay_pipm = 1;
-		      EndpointZ_kpm_pipm->Fill(partEndpointZ[i])
+		      EndpointZ_kpm_pipm->Fill(partEndpointZ[i]);
 		    }// end of K+-->pi+- decay
 		  // count the appreances that the first daughter is a baryon (whatever that means...), an electron or a photon:
 		  if( partPdg[daughters_index[i_daughters_begin]] == 2112 || partPdg[daughters_index[i_daughters_begin]] == 2212 )
