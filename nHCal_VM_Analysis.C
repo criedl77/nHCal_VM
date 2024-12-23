@@ -353,8 +353,12 @@ void nHCal_VM_Analysis(){
 		{
 		  cout << "Event " << ievgen << " with gen phi(1020), i_daughters= " << i_daughters << " \n";
 		}
+	      if( abs(partPdg[daughters_index[i_daughters_begin]] != 321) || abs(partPdg[daughters_index[i_daughters_begin]+1] != 321)  )
+		{
+		  cout << "Event " << ievgen << " with gen phi(1020), pdg of daughter1= " << partPdg[daughters_index[i_daughters_begin]] << ", pdg daughter2: " << partPdg[daughters_index[i_daughters_begin]+1] << " \n";
+		}
 	      
-	      // count the 2-body phi(1020) decays:
+	      // count the 2-body phi(1020) decays (checked Sartre - they all have exactly 2 daughters):
 	      if( i_daughters == 2 )
 		{
 		  if( (partPdg[daughters_index[i_daughters_begin]] == 321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -321 ) || (partPdg[daughters_index[i_daughters_begin]] == -321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 321) )
