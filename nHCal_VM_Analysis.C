@@ -287,490 +287,489 @@ void nHCal_VM_Analysis(){
 
 	  // Bookkeeping of decay particles:
 	  
-	  // charged-kaon decays (do NOT request partGenStat[i] == 2 - they are tagged as "stable", yet may have daughters...):
-	if( ( partPdg[i] == 321 || partPdg[i] == -321 ) && i_daughters > 0 ) 
+	  // *** charged-kaon decays (do NOT request partGenStat[i] == 2 - they are tagged as "stable", yet may have daughters...):
+	if( partPdg[i] == 321 || partPdg[i] == -321 ) 
 	    {
-	      nonzero_daughters_kpm++;
-	      //cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
-
-	      // count the kpm to mupm and pipm decays - for now require exactly 1 daughter (which may mean some decays are escaping):
-	      if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 13 || partPdg[daughters_index[i_daughters_begin]] == -13 ))
+	      if( partGenStat[i] != 1 )
 		{
-		  ndecay_kpm_mupm++;
-		  is_kpmdecay_mupm = 1;  
-		} // end of K+-->mu+- decay
-	      else if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 211 || partPdg[daughters_index[i_daughters_begin]] == -211 ))
+		  cout << "Event " << ievgen << ", generated kaon with GenStatus not 1: " << partGenStat[i] << "  \n";
+		}
+	      if( i_daughters > 0 )
 		{
-		  ndecay_kpm_pipm++;
-		  is_kpmdecay_pipm = 1;
-		}// end of K+-->pi+- decay
-	      // count the appreances that the first daughter is a baryon (whatever that means...), an electron or a photon:
-	      if( partPdg[daughters_index[i_daughters_begin]] == 2112 || partPdg[daughters_index[i_daughters_begin]] == 2212 )
-		{
-		  ndecay_kpm_baryon++;
-		} // end "first daughter is a baryon"
-	      else if( partPdg[daughters_index[i_daughters_begin]] == 11 || partPdg[daughters_index[i_daughters_begin]] == -11 || partPdg[daughters_index[i_daughters_begin]] == 22 )
-		{
-		  ndecay_kpm_em++;
-		}// end "first daughter is electron or photon"
+		  nonzero_daughters_kpm++;
+		  //cout << "Event " << ievgen << " with gen decaying kpm #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", i_daughters:" << i_daughters << "  \n";
+		  
+		  // count the kpm to mupm and pipm decays - for now require exactly 1 daughter (which may mean some decays are escaping):
+		  if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 13 || partPdg[daughters_index[i_daughters_begin]] == -13 ))
+		    {
+		      ndecay_kpm_mupm++;
+		      is_kpmdecay_mupm = 1;  
+		    } // end of K+-->mu+- decay
+		  else if( i_daughters == 1 && ( partPdg[daughters_index[i_daughters_begin]] == 211 || partPdg[daughters_index[i_daughters_begin]] == -211 ))
+		    {
+		      ndecay_kpm_pipm++;
+		      is_kpmdecay_pipm = 1;
+		    }// end of K+-->pi+- decay
+		  // count the appreances that the first daughter is a baryon (whatever that means...), an electron or a photon:
+		  if( partPdg[daughters_index[i_daughters_begin]] == 2112 || partPdg[daughters_index[i_daughters_begin]] == 2212 )
+		    {
+		      ndecay_kpm_baryon++;
+		    } // end "first daughter is a baryon"
+		  else if( partPdg[daughters_index[i_daughters_begin]] == 11 || partPdg[daughters_index[i_daughters_begin]] == -11 || partPdg[daughters_index[i_daughters_begin]] == 22 )
+		    {
+		      ndecay_kpm_em++;
+		    }// end "first daughter is electron or photon"
+		}// end of non-zero number of daughters
 	    } // end of charged-kaon decays
-	  // rho decays: 
-	  else if( partPdg[i] == 113 )
-	    {
-	      //cout << "Event " << ievgen << " with gen rho0 #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
-
-	      // count the 2-body rho0 decays:
-	      if( i_daughters == 2 )
-		{
-		  if( (partPdg[daughters_index[i_daughters_begin]] == 211 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -211 ) || (partPdg[daughters_index[i_daughters_begin]] == -211 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 211) )
-		    {
-		      //cout << "-> Event " << ievgen << " found rho0 decayed into pi+ pi-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
-		      
-		      // count it:
-		      ndecay_rho0_pp++;
-		      // tag it:
-		      is_rho0decay_pp = 1;
-		      
-		      TVector3 trueMom_rho0_pi1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
-		      TVector3 trueMom_rho0_pi2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
-		      TVector3 trueMom_rho0_pi12=trueMom_rho0_pi1 + trueMom_rho0_pi2;
-		      
-		      float trueEta_rho0_pi1 = trueMom_rho0_pi1.PseudoRapidity();
-		      float trueEta_rho0_pi2 = trueMom_rho0_pi2.PseudoRapidity();
-		      pipmfromrho0Eta->Fill(trueEta_rho0_pi1);
-		      pipmfromrho0Eta->Fill(trueEta_rho0_pi2);
-
-		      //	      cout << "--> Event " << ievgen << " rho0 decay to 2pi: generated rho0 eta: " << trueEta << ", pi1: " << trueEta_rho0_pi1 << ", pi2: " << trueEta_rho0_pi2 << "  \n";
-		      //  cout << "            trueMomrho0 X: " << trueMom.X() << ", trueMomrho0 Y: " << trueMom.Y() <<", trueMomrho0 Z: " << trueMom.Z() << "  \n";
-		      // cout << "            trueMom_rho0_pi12 X: " << trueMom_rho0_pi12.X() << ", trueMom_rho0_pi12 Y: " << trueMompi12.Y() <<", trueMom_rho0_pi12 Z: " << trueMom_rho0_pi12.Z() << "  \n";
-		    
-		    } // end of rho0 to pi+pi- decays
-		  else if( (partPdg[daughters_index[i_daughters_begin]] == 13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -13 ) || (partPdg[daughters_index[i_daughters_begin]] == -13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 13) )
-		    {
-		      //count it:
-		      ndecay_rho0_mumu++;
-		      // tag it:
-		      is_rho0decay_mumu = 1;
-		    } // end of rho0 to mumu decays
-		  else if( (partPdg[daughters_index[i_daughters_begin]] == 11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -11 ) || (partPdg[daughters_index[i_daughters_begin]] == -11 ) && ( partPdg[daughters_index[i_daughters_begin]] == 11) )
-		    {
-		      // count it:
-		      ndecay_rho0_ee++;
-		      // tag it:
-		      is_rho0decay_ee = 1;
-		    } // end of ee decays
-		} // end of 2-body decays
-	    } // end of rho0 decays
-	  // pi0 decays
-	  else if( partPdg[i] == 111 )
-	    {
-	      //cout << "Event with gen pi0 #: " << ievgen << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
-	      if( (partPdg[daughters_index[i_daughters_begin]] == 22) && (partPdg[daughters_index[i_daughters_begin]+1] == 22) )
-		{
-		  ndecay_pi0_gg++;
-		} // end of gg decays
-	    }// end of pi0 decay
-	  // phi(1020) decays:
-      	  else if( partPdg[i] == 333 )
-	    {
-	      //cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
-	      if( i_daughters != 2 )
-		{
-		  cout << "Event " << ievgen << " with gen phi(1020), i_daughters= " << i_daughters << " \n";
-		}
-	      if( ( partPdg[daughters_index[i_daughters_begin]] != 321 && partPdg[daughters_index[i_daughters_begin]] != -321 ) || ( partPdg[daughters_index[i_daughters_begin]+1] != 321 && partPdg[daughters_index[i_daughters_begin]+1] != -321 ) )
-		{
-		  cout << "Event " << ievgen << " with gen phi(1020), pdg of daughter1= " << partPdg[daughters_index[i_daughters_begin]] << ", pdg daughter2: " << partPdg[daughters_index[i_daughters_begin]+1] << " \n";
-		}
-	      
-	      // count the 2-body phi(1020) decays (checked Sartre - they all have exactly 2 daughters, and they ALL decay to kaons, even when all genstatus types are allowed):
-	      if( i_daughters == 2 )
-		{
-		  if( (partPdg[daughters_index[i_daughters_begin]] == 321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -321 ) || (partPdg[daughters_index[i_daughters_begin]] == -321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 321) )
-		    {
-		      //cout << "-> Event " << ievgen << " found phi(1020) decayed into K+ K-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
-		      
-		      // count it:
-		      ndecay_phi_kk++;
-		      // tag it:
-		      is_phidecay_kk = 1;
-
-		      TVector3 trueMom_phi_k1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
-		      TVector3 trueMom_phi_k2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
-
-		      // phi meson level:
-		      TVector3 trueMom_phi_k12=trueMom_phi_k1 + trueMom_phi_k2;
-
-		      // kaon level:
-		      float trueEta_phi_k1 = trueMom_phi_k1.PseudoRapidity();
-		      float trueEta_phi_k2 = trueMom_phi_k2.PseudoRapidity();
-		      kpmfromphiEta->Fill(trueEta_phi_k1);
-		      kpmfromphiEta->Fill(trueEta_phi_k2);
-		      kpmfromphiMom->Fill(trueMom_phi_k1.Mag());
-		      kpmfromphiMom->Fill(trueMom_phi_k2.Mag());
-		      kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]]);
-		      kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]+1]);
-		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
-		      kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
-		      kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]);
-		      kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1]);
-
-		      // kaon 1 in nHCal eta acceptance:
-		      if( trueEta_phi_k1 >= eta_min_nhcal && trueEta_phi_k1 <= eta_max_nhcal )
-			{
-			  kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
-			}
-		      // kaon 2 in nHCal eta acceptance:
-		      if( trueEta_phi_k2 >= eta_min_nhcal && trueEta_phi_k2 <= eta_max_nhcal )
-			{
-			  kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
-			}
-
-		      //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
-		      //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
-		      //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
-		      //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
-		      //cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
-		   
-		    
-		    } // end of phi to k+k- decays
-		} // end of 2-body decays
-	    } // end of phi meson decays
-	  // jpsi decays:
-	  else if( partPdg[i] == 443 )
-	    {
-	     cout << "Event " << ievgen << " with gen J/Psi #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
-	      // count the 2-body jpsi decays:
-	      if( i_daughters == 2 )
-		{
-		  if( (partPdg[daughters_index[i_daughters_begin]] == 11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -11 ) || (partPdg[daughters_index[i_daughters_begin]] == -11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 11) )
-		    {
-		      cout << "-> Event " << ievgen << " found J/Psi decayed into e+ e-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
-		      
-		      // count it:
-		      ndecay_jpsi_ee++;
-		      // tag it:
-		      is_jpsidecay_ee = 1;
-		      
-		      TVector3 trueMom_jpsi_e1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
-		      TVector3 trueMom_jpsi_e2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
-		      TVector3 trueMom_jpsi_e12=trueMom_jpsi_e1 + trueMom_jpsi_e2;
-		      
-		      float trueEta_jpsi_e1 = trueMom_jpsi_e1.PseudoRapidity();
-		      float trueEta_jpsi_e2 = trueMom_jpsi_e2.PseudoRapidity();
-		      epmfromjpsiEta->Fill(trueEta_jpsi_e1);
-		      epmfromjpsiEta->Fill(trueEta_jpsi_e2);
-
-		      cout << "--> Event " << ievgen << " J/Psi decay to 2e: generated J/Psi eta: " << trueEta << ", e1: " << trueEta_jpsi_e1 << ", e2: " << trueEta_jpsi_e2 << "  \n";
-		      cout << "            trueMomjpsi X: " << trueMom.X() << ", trueMomjpsi Y: " << trueMom.Y() <<", trueMomjpsi Z: " << trueMom.Z() << "  \n";
-		      cout << "            trueMom_jpsi_e12 X: " << trueMom_jpsi_e12.X() << ", trueMom_jpsi_e12 Y: " << trueMom_jpsi_e12.Y() <<", trueMom_jpsi_e12 Z: " << trueMom_jpsi_e12.Z() << "  \n";
-		    
-		    } // end of jpsi to e+e- decays
-		  else if( (partPdg[daughters_index[i_daughters_begin]] == 13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -13 ) || (partPdg[daughters_index[i_daughters_begin]] == -13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 13) )
-		    {
-		      // count it:
-		      ndecay_jpsi_mumu++;
-		      // tag it:
-		      is_jpsidecay_mumu = 1;
-		    } // end of jpsi to mumu decays
-		} // end of 2-body decays
-	    } // end of jpsi decays
-	  
-	  // end of decay bookkeeping on generated particle level 
-	  
-	  
-	  // count any generated particles (within the type selection we made above):
-	  if( pdg == 11){
-	    ngen_electrons++;
-	    electronEta->Fill(trueEta);
-	  }// electrons                                                                                                     
-	  else if( pdg == 13){
-	    ngen_muons++;
-	    muonEta->Fill(trueEta);
-	    //cout << "*** Event " << ievgen << ", generated muon \n";    
-	  }// muons                                                                                                         
-	  else if( pdg == 211){
-	    ngen_pions++;
-	    pionEta->Fill(trueEta);
-	    //cout << "*** Event " << ievgen << ", generated pi+- \n";    
-	  }//pions_pm
-	  else if( pdg == 111){
-	    ngen_pi0++;
-	    pi0Eta->Fill(trueEta);
-	  }//pi0  
-	  else if( pdg == 321 ){
-	    ngen_kaons++;
-	    kaonEta->Fill(trueEta);
-	    h_idaughters_kaon->Fill(i_daughters);
-	  } // kaons_pm                                                                                                     
-	  else if( pdg == 113){
-	    ngen_rho0++;
-	    rho0Eta->Fill(trueEta);
-	  } // rho(770)    
-	  else if( pdg == 443){
-	    ngen_jpsi++;
-	    jpsiEta->Fill(trueEta);
-	  } // J/Psi(1S)                                                                                                    
-	  else if( pdg == 2212){
-	    ngen_protons++;
-	    protonEta->Fill(trueEta);
-	  }// protons
-	  else if( pdg == 213){
-	    ngen_rhop++;
-	  }// rhop
-	  else if( pdg == 333){
-	    ngen_phi++;
-	    phiEta->Fill(trueEta);
-	  }// phi(1020)
-	  else if( pdg == 223){
-	    ngen_omega++;
-	  }// omega(982)
-	  else if( pdg == 553){
-	    ngen_upsilon++;
-	  }// Upsilon(1S)
-	  else if( pdg == 421){
-	    ngen_d0++;
-	  }// D0
-	  else if( pdg == 511){
-	    ngen_b0++;
-	  }// B0
+	// *** rho decays: 
+	else if( partPdg[i] == 113 )
+	  {
+	    //cout << "Event " << ievgen << " with gen rho0 #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
 	    
+	    // count the 2-body rho0 decays:
+	    if( i_daughters == 2 )
+	      {
+		if( (partPdg[daughters_index[i_daughters_begin]] == 211 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -211 ) || (partPdg[daughters_index[i_daughters_begin]] == -211 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 211) )
+		  {
+		    //cout << "-> Event " << ievgen << " found rho0 decayed into pi+ pi-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
+		    
+		    // count it:
+		    ndecay_rho0_pp++;
+		    // tag it:
+		    is_rho0decay_pp = 1;
+		    
+		    TVector3 trueMom_rho0_pi1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
+		    TVector3 trueMom_rho0_pi2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
+		    TVector3 trueMom_rho0_pi12=trueMom_rho0_pi1 + trueMom_rho0_pi2;
+		    
+		    float trueEta_rho0_pi1 = trueMom_rho0_pi1.PseudoRapidity();
+		    float trueEta_rho0_pi2 = trueMom_rho0_pi2.PseudoRapidity();
+		    pipmfromrho0Eta->Fill(trueEta_rho0_pi1);
+		    pipmfromrho0Eta->Fill(trueEta_rho0_pi2);
+		    
+		    //	      cout << "--> Event " << ievgen << " rho0 decay to 2pi: generated rho0 eta: " << trueEta << ", pi1: " << trueEta_rho0_pi1 << ", pi2: " << trueEta_rho0_pi2 << "  \n";
+		    //  cout << "            trueMomrho0 X: " << trueMom.X() << ", trueMomrho0 Y: " << trueMom.Y() <<", trueMomrho0 Z: " << trueMom.Z() << "  \n";
+		    // cout << "            trueMom_rho0_pi12 X: " << trueMom_rho0_pi12.X() << ", trueMom_rho0_pi12 Y: " << trueMompi12.Y() <<", trueMom_rho0_pi12 Z: " << trueMom_rho0_pi12.Z() << "  \n";
+		    
+		  } // end of rho0 to pi+pi- decays
+		else if( (partPdg[daughters_index[i_daughters_begin]] == 13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -13 ) || (partPdg[daughters_index[i_daughters_begin]] == -13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 13) )
+		  {
+		    //count it:
+		    ndecay_rho0_mumu++;
+		    // tag it:
+		    is_rho0decay_mumu = 1;
+		  } // end of rho0 to mumu decays
+		else if( (partPdg[daughters_index[i_daughters_begin]] == 11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -11 ) || (partPdg[daughters_index[i_daughters_begin]] == -11 ) && ( partPdg[daughters_index[i_daughters_begin]] == 11) )
+		  {
+		    // count it:
+		    ndecay_rho0_ee++;
+		    // tag it:
+		    is_rho0decay_ee = 1;
+		  } // end of ee decays
+	      } // end of 2-body decays
+	  } // end of rho0 decays
+	// *** pi0 decays
+	else if( partPdg[i] == 111 )
+	  {
+	    //cout << "Event with gen pi0 #: " << ievgen << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
+	    if( (partPdg[daughters_index[i_daughters_begin]] == 22) && (partPdg[daughters_index[i_daughters_begin]+1] == 22) )
+	      {
+		ndecay_pi0_gg++;
+	      } // end of gg decays
+	  }// end of pi0 decay
+	// *** phi(1020) decays:
+	else if( partPdg[i] == 333 )
+	  {
+	    //cout << "Event " << ievgen << " with gen phi(1020): " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
+	    if( i_daughters != 2 )
+	      {
+		cout << "Event " << ievgen << " with gen phi(1020), i_daughters= " << i_daughters << " \n";
+	      }
+	    if( ( partPdg[daughters_index[i_daughters_begin]] != 321 && partPdg[daughters_index[i_daughters_begin]] != -321 ) || ( partPdg[daughters_index[i_daughters_begin]+1] != 321 && partPdg[daughters_index[i_daughters_begin]+1] != -321 ) )
+	      {
+		cout << "Event " << ievgen << " with gen phi(1020), pdg of daughter1= " << partPdg[daughters_index[i_daughters_begin]] << ", pdg daughter2: " << partPdg[daughters_index[i_daughters_begin]+1] << " \n";
+	      }
 	    
-	  //Fill all true eta: 
-	  partEta->Fill(trueEta);
+	    // count the 2-body phi(1020) decays (checked Sartre - they all have exactly 2 daughters, and they ALL decay to kaons, even when all genstatus types are allowed):
+	    if( i_daughters == 2 )
+	      {
+		if( (partPdg[daughters_index[i_daughters_begin]] == 321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -321 ) || (partPdg[daughters_index[i_daughters_begin]] == -321 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 321) )
+		  {
+		    //cout << "-> Event " << ievgen << " found phi(1020) decayed into K+ K-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
+		    
+		    // count it:
+		    ndecay_phi_kk++;
+		    // tag it:
+		    is_phidecay_kk = 1;
+		    
+		    TVector3 trueMom_phi_k1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
+		    TVector3 trueMom_phi_k2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
+		    
+		    // phi meson level:
+		    TVector3 trueMom_phi_k12=trueMom_phi_k1 + trueMom_phi_k2;
+		    
+		    // kaon level:
+		    float trueEta_phi_k1 = trueMom_phi_k1.PseudoRapidity();
+		    float trueEta_phi_k2 = trueMom_phi_k2.PseudoRapidity();
+		    kpmfromphiEta->Fill(trueEta_phi_k1);
+		    kpmfromphiEta->Fill(trueEta_phi_k2);
+		    kpmfromphiMom->Fill(trueMom_phi_k1.Mag());
+		    kpmfromphiMom->Fill(trueMom_phi_k2.Mag());
+		    kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]]);
+		    kpmfromphi_simulatorStatus->Fill(partSimStat[daughters_index[i_daughters_begin]+1]);
+		    kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
+		    kpmfromphiEndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
+		    kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]], partSimStat[daughters_index[i_daughters_begin]]);
+		    kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1]);
+		    
+		    // kaon 1 in nHCal eta acceptance:
+		    if( trueEta_phi_k1 >= eta_min_nhcal && trueEta_phi_k1 <= eta_max_nhcal )
+		      {
+			kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
+		      }
+		    // kaon 2 in nHCal eta acceptance:
+		    if( trueEta_phi_k2 >= eta_min_nhcal && trueEta_phi_k2 <= eta_max_nhcal )
+		      {
+			kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
+		      }
+		    
+		    //cout << "--> Event " << ievgen << " phi(1020) decay to 2K: generated phi eta: " << trueEta << ", K1: " << trueEta_phi_k1 << ", K2: " << trueEta_phi_k2 << "  \n";
+		    //cout << "            trueMomphi X: " << trueMom.X() << ", trueMomphi Y: " << trueMom.Y() <<", trueMomphi Z: " << trueMom.Z() << "  \n";
+		    //cout << "            trueMom_phi_k12 X: " << trueMom_phi_k12.X() << ", trueMom_phi_k12 Y: " << trueMom_phi_k12.Y() <<", trueMom_phi_k12 Z: " << trueMom_phi_k12.Z() << "  \n";
+		    //cout << "           endpoint Z K1: " << partEndpointZ[daughters_index[i_daughters_begin]] << ", endpoint Z K2: " << partEndpointZ[daughters_index[i_daughters_begin]+1] << "  \n";
+		    //cout << "           generator status K1: " <<  partGenStat[daughters_index[i_daughters_begin]] << ", simulator status K1: " << partSimStat[daughters_index[i_daughters_begin]]  << ", generator status K2: " << partGenStat[daughters_index[i_daughters_begin]+1] << ", simulator status K2: " << partSimStat[daughters_index[i_daughters_begin]+1] << "  \n";
+		    
+		    
+		  } // end of phi to k+k- decays
+	      } // end of 2-body decays
+	  } // end of phi meson decays
+	// *** jpsi decays:
+	else if( partPdg[i] == 443 )
+	  {
+	    cout << "Event " << ievgen << " with gen J/Psi #: " << partPdg[i] << ", daughter 1:" << partPdg[daughters_index[i_daughters_begin]] << ", daughter 2:" << partPdg[daughters_index[i_daughters_begin]+1] << ", i_daughters:" << i_daughters << "  \n";
+	    // count the 2-body jpsi decays:
+	    if( i_daughters == 2 )
+	      {
+		if( (partPdg[daughters_index[i_daughters_begin]] == 11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -11 ) || (partPdg[daughters_index[i_daughters_begin]] == -11 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 11) )
+		  {
+		    //cout << "-> Event " << ievgen << " found J/Psi decayed into e+ e-: "  << partPdg[daughters_index[i_daughters_begin]] << " and " << partPdg[daughters_index[i_daughters_begin]+1] << "  \n";
+		    ndecay_jpsi_ee++;
+		    is_jpsidecay_ee = 1;
+		    
+		    TVector3 trueMom_jpsi_e1(partMomX[daughters_index[i_daughters_begin]],partMomY[daughters_index[i_daughters_begin]],partMomZ[daughters_index[i_daughters_begin]]);
+		    TVector3 trueMom_jpsi_e2(partMomX[daughters_index[i_daughters_begin]+1],partMomY[daughters_index[i_daughters_begin]+1],partMomZ[daughters_index[i_daughters_begin]+1]);
+		    TVector3 trueMom_jpsi_e12=trueMom_jpsi_e1 + trueMom_jpsi_e2;
+		    
+		    float trueEta_jpsi_e1 = trueMom_jpsi_e1.PseudoRapidity();
+		    float trueEta_jpsi_e2 = trueMom_jpsi_e2.PseudoRapidity();
+		    epmfromjpsiEta->Fill(trueEta_jpsi_e1);
+		    epmfromjpsiEta->Fill(trueEta_jpsi_e2);
+		    
+		    //cout << "--> Event " << ievgen << " J/Psi decay to 2e: generated J/Psi eta: " << trueEta << ", e1: " << trueEta_jpsi_e1 << ", e2: " << trueEta_jpsi_e2 << "  \n";
+		    //cout << "            trueMomjpsi X: " << trueMom.X() << ", trueMomjpsi Y: " << trueMom.Y() <<", trueMomjpsi Z: " << trueMom.Z() << "  \n";
+		    //cout << "            trueMom_jpsi_e12 X: " << trueMom_jpsi_e12.X() << ", trueMom_jpsi_e12 Y: " << trueMom_jpsi_e12.Y() <<", trueMom_jpsi_e12 Z: " << trueMom_jpsi_e12.Z() << "  \n";
+		    
+		  } // end of jpsi to e+e- decays
+		else if( (partPdg[daughters_index[i_daughters_begin]] == 13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == -13 ) || (partPdg[daughters_index[i_daughters_begin]] == -13 ) && ( partPdg[daughters_index[i_daughters_begin]+1] == 13) )
+		  {
+		    // count it:
+		    ndecay_jpsi_mumu++;
+		    // tag it:
+		    is_jpsidecay_mumu = 1;
+		  } // end of jpsi to mumu decays
+	      } // end of 2-body decays
+	  } // end of jpsi decays
+	
+	// end of decay bookkeeping on generated particle level 
+	
+	
+	// count any generated particles (within the type selection we made above):
+	if( pdg == 11){
+	  ngen_electrons++;
+	  electronEta->Fill(trueEta);
+	}// electrons                                                                                                     
+	else if( pdg == 13){
+	  ngen_muons++;
+	  muonEta->Fill(trueEta);
+	  //cout << "*** Event " << ievgen << ", generated muon \n";    
+	}// muons                                                                                                         
+	else if( pdg == 211){
+	  ngen_pions++;
+	  pionEta->Fill(trueEta);
+	  //cout << "*** Event " << ievgen << ", generated pi+- \n";    
+	}//pions_pm
+	else if( pdg == 111){
+	  ngen_pi0++;
+	  pi0Eta->Fill(trueEta);
+	}//pi0  
+	else if( pdg == 321 ){
+	  ngen_kaons++;
+	  kaonEta->Fill(trueEta);
+	  h_idaughters_kaon->Fill(i_daughters);
+	} // kaons_pm                                                                                                     
+	else if( pdg == 113){
+	  ngen_rho0++;
+	  rho0Eta->Fill(trueEta);
+	} // rho(770)    
+	else if( pdg == 443){
+	  ngen_jpsi++;
+	  jpsiEta->Fill(trueEta);
+	} // J/Psi(1S)                                                                                                    
+	else if( pdg == 2212){
+	  ngen_protons++;
+	  protonEta->Fill(trueEta);
+	}// protons
+	else if( pdg == 213){
+	  ngen_rhop++;
+	}// rhop
+	else if( pdg == 333){
+	  ngen_phi++;
+	  phiEta->Fill(trueEta);
+	}// phi(1020)
+	else if( pdg == 223){
+	  ngen_omega++;
+	}// omega(982)
+	else if( pdg == 553){
+	  ngen_upsilon++;
+	}// Upsilon(1S)
+	else if( pdg == 421){
+	  ngen_d0++;
+	}// D0
+	else if( pdg == 511){
+	  ngen_b0++;
+	}// B0
+	
+	
+	//Fill all true eta: 
+	partEta->Fill(trueEta);
+	
+	// Fill all true momentum:
+	partMom->Fill(trueMom.Mag());
+	
+	// Fill all true phi: 
+	partPhi->Fill(truePhi);
+	
+	// Fill all true theta: 
+	partTheta->Fill(trueTheta);
+	
+	
+	// Loop over associations to find matching ReconstructedChargedParticle
+	for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
+	  {
+	    //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
 	    
-	  // Fill all true momentum:
-	  partMom->Fill(trueMom.Mag());
-	  
-	  // Fill all true phi: 
-	  partPhi->Fill(truePhi);
-
-	   // Fill all true theta: 
-	  partTheta->Fill(trueTheta);
-	  
-	  
-	  // Loop over associations to find matching ReconstructedChargedParticle
-	  for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
-	    {
-	      //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
-	      
-	      if(simuAssoc[j] == i) // Find association index matching the index of the thrown particle we are looking at
-		{
-		  TVector3 recMom(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]); // recoAssoc[j] is the index of the matched ReconstructedChargedParticle                                                       
-		  
-		  float CPartMom = recMom.Mag();
-		  float CPartEta = recMom.PseudoRapidity();
-		  float CPartPhi = recMom.Phi();
-		  float CPartTheta = recMom.Theta();
-		  float CPartEnergy = trackEnergy[recoAssoc[j]];
-
-		  recP->Fill(CPartMom);
-		  recEta->Fill(CPartEta);
-		  recPhi->Fill(CPartPhi);
-		  recTheta->Fill(CPartTheta);
-		  
-		  // nHCal eta acceptance:
-		  if( CPartEta >= eta_min_nhcal && CPartEta <= eta_max_nhcal )
-			{
-			  recP_nHCal->Fill(CPartMom);
-			  recTheta_nHCal->Fill(CPartTheta);
-			}
-		  		  
-		  if( pdg == 11){
-		    nrec_electrons++;
-		    electronRecEta->Fill(CPartEta);
-		    // XXX Here, navigate to scattered reco electron - this has to be developed further. Also check out if the branch ReconstrcutedElectrons contains useful info. How does ePIC get the scattered beam electron, what is the technical recipe? 
-		    //if( partGenStat[i]==1 ) // also want the parent be the incoming beam electron. This is straight forward in Sartre, but looks more tricky in pythia. 
-			// {
-			//cout << "*** Event " << ievgen << ", scattered electron energy " << trackEnergy[recoAssoc[j]] << " \n";   
-		    //}
-		  }// electrons	       
-		  else if( pdg == 13){
-		    nrec_muons++;
-		    muonRecEta->Fill(CPartEta);
-		  }// muons			
-		  else if( pdg == 211){
-		    nrec_pions++;
-		    pionRecEta->Fill(CPartEta);
-		  }//pions
-		  else if( pdg == 321){
-		    nrec_kaons++;
-		    kaonRecEta->Fill(CPartEta);
-		  }//pions
-		  else if( pdg == 2212){
-		    nrec_protons++;
-		    protonRecEta->Fill(CPartEta);
-		  }// protons       
-		} // end of matched association gen to rec
-	      
-	      // Match the decay particles to their recos:
-	      // rho0 to pi+ pi-
-	      if( is_rho0decay_pp )
-		{
-		  if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay pi1 of the gen rho0, by accessing the correct MCParticle index
-		    {
-		      TVector3 recMom_rho0_pi1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-		      float recEta_rho0_pi1 = recMom_rho0_pi1.PseudoRapidity();
-		      float recPhi_rho0_pi1 = recMom_rho0_pi1.Phi();
-		      pipmfromrho0RecEta->Fill(recEta_rho0_pi1);
-
-		      // count the decay pions (reco level) that are within the nHCal acceptance, here pion1:
-		      if( recEta_rho0_pi1 >= eta_min_nhcal && recEta_rho0_pi1 <= eta_max_nhcal )
-			{
-			  ndecay_rho0_pionpm_nHCal++;
-			}
-		      //cout << "---> Event " << ievgen << " rho0 decay, reco index rho0: " << j << " \n";
-		      //cout << "          reco daughter-1 eta: " << recEta_rho0_pi1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
-		    }// end of rho0 decay pi1
-		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay pi2 of the gen rho0
-		    {
-		      TVector3 recMom_rho0_pi2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-		      float recEta_rho0_pi2 = recMom_rho0_pi2.PseudoRapidity();
-		      float recPhi_rho0_pi2 = recMom_rho0_pi2.Phi();
-		      pipmfromrho0RecEta->Fill(recEta_rho0_pi2);
-
-		      // count the decay pions (reco level) that are within the nHCal acceptance, here pion2:
-		      if( recEta_rho0_pi2 >= eta_min_nhcal && recEta_rho0_pi2 <= eta_max_nhcal )
-			{
-			  ndecay_rho0_pionpm_nHCal++;
-			}
-		      
-		      //cout << "          reco daughter-2 eta: " << recEta_rho0_pi2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
-		    }// end of rho0 decay pi2
-		} // end of rho0 decay into pp
-	      // phi to K+ K-
-	      if( is_phidecay_kk )
-		{
-		  if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay k1 of the gen phi, by accessing the correct MCParticle index
-		    {
-		      TVector3 recMom_phi_k1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-
-		      float recP_phi_k1 = recMom_phi_k1.Mag();
-		      float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
-		      float recPhi_phi_k1 = recMom_phi_k1.Phi();
-		      float recTheta_phi_k1 = recMom_phi_k1.Theta();
-		      float decaylength_k1 = 100*(recP_phi_k1/kpmmass)*kpmlifetime*speedoflight; // [cm]
-		      float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location [cm] of kaon decay - its sign is handled by  the sign of the cosine
-		      //cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
-
-		      // count and fill the decay kaons (reco level), here kaon1:
-		      ndecay_phi_kaonpm_rec++;
-		      kpmfromphiRecMom->Fill(recP_phi_k1);
-		      kpmfromphiRecEta->Fill(recEta_phi_k1);
-		      kpmfromphiRecTheta->Fill(recTheta_phi_k1);
-		      kpmfromphiRecDecayLength->Fill(decaylength_k1);
-		      kpmfromphiRecZdecay->Fill(zdecay_k1);
-		      kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
-
-		      // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
-		      if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
-			{
-			  ndecay_phi_kaonpm_nHCal++;
-			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
-			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
-			  kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k1);
-			  kpmfromphiRecZdecay_nHCal->Fill(zdecay_k1);
-			}
-
-		      //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
-		      //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
-		      //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
-		      //cout << " K1 rec momentum: "  << recMom_phi_k1.Mag() << ", K1 decay length: " << decaylength_k1 << " \n";
-		      		      
-		    }// end of phi(1020) decay K1
-		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay k2 of the gen phi
-		    {
-		      TVector3 recMom_phi_k2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-
-		      float recP_phi_k2 = recMom_phi_k2.Mag();
-		      float recEta_phi_k2 = recMom_phi_k2.PseudoRapidity();
-		      float recPhi_phi_k2 = recMom_phi_k2.Phi();
-		      float recTheta_phi_k2 = recMom_phi_k2.Theta();
-		      float decaylength_k2 = 100*(recP_phi_k2/kpmmass)*kpmlifetime*speedoflight; // [cm]
-		      float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2; // [cm]
-
-		      //cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
-
-		      // count and fill the decay kaons (reco level), here kaon2:
-		      ndecay_phi_kaonpm_rec++;
-		      kpmfromphiRecMom->Fill(recP_phi_k2);
-		      kpmfromphiRecEta->Fill(recEta_phi_k2);
-		      kpmfromphiRecTheta->Fill(recTheta_phi_k2);
-		      kpmfromphiRecDecayLength->Fill(decaylength_k2);
-		      kpmfromphiRecZdecay->Fill(zdecay_k2);
-		      kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k2);
-
-		      // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
-		      if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
-			{
-			  ndecay_phi_kaonpm_nHCal++;
-			  kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
-			  kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
-			  kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k2);
-			  kpmfromphiRecZdecay_nHCal->Fill(zdecay_k2);
-			}
-
-		      
-		      //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
-		      //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
-		      //cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << decaylength_k2 << " \n";
-		      
+	    if(simuAssoc[j] == i) // Find association index matching the index of the thrown particle we are looking at
+	      {
+		TVector3 recMom(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]); // recoAssoc[j] is the index of the matched ReconstructedChargedParticle                                                       
+		
+		float CPartMom = recMom.Mag();
+		float CPartEta = recMom.PseudoRapidity();
+		float CPartPhi = recMom.Phi();
+		float CPartTheta = recMom.Theta();
+		float CPartEnergy = trackEnergy[recoAssoc[j]];
+		
+		recP->Fill(CPartMom);
+		recEta->Fill(CPartEta);
+		recPhi->Fill(CPartPhi);
+		recTheta->Fill(CPartTheta);
+		
+		// nHCal eta acceptance:
+		if( CPartEta >= eta_min_nhcal && CPartEta <= eta_max_nhcal )
+		  {
+		    recP_nHCal->Fill(CPartMom);
+		    recTheta_nHCal->Fill(CPartTheta);
+		  }
+		
+		if( pdg == 11){
+		  nrec_electrons++;
+		  electronRecEta->Fill(CPartEta);
+		  // XXX Here, navigate to scattered reco electron - this has to be developed further. Also check out if the branch ReconstrcutedElectrons contains useful info. How does ePIC get the scattered beam electron, what is the technical recipe? 
+		  //if( partGenStat[i]==1 ) // also want the parent be the incoming beam electron. This is straight forward in Sartre, but looks more tricky in pythia. 
+		  // {
+		  //cout << "*** Event " << ievgen << ", scattered electron energy " << trackEnergy[recoAssoc[j]] << " \n";   
+		  //}
+		}// electrons	       
+		else if( pdg == 13){
+		  nrec_muons++;
+		  muonRecEta->Fill(CPartEta);
+		}// muons			
+		else if( pdg == 211){
+		  nrec_pions++;
+		  pionRecEta->Fill(CPartEta);
+		}//pions
+		else if( pdg == 321){
+		  nrec_kaons++;
+		  kaonRecEta->Fill(CPartEta);
+		}//pions
+		else if( pdg == 2212){
+		  nrec_protons++;
+		  protonRecEta->Fill(CPartEta);
+		}// protons       
+	      } // end of matched association gen to rec
+	    
+	    // Match the decay particles to their recos:
+	    // rho0 to pi+ pi-
+	    if( is_rho0decay_pp )
+	      {
+		if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay pi1 of the gen rho0, by accessing the correct MCParticle index
+		  {
+		    TVector3 recMom_rho0_pi1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    float recEta_rho0_pi1 = recMom_rho0_pi1.PseudoRapidity();
+		    float recPhi_rho0_pi1 = recMom_rho0_pi1.Phi();
+		    pipmfromrho0RecEta->Fill(recEta_rho0_pi1);
+		    
+		    // count the decay pions (reco level) that are within the nHCal acceptance, here pion1:
+		    if( recEta_rho0_pi1 >= eta_min_nhcal && recEta_rho0_pi1 <= eta_max_nhcal )
+		      {
+			ndecay_rho0_pionpm_nHCal++;
+		      }
+		    //cout << "---> Event " << ievgen << " rho0 decay, reco index rho0: " << j << " \n";
+		    //cout << "          reco daughter-1 eta: " << recEta_rho0_pi1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
+		  }// end of rho0 decay pi1
+		else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay pi2 of the gen rho0
+		  {
+		    TVector3 recMom_rho0_pi2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    float recEta_rho0_pi2 = recMom_rho0_pi2.PseudoRapidity();
+		    float recPhi_rho0_pi2 = recMom_rho0_pi2.Phi();
+		    pipmfromrho0RecEta->Fill(recEta_rho0_pi2);
+		    
+		    // count the decay pions (reco level) that are within the nHCal acceptance, here pion2:
+		    if( recEta_rho0_pi2 >= eta_min_nhcal && recEta_rho0_pi2 <= eta_max_nhcal )
+		      {
+			ndecay_rho0_pionpm_nHCal++;
+		      }
+		    
+		    //cout << "          reco daughter-2 eta: " << recEta_rho0_pi2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+		  }// end of rho0 decay pi2
+	      } // end of rho0 decay into pp
+	    // phi to K+ K-
+	    if( is_phidecay_kk )
+	      {
+		if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay k1 of the gen phi, by accessing the correct MCParticle index
+		  {
+		    TVector3 recMom_phi_k1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    
+		    float recP_phi_k1 = recMom_phi_k1.Mag();
+		    float recEta_phi_k1 = recMom_phi_k1.PseudoRapidity();
+		    float recPhi_phi_k1 = recMom_phi_k1.Phi();
+		    float recTheta_phi_k1 = recMom_phi_k1.Theta();
+		    float decaylength_k1 = 100*(recP_phi_k1/kpmmass)*kpmlifetime*speedoflight; // [cm]
+		    float zdecay_k1 = ROOT::Math::cos(recTheta_phi_k1) * decaylength_k1; // z location [cm] of kaon decay - its sign is handled by  the sign of the cosine
+		    //cout <<  "K1 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K1 z decay point (reco level): " << zdecay_k1 << ", theta: " << recTheta_phi_k1 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k1) << " \n";
+		    
+		    // count and fill the decay kaons (reco level), here kaon1:
+		    ndecay_phi_kaonpm_rec++;
+		    kpmfromphiRecMom->Fill(recP_phi_k1);
+		    kpmfromphiRecEta->Fill(recEta_phi_k1);
+		    kpmfromphiRecTheta->Fill(recTheta_phi_k1);
+		    kpmfromphiRecDecayLength->Fill(decaylength_k1);
+		    kpmfromphiRecZdecay->Fill(zdecay_k1);
+		    kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
+		    
+		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
+		    if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
+		      {
+			ndecay_phi_kaonpm_nHCal++;
+			kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
+			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
+			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k1);
+			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k1);
+		      }
+		    
+		    //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
+		    //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
+		    //cout << " K1 energy: "  << trackEnergy[recoAssoc[j]] << ", K1 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
+		    //cout << " K1 rec momentum: "  << recMom_phi_k1.Mag() << ", K1 decay length: " << decaylength_k1 << " \n";
+		    
+		  }// end of phi(1020) decay K1
+		else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay k2 of the gen phi
+		  {
+		    TVector3 recMom_phi_k2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    
+		    float recP_phi_k2 = recMom_phi_k2.Mag();
+		    float recEta_phi_k2 = recMom_phi_k2.PseudoRapidity();
+		    float recPhi_phi_k2 = recMom_phi_k2.Phi();
+		    float recTheta_phi_k2 = recMom_phi_k2.Theta();
+		    float decaylength_k2 = 100*(recP_phi_k2/kpmmass)*kpmlifetime*speedoflight; // [cm]
+		    float zdecay_k2 = ROOT::Math::cos(recTheta_phi_k2) * decaylength_k2; // [cm]
+		    
+		    //cout <<  "K2 z endpoint (McParticles): " << partEndpointZ[simuAssoc[j]] << ", K2 z decay point (reco level): " << zdecay_k2 << ", theta: " << recTheta_phi_k2 << ", cos(theta): " << ROOT::Math::cos(recTheta_phi_k2) << " \n";
+		    
+		    // count and fill the decay kaons (reco level), here kaon2:
+		    ndecay_phi_kaonpm_rec++;
+		    kpmfromphiRecMom->Fill(recP_phi_k2);
+		    kpmfromphiRecEta->Fill(recEta_phi_k2);
+		    kpmfromphiRecTheta->Fill(recTheta_phi_k2);
+		    kpmfromphiRecDecayLength->Fill(decaylength_k2);
+		    kpmfromphiRecZdecay->Fill(zdecay_k2);
+		    kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k2);
+		    
+		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
+		    if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
+		      {
+			ndecay_phi_kaonpm_nHCal++;
+			kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
+			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
+			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k2);
+			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k2);
+		      }
+		    
+		    
+		    //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+		    //cout << " K2 energy: "  << trackEnergy[recoAssoc[j]] << ", K2 momZ: " << trackMomZ[recoAssoc[j]] << " \n";
+		    //cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << decaylength_k2 << " \n";
+		    
 		    }// end of phi(1020) decay K2
-       		} // end of phi(1020) decay into KK
-	      // jpsi into ee:
-	      if( is_jpsidecay_ee )
-		{
-		  if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay e1 of the gen jpsi, by accessing the correct MCParticle index
-		    {
-		      TVector3 recMom_jpsi_e1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-		      float recEta_jpsi_e1 = recMom_jpsi_e1.PseudoRapidity();
-		      float recPhi_jpsi_e1 = recMom_jpsi_e1.Phi();
-		      epmfromjpsiRecEta->Fill(recEta_jpsi_e1);
-
-		      // count the decay electrons (reco level) that are within the nHCal acceptance, here electron1:
-		      if( recEta_jpsi_e1 >= eta_min_nhcal && recEta_jpsi_e1 <= eta_max_nhcal )
-			{
-			  ndecay_jpsi_epm_nHCal++;
-			}
-		      cout << "---> Event " << ievgen << " J/Psi decay, reco index J/Psi: " << j << " \n";
-		      cout << "          reco daughter-1 eta: " << recEta_jpsi_e1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
-		    }// end of jpsi decay e1
-		  else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay e2 of the gen jpsi
-		    {
-		      TVector3 recMom_jpsi_e2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
-		      float recEta_jpsi_e2 = recMom_jpsi_e2.PseudoRapidity();
-		      float recPhi_jpsi_e2 = recMom_jpsi_e2.Phi();
-		      epmfromjpsiRecEta->Fill(recEta_jpsi_e2);
-
-		      // count the decay electrons (reco level) that are within the nHCal acceptance, here electron2:
-		      if( recEta_jpsi_e2 >= eta_min_nhcal && recEta_jpsi_e2 <= eta_max_nhcal )
-			{
-			  ndecay_jpsi_epm_nHCal++;
-			}
-		      
-		      cout << "          reco daughter-2 eta: " << recEta_jpsi_e2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
-		    }// end of jpsi decay e2
-		} // end of jpsi decay into ee
-
-
-	      
-
-	      
-	    }// End loop over associations    
-	  //} // End stable or decay particles condition
+	      } // end of phi(1020) decay into KK
+	    // jpsi into ee:
+	    if( is_jpsidecay_ee )
+	      {
+		if( simuAssoc[j] == daughters_index[i_daughters_begin] ) // get the reco decay e1 of the gen jpsi, by accessing the correct MCParticle index
+		  {
+		    TVector3 recMom_jpsi_e1(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    float recEta_jpsi_e1 = recMom_jpsi_e1.PseudoRapidity();
+		    float recPhi_jpsi_e1 = recMom_jpsi_e1.Phi();
+		    epmfromjpsiRecEta->Fill(recEta_jpsi_e1);
+		    
+		    // count the decay electrons (reco level) that are within the nHCal acceptance, here electron1:
+		    if( recEta_jpsi_e1 >= eta_min_nhcal && recEta_jpsi_e1 <= eta_max_nhcal )
+		      {
+			ndecay_jpsi_epm_nHCal++;
+		      }
+		    cout << "---> Event " << ievgen << " J/Psi decay, reco index J/Psi: " << j << " \n";
+		    cout << "          reco daughter-1 eta: " << recEta_jpsi_e1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
+		  }// end of jpsi decay e1
+		else if( simuAssoc[j] == daughters_index[i_daughters_begin]+1 ) // get the reco decay e2 of the gen jpsi
+		  {
+		    TVector3 recMom_jpsi_e2(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]);
+		    float recEta_jpsi_e2 = recMom_jpsi_e2.PseudoRapidity();
+		    float recPhi_jpsi_e2 = recMom_jpsi_e2.Phi();
+		    epmfromjpsiRecEta->Fill(recEta_jpsi_e2);
+		    
+		    // count the decay electrons (reco level) that are within the nHCal acceptance, here electron2:
+		    if( recEta_jpsi_e2 >= eta_min_nhcal && recEta_jpsi_e2 <= eta_max_nhcal )
+		      {
+			ndecay_jpsi_epm_nHCal++;
+		      }
+		    
+		    cout << "          reco daughter-2 eta: " << recEta_jpsi_e2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+		  }// end of jpsi decay e2
+	      } // end of jpsi decay into ee
+	  }// End loop over associations    
+	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
     
     
     //for(unsigned int k=0; k<trackMomX.GetSize(); k++){ // Loop over all reconstructed tracks, thrown or not                                 
-
+    
     //  TVector3 recMom(trackMomX[k], trackMomY[k], trackMomZ[k]);
-	
+    
     //} // End loop over all reconstructed tracks, within that event 
-
+    
     // now go to next event
     
   } // End loop over events
-
+  
   // Calculate fractions of decay particles:
   double fraction_rho0_pionpm_nHCal = 0.;
   fraction_rho0_pionpm_nHCal = ndecay_rho0_pp?(double(ndecay_rho0_pionpm_nHCal)/(2*double(ndecay_rho0_pp))):0;
