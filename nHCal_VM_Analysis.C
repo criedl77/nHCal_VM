@@ -102,7 +102,7 @@ void nHCal_VM_Analysis(){
   //// Define Histograms
 
   // event level
-  TH1D *xTruth = new TH1D("xTruth","xBjorken Truth, all; x_{Truth}",500,0.,1.);
+  TH1D *xTruth = new TH1D("xTruth","xBjorken Truth, all; x_{Truth}",5000,0.,1000.);
 
   //generatorStatus, simulatorStatus, number of daughters
   TH1D *generatorStatus = new TH1D("generatorStatus","Status of generated particles, all; generatorStatus",101,0,100);
