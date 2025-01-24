@@ -6,7 +6,7 @@ void nHCal_VM_Analysis(){
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
 
-  // >>>>> If streaming a runlist from SDCC:
+  // >>>>> If streaming a runlist from SDCC JLab:
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
@@ -61,6 +61,9 @@ void nHCal_VM_Analysis(){
 
   // Get event-level information:
   // XXX add x-bjorken, q2, t, x_pomeron, etc
+
+  TTreeReaderArray<double> evTruthX(tree_reader, "InclusiveKinematicsTruth.x");
+  TTreeReaderArray<double> evTruthQ2(tree_reader, "InclusiveKinematicsTruth.Q2");
   
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
@@ -96,7 +99,10 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<unsigned int> daughters_begin(tree_reader, "MCParticles.daughters_begin");
   TTreeReaderArray<unsigned int> daughters_end(tree_reader, "MCParticles.daughters_end");  
   
-  // Define Histograms
+  //// Define Histograms
+
+  // event level
+  TH1D *xTruth = new TH1D("xTruth","xBjorken Truth, all; x_{Truth}",500,0.,1.);
 
   //generatorStatus, simulatorStatus, number of daughters
   TH1D *generatorStatus = new TH1D("generatorStatus","Status of generated particles, all; generatorStatus",101,0,100);
@@ -244,12 +250,13 @@ void nHCal_VM_Analysis(){
     if(ievgen % 10000 == 0 && ievgen != 0 ){
       cout << "+ processed " << ievgen << " events \n";
       }
+
+    // event kinematics:
+    xTruth->Fill(evTruthX);
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
-    // partGenStat[i]== 1: stable; 2: decay; 4: beam particle;  21, 23, 61, 62, 63, 71, ... are [di]quark-related)
-    // count only 1, 2, 4 and ignore the 2-digits for now.
-    //generatorStatus is set in DD4Hep -> Geant4InputAction::setGeneratorStatus. It is possible that it stays in its initial value, 0, "empty". Ignore those for now. 
+    // start a gigantic loop over the generated particles:
     for(unsigned int i=0; i<partGenStat.GetSize(); i++) // Loop over generated particles
       {
 	//cout << "++ Entering generated particle #: " << i << " \n";
@@ -285,6 +292,8 @@ void nHCal_VM_Analysis(){
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
 
+	// partGenStat[i]== 1: stable; 2: decay; 4: beam particle;  21, 23, 61, 62, 63, 71, ... are [di]quark-related)
+    //generatorStatus is set in DD4Hep -> Geant4InputAction::setGeneratorStatus. It is possible that it stays in its initial value, 0, "empty". 
 	//Consider only selected generated particles:
 	//if( (partGenStat[i] == 1) || (partGenStat[i] == 2) )  // Select only stable or decay particles (I trust the beam particles now... (partGenStat[i] == 4) count them separately?)
 	//{
@@ -333,7 +342,7 @@ void nHCal_VM_Analysis(){
 		    }// end "first daughter is electron or photon"
 		}// end of non-zero number of daughters
 
-	      cout << "Event " << ievgen << ", generated kaon with SimStat: " <<  partSimStat[i] << "ismupm: " << is_kpmdecay_mupm << ", ispipm: " << is_kpmdecay_pipm << ", isem: " << is_kpmdecay_em << ", isbaryon: " << is_kpmdecay_baryon << "  \n";
+	      cout << "Event " << ievgen << ", generated kaon with SimStat: " <<  partSimStat[i] << ", ismupm: " << is_kpmdecay_mupm << ", ispipm: " << is_kpmdecay_pipm << ", isem: " << is_kpmdecay_em << ", isbaryon: " << is_kpmdecay_baryon << "  \n";
 	      
 	    } // end of charged-kaon decays
 	// *** rho decays: 
