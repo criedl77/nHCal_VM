@@ -253,7 +253,7 @@ void nHCal_VM_Analysis(){
 
     // event kinematics:
     //cout << "++ Truth xB: " << evTruthX << " \n";
-    xTruth->Fill(evTruthX);
+    xTruth->Fill(evTruthX[0]);
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
