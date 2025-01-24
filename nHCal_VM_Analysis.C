@@ -246,13 +246,14 @@ void nHCal_VM_Analysis(){
 
     ievgen++;
     
-    //cout << "+ Entering event #: " << ievgen << " \n";
+    cout << "+ Entering event #: " << ievgen << " \n";
     if(ievgen % 10000 == 0 && ievgen != 0 ){
       cout << "+ processed " << ievgen << " events \n";
       }
 
     // event kinematics:
-    xTruth->Fill(evTruthX);
+     cout << "++ Truth xB: " << evTruthX << " \n";
+    //xTruth->Fill(evTruthX);
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
