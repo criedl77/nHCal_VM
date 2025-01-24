@@ -62,11 +62,10 @@ void nHCal_VM_Analysis(){
   // Get event-level information:
   // XXX add x-bjorken, q2, t, x_pomeron, etc
 
-  TTreeReader<double> evTruthX(tree_reader, "InclusiveKinematicsTruth.x");
+  TTreeReaderArray<double> evTruthX(tree_reader, "InclusiveKinematicsTruth.x");
   TTreeReaderArray<double> evTruthQ2(tree_reader, "InclusiveKinematicsTruth.Q2");
   
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
-  // I believe the "Array" refers to that we have an array of generated particles for each event
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
   TTreeReaderArray<int> partSimStat(tree_reader, "MCParticles.simulatorStatus");
   TTreeReaderArray<float> partMomX(tree_reader, "MCParticles.momentum.x");
