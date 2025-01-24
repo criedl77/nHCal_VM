@@ -62,8 +62,8 @@ void nHCal_VM_Analysis(){
   // Get event-level information:
   // XXX add x-bjorken, q2, t, x_pomeron, etc
 
-  TTreeReaderArray<float> evTruthX(tree_reader, "InclusiveKinematicsTruth.x");
-  TTreeReaderArray<float> evTruthQ2(tree_reader, "InclusiveKinematicsTruth.Q2");
+  TTreeReaderArray<double> evTruthX(tree_reader, "InclusiveKinematicsTruth.x");
+  TTreeReaderArray<double> evTruthQ2(tree_reader, "InclusiveKinematicsTruth.Q2");
   
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
@@ -252,7 +252,7 @@ void nHCal_VM_Analysis(){
       }
 
     // event kinematics:
-    //cout << "++ Truth xB: " << evTruthX << " \n";
+    cout << "++ Truth xB: " << evTruthX[0] << " \n";
     xTruth->Fill(evTruthX[0]);
     
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
@@ -343,7 +343,7 @@ void nHCal_VM_Analysis(){
 		    }// end "first daughter is electron or photon"
 		}// end of non-zero number of daughters
 
-	      cout << "Event " << ievgen << ", generated kaon with SimStat: " <<  partSimStat[i] << ", ismupm: " << is_kpmdecay_mupm << ", ispipm: " << is_kpmdecay_pipm << ", isem: " << is_kpmdecay_em << ", isbaryon: " << is_kpmdecay_baryon << "  \n";
+	      //cout << "Event " << ievgen << ", generated kaon with SimStat: " <<  partSimStat[i] << ", ismupm: " << is_kpmdecay_mupm << ", ispipm: " << is_kpmdecay_pipm << ", isem: " << is_kpmdecay_em << ", isbaryon: " << is_kpmdecay_baryon << "  \n";
 	      
 	    } // end of charged-kaon decays
 	// *** rho decays: 
