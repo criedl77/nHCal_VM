@@ -182,7 +182,7 @@ void nHCal_VM_Analysis(){
   //// Reset global counters : 
   // count events:
   int ievgen = 0;
-  // count generated particles:
+  // count total generated particles:
   int ngen_electrons = 0; //+-
   int ngen_protons = 0; //+-
   int ngen_muons = 0; //+-
@@ -197,13 +197,13 @@ void nHCal_VM_Analysis(){
   int ngen_upsilon = 0;
   int ngen_d0 = 0;
   int ngen_b0 = 0;
-  // count reconstructed particles (+-):
+  // count total reconstructed particles (+-):
   int nrec_electrons = 0;
   int nrec_protons = 0;
   int nrec_muons = 0;
   int nrec_pions = 0;
   int nrec_kaons = 0;
-  // count number of decays (generated level):
+  // count total number of decays (generated level):
   int ndecay_pi0_gg = 0;
   int ndecay_kpm_mupm = 0;
   int ndecay_kpm_pipm = 0;
@@ -228,13 +228,13 @@ void nHCal_VM_Analysis(){
   int is_phidecay_kk = 0;
   int is_jpsidecay_mumu = 0;
   int is_jpsidecay_ee = 0;
-  // count number of decay particles (reco level):
+  // count total number of decay particles (reco level):
   int ndecay_kpm_mupm_rec = 0; // not yet used
   int ndecay_rho0_pionpm_rec = 0; // not yet used
   int ndecay_phi_kaonpm_rec = 0; 
   int ndecay_jpsi_epm_rec = 0; // not yet used
   int ndecay_jpsi_muonpm_rec = 0; // not yet used
-  // count number of decay particles (reco level) in nHCal eta acceptance:
+  // count total number of decay particles (reco level) in nHCal eta acceptance:
   int ndecay_kpm_mupm_nHCal = 0;
   int ndecay_rho0_pionpm_nHCal = 0;
   int ndecay_phi_kaonpm_nHCal = 0;
@@ -253,7 +253,7 @@ void nHCal_VM_Analysis(){
       }
 
     // event kinematics:
-    cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
+    //cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
     xTruth->Fill(evTruthX[0]);
     Q2Truth->Fill(evTruthQ2[0]);
     
@@ -450,7 +450,8 @@ void nHCal_VM_Analysis(){
 		    kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1]);
 		    
 		    // kaon 1 in nHCal eta acceptance:
-		    if( trueEta_phi_k1 >= eta_min_nhcal && trueEta_phi_k1 <= eta_max_nhcal )
+		    //if( trueEta_phi_k1 >= eta_min_nhcal && trueEta_phi_k1 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal", trueEta_phi_k1))
 		      {
 			kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      }
@@ -785,6 +786,8 @@ void nHCal_VM_Analysis(){
 	  }// End loop over associations    
 	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
+
+    // XXX Do some things on event level after looping over all generated particles and getting all the info:
     
     
     //for(unsigned int k=0; k<trackMomX.GetSize(); k++){ // Loop over all reconstructed tracks, thrown or not                                 

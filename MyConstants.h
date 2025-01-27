@@ -25,9 +25,22 @@ const double kPi = TMath::Pi();               // Value of Pi
 const double kElectronMass = 9.10938356e-31;  // Electron mass in kg
 const double kProtonMass = 1.6726219e-27;     // Proton mass in kg
 
+//From Dhruv - accepts a string cal_name containing the desired calorimeter name and returns true if an eta particle_eta is within acceptance for the given calorimeter
+bool calo_eta_acceptance(const char* cal_name, float particle_eta) {
+    if (cal_name == nhcal) {
+        return (particle_eta >=  eta_min_nhcal && particle_eta <  eta_max_nhcal);
+    } else if (cal_name == bhcal) {
+        return (particle_eta >= eta_min_bhcal && particle_eta < eta_max_bhcal);
+    } else if (cal_name == lfhcal) {
+        return (particle_eta >= eta_min_lfhcal && particle_eta < eta_max_lfhcal);
+    }
+    return false;
+}
+
 // Example: Define some useful functions
 inline double ConvertToGeV(double massInKg) {
   return massInKg * (TMath::Power(10, 9) / speedoflight); // Convert kg to GeV
 }
+
 
 #endif // MY_CONSTANTS_H
