@@ -785,13 +785,12 @@ void nHCal_VM_Analysis(){
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
 
-	//XXXX out the 2 kaons together here? Do the TVector3 survive until here?
+	// Can I put the 2 kaons together here? Do the TVector3 survive until here? -> no, doesn't work "undeclared identifier"
 	// Before going to the next generated particle, pull together some info:
-	if( is_phidecay_kk )
-	  {
-	    cout << "This generated particle was a phi that decayed into KK. Reco eta K1: " <<  recEta_phi_k1 << "Reco eta K2: " <<  recEta_phi_k2 <<  "\n";
-	   
-	  }
+	//if( is_phidecay_kk )
+	//{
+	//  cout << "This generated particle was a phi that decayed into KK. Reco eta K1: " <<  recEta_phi_k1 << "Reco eta K2: " <<  recEta_phi_k2 <<  "\n"; 
+	//}
 	
 	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
