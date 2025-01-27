@@ -450,13 +450,12 @@ void nHCal_VM_Analysis(){
 		    kpmfromphiSimstatus_EndpointZ->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1], partSimStat[daughters_index[i_daughters_begin]+1]);
 		    
 		    // kaon 1 in nHCal eta acceptance:
-		    //if( trueEta_phi_k1 >= eta_min_nhcal && trueEta_phi_k1 <= eta_max_nhcal )
 		    if(calo_eta_acceptance("nhcal", trueEta_phi_k1))
 		      {
 			kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]]);
 		      }
 		    // kaon 2 in nHCal eta acceptance:
-		    if( trueEta_phi_k2 >= eta_min_nhcal && trueEta_phi_k2 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal", trueEta_phi_k2))
 		      {
 			kpmfromphiEndpointZ_nHCal->Fill(partEndpointZ[daughters_index[i_daughters_begin]+1]);
 		      }
@@ -602,7 +601,7 @@ void nHCal_VM_Analysis(){
 		recTheta->Fill(CPartTheta);
 		
 		// nHCal eta acceptance:
-		if( CPartEta >= eta_min_nhcal && CPartEta <= eta_max_nhcal )
+		if(calo_eta_acceptance("nhcal", CPartEta))
 		  {
 		    recP_nHCal->Fill(CPartMom);
 		    recTheta_nHCal->Fill(CPartTheta);
@@ -647,7 +646,7 @@ void nHCal_VM_Analysis(){
 		    pipmfromrho0RecEta->Fill(recEta_rho0_pi1);
 		    
 		    // count the decay pions (reco level) that are within the nHCal acceptance, here pion1:
-		    if( recEta_rho0_pi1 >= eta_min_nhcal && recEta_rho0_pi1 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_rho0_pi1 ))
 		      {
 			ndecay_rho0_pionpm_nHCal++;
 		      }
@@ -662,7 +661,7 @@ void nHCal_VM_Analysis(){
 		    pipmfromrho0RecEta->Fill(recEta_rho0_pi2);
 		    
 		    // count the decay pions (reco level) that are within the nHCal acceptance, here pion2:
-		    if( recEta_rho0_pi2 >= eta_min_nhcal && recEta_rho0_pi2 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_rho0_pi2 ))
 		      {
 			ndecay_rho0_pionpm_nHCal++;
 		      }
@@ -695,7 +694,7 @@ void nHCal_VM_Analysis(){
 		    kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
 		    
 		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
-		    if( recEta_phi_k1 >= eta_min_nhcal && recEta_phi_k1 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_phi_k1 ))
 		      {
 			ndecay_phi_kaonpm_nHCal++;
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
@@ -733,7 +732,7 @@ void nHCal_VM_Analysis(){
 		    kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k2);
 		    
 		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
-		    if( recEta_phi_k2 >= eta_min_nhcal && recEta_phi_k2 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_phi_k2 ))
 		      {
 			ndecay_phi_kaonpm_nHCal++;
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
@@ -748,6 +747,7 @@ void nHCal_VM_Analysis(){
 		    //cout << " K2 rec momentum: "  << recMom_phi_k2.Mag() << ", K2 decay length: " << decaylength_k2 << " \n";
 		    
 		    }// end of phi(1020) decay K2
+		
 	      } // end of phi(1020) decay into KK
 	    // jpsi into ee:
 	    if( is_jpsidecay_ee )
@@ -760,7 +760,7 @@ void nHCal_VM_Analysis(){
 		    epmfromjpsiRecEta->Fill(recEta_jpsi_e1);
 		    
 		    // count the decay electrons (reco level) that are within the nHCal acceptance, here electron1:
-		    if( recEta_jpsi_e1 >= eta_min_nhcal && recEta_jpsi_e1 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_jpsi_e1 ))
 		      {
 			ndecay_jpsi_epm_nHCal++;
 		      }
@@ -775,7 +775,7 @@ void nHCal_VM_Analysis(){
 		    epmfromjpsiRecEta->Fill(recEta_jpsi_e2);
 		    
 		    // count the decay electrons (reco level) that are within the nHCal acceptance, here electron2:
-		    if( recEta_jpsi_e2 >= eta_min_nhcal && recEta_jpsi_e2 <= eta_max_nhcal )
+		    if(calo_eta_acceptance("nhcal",recEta_jpsi_e2 ))
 		      {
 			ndecay_jpsi_epm_nHCal++;
 		      }
@@ -783,7 +783,16 @@ void nHCal_VM_Analysis(){
 		    cout << "          reco daughter-2 eta: " << recEta_jpsi_e2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
 		  }// end of jpsi decay e2
 	      } // end of jpsi decay into ee
-	  }// End loop over associations    
+	  }// End loop over associations
+
+	//XXXX out the 2 kaons together here? Do the TVector3 survive until here?
+	// Before going to the next generated particle, pull together some info:
+	if( is_phidecay_kk )
+	  {
+	    cout << "This generated particle was a phi that decayed into KK. Reco eta K1: " <<  recEta_phi_k1 << "Reco eta K2: " <<  recEta_phi_k2 <<  "\n";
+	   
+	  }
+	
 	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
 
