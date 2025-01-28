@@ -215,6 +215,10 @@ void nHCal_VM_Analysis(){
   int ndecay_phi_kk = 0;
   int ndecay_jpsi_mumu = 0;
   int ndecay_jpsi_ee = 0;
+  // couunt total number of decay daughters in calo (eta) acceptance:
+  int decay_phi_kaonpm_0_nHCal = 0;
+  int decay_phi_kaonpm_1_nHCal = 0;
+  int decay_phi_kaonpm_2_nHCal = 0;
   // count number of particles with non-zero daughters (gen level):
   int nonzero_daughters_kpm = 0;
   // tag decays on generated particle level ( 0 or 1 for a given generated particle ):
@@ -228,6 +232,8 @@ void nHCal_VM_Analysis(){
   int is_phidecay_kk = 0;
   int is_jpsidecay_mumu = 0;
   int is_jpsidecay_ee = 0;
+  // count number of decay daughters in calo (eta) acceptance on geenrated particle (!) level - can be 0, 1, or 2 for 2-body decays:
+  int n_this_decay_phi_kaonpm_rec_nHCal = 0;
   // count total number of decay particles (reco level):
   int ndecay_kpm_mupm_rec = 0; // not yet used
   int ndecay_rho0_pionpm_rec = 0; // not yet used
@@ -294,6 +300,7 @@ void nHCal_VM_Analysis(){
 	is_phidecay_kk = 0;
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
+	n_this_decay_phi_kaonpm_rec_nHCal = 0;
 
 	// partGenStat[i]== 1: stable; 2: decay; 4: beam particle;  21, 23, 61, 62, 63, 71, ... are [di]quark-related)
     //generatorStatus is set in DD4Hep -> Geant4InputAction::setGeneratorStatus. It is possible that it stays in its initial value, 0, "empty". 
@@ -696,12 +703,14 @@ void nHCal_VM_Analysis(){
 		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
 		    if(calo_eta_acceptance("nhcal",recEta_phi_k1 ))
 		      {
-			ndecay_phi_kaonpm_nHCal++;
+			ndecay_phi_kaonpm_nHCal++; // total count
+			n_this_decay_phi_kaonpm_rec_nHCal++; // generated-particle level
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
 			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
 			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k1);
 			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k1);
 		      }
+
 		    
 		    //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
 		    //cout << "          reco daughter-1 eta: " << recEta_phi_k1 << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n";
@@ -734,7 +743,8 @@ void nHCal_VM_Analysis(){
 		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon2:
 		    if(calo_eta_acceptance("nhcal",recEta_phi_k2 ))
 		      {
-			ndecay_phi_kaonpm_nHCal++;
+			ndecay_phi_kaonpm_nHCal++; // total count
+			n_this_decay_phi_kaonpm_rec_nHCal++; // generated-particle level
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
 			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
 			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k2);
@@ -785,12 +795,12 @@ void nHCal_VM_Analysis(){
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
 
-	// Can I put the 2 kaons together here? Do the TVector3 survive until here? -> no, doesn't work "undeclared identifier"
-	// Before going to the next generated particle, pull together some info:
-	//if( is_phidecay_kk )
-	//{
-	//  cout << "This generated particle was a phi that decayed into KK. Reco eta K1: " <<  recEta_phi_k1 << "Reco eta K2: " <<  recEta_phi_k2 <<  "\n"; 
-	//}
+	// Put the information of the decay daughters together here - can't pull kinematics here, tough. Have to tag and count earlier.
+	if( is_phidecay_kk )
+	{
+	  n_this_decay_phi_kaonpm_rec_nHCal = ndecay_phi_kaonpm_nHCal;
+	  cout << "This generated particle was a phi that decayed into KK. Reco kaons in nHCal eta acceptance: " << n_this_decay_phi_kaonpm_rec_nHCal <<"\n"; 
+	} // end phiToKK
 	
 	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
