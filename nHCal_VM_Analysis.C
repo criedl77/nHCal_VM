@@ -798,7 +798,6 @@ void nHCal_VM_Analysis(){
 	// Put the information of the decay daughters together here - can't pull kinematics here, tough. Have to tag and count earlier.
 	if( is_phidecay_kk )
 	{
-	  n_this_decay_phi_kaonpm_rec_nHCal = ndecay_phi_kaonpm_nHCal;
 	  cout << "This generated particle was a phi that decayed into KK. Reco kaons in nHCal eta acceptance: " << n_this_decay_phi_kaonpm_rec_nHCal <<"\n"; 
 	} // end phiToKK
 	
