@@ -798,7 +798,22 @@ void nHCal_VM_Analysis(){
 	// Put the information of the decay daughters together here - can't pull kinematics here, tough. Have to tag and count earlier.
 	if( is_phidecay_kk )
 	{
-	  cout << "This generated particle was a phi that decayed into KK. Reco kaons in nHCal eta acceptance: " << n_this_decay_phi_kaonpm_rec_nHCal <<"\n"; 
+	  cout << "This generated particle was a phi that decayed into KK. Reco kaons in nHCal eta acceptance: " << n_this_decay_phi_kaonpm_rec_nHCal <<"\n";
+
+	  if( n_this_decay_phi_kaonpm_rec_nHCal == 0 )
+	    {
+	      decay_phi_kaonpm_0_nHCal++; 
+	    }
+	  else if( n_this_decay_phi_kaonpm_rec_nHCal == 1 )
+	    {
+	      decay_phi_kaonpm_1_nHCal++;
+	    }
+	  else if( n_this_decay_phi_kaonpm_rec_nHCal == 2 )
+	    {
+	      decay_phi_kaonpm_2_nHCal++;
+	    }
+	  
+	    
 	} // end phiToKK
 	
 	//} // End stable or decay particles condition
@@ -841,6 +856,9 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated phi: " << ngen_phi <<", of which decay into K+ K-: " << ndecay_phi_kk << " \n";
   cout << "         Of these " << 2*ndecay_phi_kk << " decay K+ K-, " << ndecay_phi_kaonpm_rec << " are reconstructed by ePIC (fraction " << fraction_phi_kaonpm_rec << "), and \n ";
   cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction (of generated decay K+ K-) " << fraction_phi_kaonpm_nHCal << " \n";
+  cout << "  --> 0 kaons:" decay_phi_kaonpm_0_nHCal << "\n";
+  cout << "  --> 1 kaons:" decay_phi_kaonpm_1_nHCal << "\n";
+  cout << "  --> 2 kaons:" decay_phi_kaonpm_2_nHCal << "\n";
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
   cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
