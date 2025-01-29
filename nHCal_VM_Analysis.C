@@ -240,7 +240,14 @@ void nHCal_VM_Analysis(){
   int n_this_decay_phi_kaonpm_k2_rec_bHCal = 0;
   int n_this_decay_phi_kaonpm_k2_rec_lfHCal = 0;
   //Array for reco decay daughter HCal acceptances (nHCal - bHCal - lfHCal - any HCal)[k1][k2] - concept taken from Dhruv: 
-  float HCalMatrixphi_kaonpm_rec[4][4]; 
+  float HCalMatrixphi_kaonpm_rec[4][4];
+  for (int k1 = 0; k1 <=3; k1++)
+    {
+      for (int k2 = 0; k2 <=3; k2++)
+	{
+	  HCalMatrixphi_kaonpm_rec[k1][k2]=0.;  
+	}
+    }
   // count total number of decay particles (reco level):
   int ndecay_kpm_mupm_rec = 0; // not yet used
   int ndecay_rho0_pionpm_rec = 0; // not yet used
@@ -877,17 +884,17 @@ void nHCal_VM_Analysis(){
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][0]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, nHCal)
+		  } // end of (lfHCal, nHCal)
 		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][1]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, bHCal)
+		  } // end of (lfHCal, bHCal)
 		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][2]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, lfHCal)
+		  } // end of (lfHCal, lfHCal)
 	      } // end of K1 in lfHCal
 	    																											 
 	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
