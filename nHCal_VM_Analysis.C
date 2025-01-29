@@ -733,13 +733,13 @@ void nHCal_VM_Analysis(){
 		    // use "if" and not "else if" in case I ever will have overlapping acceptances
 		    // count the decay kaons (reco level) that are within the eta acceptance of the other HCals, here kaon1:
 		    if(calo_eta_acceptance("bhcal",recEta_phi_k1 ))
-		    {
-		      n_this_decay_phi_kaonpm_k1_rec_bHCal++; // generated-particle level
-		    }
+		      {
+			n_this_decay_phi_kaonpm_k1_rec_bHCal++; // generated-particle level
+		      }
 		    if(calo_eta_acceptance("lfhcal",recEta_phi_k1 ))
-		    {
-		      n_this_decay_phi_kaonpm_k1_rec_lfHCal++; // generated-particle level
-		    }
+		      {
+			n_this_decay_phi_kaonpm_k1_rec_lfHCal++; // generated-particle level
+		      }
 
 		    
 		    //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
@@ -840,7 +840,7 @@ void nHCal_VM_Analysis(){
 	// for phitoKK:
 	if( is_phidecay_kk )
 	  {
-	    cout << "This generated particle was a phi that decayed into KK. In nHCal acceptance: reco kaon 1: " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", reco kaon 2: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << "\n";
+	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ) \n";
 	    
 	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
 	      {
@@ -957,14 +957,14 @@ void nHCal_VM_Analysis(){
   cout << "         Of these " << 2*ndecay_phi_kk << " decay K+ K-, " << ndecay_phi_kaonpm_rec << " are reconstructed by ePIC (fraction " << fraction_phi_kaonpm_rec << "), and \n ";
   cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction (of generated decay K+ K-) " << fraction_phi_kaonpm_nHCal << " \n";
   cout << "  --> 0 kaons: " << decay_phi_kaonpm_0_nHCal << "\n";
-  cout << "  --> 1 kaons: " << decay_phi_kaonpm_1_nHCal << "\n";
+  cout << "  --> 1 kaon:  " << decay_phi_kaonpm_1_nHCal << "\n";
   cout << "  --> 2 kaons: " << decay_phi_kaonpm_2_nHCal << "\n";
   cout << "Distributions in nHCal (0), bHCal (1), lfHCal (2), and all HCals (3), for (K1, K2): \n";
   for (int k1 = 0; k1 <=3; k1++)
     {
       for (int k2 = 0; k2 <=3; k2++)
 	{
-	  cout << "K1= " << k1 << ", K2= " << k2 << "(K1, K2)= " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
+	  cout << "( K1, K2 ) = (" << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
 	}
     }
   
