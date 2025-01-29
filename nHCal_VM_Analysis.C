@@ -232,8 +232,15 @@ void nHCal_VM_Analysis(){
   int is_phidecay_kk = 0;
   int is_jpsidecay_mumu = 0;
   int is_jpsidecay_ee = 0;
-  // count number of decay daughters in calo (eta) acceptance on geenrated particle (!) level - can be 0, 1, or 2 for 2-body decays:
-  int n_this_decay_phi_kaonpm_rec_nHCal = 0;
+  // count number of each (!) decay daughters in HCalo (eta) acceptances on generated particle (!) level:
+  int n_this_decay_phi_kaonpm_k1_rec_nHCal = 0;
+  int n_this_decay_phi_kaonpm_k1_rec_bHCal = 0;
+  int n_this_decay_phi_kaonpm_k1_rec_lfHCal = 0;
+  int n_this_decay_phi_kaonpm_k2_rec_nHCal = 0;
+  int n_this_decay_phi_kaonpm_k2_rec_bHCal = 0;
+  int n_this_decay_phi_kaonpm_k2_rec_lfHCal = 0;
+  //Array for reco decay daughter HCal acceptances (nHCal - bHCal - lfHCal - any HCal)[k1][k2] - concept taken from Dhruv: 
+  float HCalMatrixphi_kaonpm_rec[4][4]; 
   // count total number of decay particles (reco level):
   int ndecay_kpm_mupm_rec = 0; // not yet used
   int ndecay_rho0_pionpm_rec = 0; // not yet used
@@ -300,7 +307,12 @@ void nHCal_VM_Analysis(){
 	is_phidecay_kk = 0;
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
-	n_this_decay_phi_kaonpm_rec_nHCal = 0;
+	n_this_decay_phi_kaonpm_k1_rec_nHCal = 0;
+	n_this_decay_phi_kaonpm_k1_rec_bHCal = 0;
+	n_this_decay_phi_kaonpm_k1_rec_lfHCal = 0;
+	n_this_decay_phi_kaonpm_k2_rec_nHCal = 0;
+	n_this_decay_phi_kaonpm_k2_rec_bHCal = 0;
+	n_this_decay_phi_kaonpm_k2_rec_lfHCal = 0;
 
 	// partGenStat[i]== 1: stable; 2: decay; 4: beam particle;  21, 23, 61, 62, 63, 71, ... are [di]quark-related)
     //generatorStatus is set in DD4Hep -> Geant4InputAction::setGeneratorStatus. It is possible that it stays in its initial value, 0, "empty". 
@@ -700,16 +712,27 @@ void nHCal_VM_Analysis(){
 		    kpmfromphiRecZdecay->Fill(zdecay_k1);
 		    kpmfromphiRecZdecay_EndpointZ->Fill(partEndpointZ[simuAssoc[j]], zdecay_k1);
 		    
-		    // count and fill the decay kaons (reco level) that are within the nHCal acceptance, here kaon1:
+		    // count and fill the decay kaons (reco level) that are within the nHCal eta acceptance, here kaon1:
 		    if(calo_eta_acceptance("nhcal",recEta_phi_k1 ))
 		      {
 			ndecay_phi_kaonpm_nHCal++; // total count
-			n_this_decay_phi_kaonpm_rec_nHCal++; // generated-particle level
+			n_this_decay_phi_kaonpm_k1_rec_nHCal++; // generated-particle level
+			
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k1);
 			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k1);
 			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k1);
 			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k1);
 		      }
+		    // use "if" and not "else if" in case I ever will have overlapping acceptances
+		    // count the decay kaons (reco level) that are within the eta acceptance of the other HCals, here kaon1:
+		    if(calo_eta_acceptance("bhcal",recEta_phi_k1 ))
+		    {
+		      n_this_decay_phi_kaonpm_k1_rec_bHCal++; // generated-particle level
+		    }
+		    if(calo_eta_acceptance("lfhcal",recEta_phi_k1 ))
+		    {
+		      n_this_decay_phi_kaonpm_k1_rec_lfHCal++; // generated-particle level
+		    }
 
 		    
 		    //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
@@ -744,11 +767,22 @@ void nHCal_VM_Analysis(){
 		    if(calo_eta_acceptance("nhcal",recEta_phi_k2 ))
 		      {
 			ndecay_phi_kaonpm_nHCal++; // total count
-			n_this_decay_phi_kaonpm_rec_nHCal++; // generated-particle level
+			n_this_decay_phi_kaonpm_k2_rec_nHCal++; // generated-particle level
+			
 			kpmfromphiRecMom_nHCal->Fill(recP_phi_k2);
 			kpmfromphiRecTheta_nHCal->Fill(recTheta_phi_k2);
 			kpmfromphiRecDecayLength_nHCal->Fill(decaylength_k2);
 			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k2);
+		      }
+		    // use "if" and not "else if" in case I ever will have overlapping acceptances
+		    // count the decay kaons (reco level) that are within the eta acceptance of the other HCals, here kaon1:
+		    if(calo_eta_acceptance("bhcal",recEta_phi_k2 ))
+		      {
+			n_this_decay_phi_kaonpm_k2_rec_bHCal++; // generated-particle level
+		      }
+		    if(calo_eta_acceptance("lfhcal",recEta_phi_k2 ))
+		      {
+			n_this_decay_phi_kaonpm_k2_rec_lfHCal++; // generated-particle level
 		      }
 		    
 		    
@@ -795,22 +829,27 @@ void nHCal_VM_Analysis(){
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
 
-	// Put the information of the decay daughters together here - can't pull kinematics here, tough. Have to tag and count earlier.
+	// Put the information of the reco decay daughters together:
+	// for phitoKK:
 	if( is_phidecay_kk )
 	{
-	  cout << "This generated particle was a phi that decayed into KK. Reco kaons in nHCal eta acceptance: " << n_this_decay_phi_kaonpm_rec_nHCal <<"\n";
+	  cout << "This generated particle was a phi that decayed into KK. In nHCal acceptance: reco kaon 1: " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", reco kaon 2: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << "\n";
 
-	  if( n_this_decay_phi_kaonpm_rec_nHCal == 0 )
+	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
 	    {
-	      decay_phi_kaonpm_0_nHCal++; 
+	      decay_phi_kaonpm_0_nHCal++;
 	    }
-	  else if( n_this_decay_phi_kaonpm_rec_nHCal == 1 )
+	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )
 	    {
 	      decay_phi_kaonpm_1_nHCal++;
 	    }
-	  else if( n_this_decay_phi_kaonpm_rec_nHCal == 2 )
+	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 2 )
 	    {
 	      decay_phi_kaonpm_2_nHCal++;
+	    }
+	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal > 2 )
+	    {
+	       cout << "*** WARNING: number of phi decay daughters larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
 	    }
 	  
 	    
@@ -856,9 +895,9 @@ void nHCal_VM_Analysis(){
   cout << "Number of generated phi: " << ngen_phi <<", of which decay into K+ K-: " << ndecay_phi_kk << " \n";
   cout << "         Of these " << 2*ndecay_phi_kk << " decay K+ K-, " << ndecay_phi_kaonpm_rec << " are reconstructed by ePIC (fraction " << fraction_phi_kaonpm_rec << "), and \n ";
   cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction (of generated decay K+ K-) " << fraction_phi_kaonpm_nHCal << " \n";
-  cout << "  --> 0 kaons:" << decay_phi_kaonpm_0_nHCal << "\n";
-  cout << "  --> 1 kaons:" << decay_phi_kaonpm_1_nHCal << "\n";
-  cout << "  --> 2 kaons:" << decay_phi_kaonpm_2_nHCal << "\n";
+  cout << "  --> 0 kaons: " << decay_phi_kaonpm_0_nHCal << "\n";
+  cout << "  --> 1 kaons: " << decay_phi_kaonpm_1_nHCal << "\n";
+  cout << "  --> 2 kaons: " << decay_phi_kaonpm_2_nHCal << "\n";
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
   cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
