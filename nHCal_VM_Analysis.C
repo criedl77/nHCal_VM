@@ -832,9 +832,64 @@ void nHCal_VM_Analysis(){
 	// Put the information of the reco decay daughters together:
 	// for phitoKK:
 	if( is_phidecay_kk )
-	{
-	  cout << "This generated particle was a phi that decayed into KK. In nHCal acceptance: reco kaon 1: " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", reco kaon 2: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << "\n";
-
+	  {
+	    cout << "This generated particle was a phi that decayed into KK. In nHCal acceptance: reco kaon 1: " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", reco kaon 2: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << "\n";
+	    
+	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
+	      {
+		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[0][0]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (nHCal, nHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[0][1]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (nHCal, bHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[0][2]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (nHCal, lfHCal)
+	      } // end of K1 in nHCal
+	    else if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
+	      {
+		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[1][0]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, nHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[1][1]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, bHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[1][2]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, lfHCal)
+	      } // end of K1 in bHCal
+	    else if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
+	      {
+		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[2][0]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, nHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[2][1]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, bHCal)
+		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		  {
+		    HCalMatrixphi_kaonpm_rec[2][2]++;
+		    HCalMatrixphi_kaonpm_rec[3][3]++;
+		  } // end of (bHCal, lfHCal)
+	      } // end of K1 in lfHCal
+	    																											 
 	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
 	    {
 	      decay_phi_kaonpm_0_nHCal++;
@@ -850,8 +905,7 @@ void nHCal_VM_Analysis(){
 	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal > 2 )
 	    {
 	       cout << "*** WARNING: number of phi decay daughters larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
-	    }
-	  
+	    }	  
 	    
 	} // end phiToKK
 	
@@ -898,6 +952,15 @@ void nHCal_VM_Analysis(){
   cout << "  --> 0 kaons: " << decay_phi_kaonpm_0_nHCal << "\n";
   cout << "  --> 1 kaons: " << decay_phi_kaonpm_1_nHCal << "\n";
   cout << "  --> 2 kaons: " << decay_phi_kaonpm_2_nHCal << "\n";
+  cout << "Distributions in nHCal (0), bHCal (1), lfHCal (2), and all HCals (3), for (K1, K2): \n"
+    for (int k1 = 0; k1 <=3; k1++)
+      {
+	for (int k2 = 0; k2 <=3; k2++)
+	  {
+	    cout << "K1= " << k1 << ", K2= " << k2 << "(K1, K2)= " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
+	  }
+      }
+  
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
   cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
