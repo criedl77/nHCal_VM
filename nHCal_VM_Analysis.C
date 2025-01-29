@@ -952,14 +952,14 @@ void nHCal_VM_Analysis(){
   cout << "  --> 0 kaons: " << decay_phi_kaonpm_0_nHCal << "\n";
   cout << "  --> 1 kaons: " << decay_phi_kaonpm_1_nHCal << "\n";
   cout << "  --> 2 kaons: " << decay_phi_kaonpm_2_nHCal << "\n";
-  cout << "Distributions in nHCal (0), bHCal (1), lfHCal (2), and all HCals (3), for (K1, K2): \n"
-    for (int k1 = 0; k1 <=3; k1++)
-      {
-	for (int k2 = 0; k2 <=3; k2++)
-	  {
-	    cout << "K1= " << k1 << ", K2= " << k2 << "(K1, K2)= " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
-	  }
-      }
+  cout << "Distributions in nHCal (0), bHCal (1), lfHCal (2), and all HCals (3), for (K1, K2): \n";
+  for (int k1 = 0; k1 <=3; k1++)
+    {
+      for (int k2 = 0; k2 <=3; k2++)
+	{
+	  cout << "K1= " << k1 << ", K2= " << k2 << "(K1, K2)= " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
+	}
+    }
   
   cout << "Number of generated omega: " << ngen_omega << " \n";
   cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
