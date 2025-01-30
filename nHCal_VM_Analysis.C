@@ -787,10 +787,14 @@ void nHCal_VM_Analysis(){
 			kpmfromphiRecZdecay_nHCal->Fill(zdecay_k2);
 		      }
 		    // use "if" and not "else if" in case I ever will have overlapping acceptances
-		    // count the decay kaons (reco level) that are within the eta acceptance of the other HCals, here kaon1:
+		    // count the decay kaons (reco level) that are within the eta acceptance of the other HCals, here kaon2:
 		    if(calo_eta_acceptance("bhcal",recEta_phi_k2 ))
 		      {
 			n_this_decay_phi_kaonpm_k2_rec_bHCal++; // generated-particle level
+		      }
+		    if( !calo_eta_acceptance("nhcal",recEta_phi_k2 ) && !calo_eta_acceptance("lfhcal",recEta_phi_k2 ) )
+		      {
+			cout << "***** event " << ievgen << " - reco K2 is not in nHCal and not in lfhcal, eta = " << recEta_phi_k2  << ", bhcal acceptance function: " << calo_eta_acceptance("bhcal",recEta_phi_k2 ) << " \n";
 		      }
 		    if(calo_eta_acceptance("lfhcal",recEta_phi_k2 ))
 		      {
