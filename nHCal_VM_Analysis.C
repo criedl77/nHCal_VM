@@ -915,7 +915,7 @@ void nHCal_VM_Analysis(){
 	    }
 
 	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																				 {
-	    cout << "***EVENT with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << "K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << "lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << "K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
+	    cout << "***EVENT with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
 	  }
 																				       
 	    
