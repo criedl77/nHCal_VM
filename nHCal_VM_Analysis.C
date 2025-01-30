@@ -267,7 +267,7 @@ void nHCal_VM_Analysis(){
 
     ievgen++;
     
-    cout << "+ Entering event #: " << ievgen << " \n";
+    //cout << "+ Entering event #: " << ievgen << " \n";
     if(ievgen % 10000 == 0 && ievgen != 0 ){
       cout << "+ processed " << ievgen << " events \n";
       }
