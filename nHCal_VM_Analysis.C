@@ -909,7 +909,7 @@ void nHCal_VM_Analysis(){
 		  } // end of (lfHCal, lfHCal)
 	      } // end of K1 in lfHCal
 
-	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ), Matrix[1][1]: " << HCalMatrixphi_kaonpm_rec[1][1] << " \n";
+	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ), Matrix[0][1]: " << HCalMatrixphi_kaonpm_rec[0][1] << ", Matrix[1][0]: " << HCalMatrixphi_kaonpm_rec[1][0] << " \n";
 																												
 	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
 	    {
