@@ -736,7 +736,7 @@ void nHCal_VM_Analysis(){
 		      {
 			n_this_decay_phi_kaonpm_k1_rec_bHCal++; // generated-particle level
 		      }
-		    if(!calo_eta_acceptance("bhcal",recEta_phi_k1 ) && (recEta_phi_k1>= eta_min_bhcal || recEta_phi_k1< eta_min_bhcal))
+		    if(!calo_eta_acceptance("bhcal",recEta_phi_k1 ) && (recEta_phi_k1>= eta_min_bhcal || recEta_phi_k1< eta_max_bhcal))
 		      {
 			cout <<"@@@@@ Houston we have a problem, event" <<ievgen << ", recEta_phi_k1 = " << recEta_phi_k1 << ", bHCal acceptance function = " << calo_eta_acceptance("bhcal",recEta_phi_k1 ) << "  \n";
 		      }
