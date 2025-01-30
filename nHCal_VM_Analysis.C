@@ -896,7 +896,7 @@ void nHCal_VM_Analysis(){
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (lfHCal, lfHCal)
 	      } // end of K1 in lfHCal
-	    																											 
+																												
 	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
 	    {
 	      decay_phi_kaonpm_0_nHCal++;
@@ -912,7 +912,12 @@ void nHCal_VM_Analysis(){
 	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal > 2 )
 	    {
 	       cout << "*** WARNING: number of phi decay daughters larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
-	    }	  
+	    }
+
+	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																				 {
+	    cout << "***EVENT with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << "K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << "lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << "K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
+	  }
+																				       
 	    
 	} // end phiToKK
 	
