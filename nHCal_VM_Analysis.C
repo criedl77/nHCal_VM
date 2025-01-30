@@ -740,6 +740,11 @@ void nHCal_VM_Analysis(){
 		      {
 			n_this_decay_phi_kaonpm_k1_rec_lfHCal++; // generated-particle level
 		      }
+		    // check if K1 is any HCal acceptance:
+		    if( !calo_eta_acceptance("nhcal",recEta_phi_k1 ) && !calo_eta_acceptance("bhcal",recEta_phi_k1 ) && !calo_eta_acceptance("lfhcal",recEta_phi_k1 ) )
+		      {
+			cout << "*** reco K1 is in no HCal acceptance, eta = " << recEta_phi_k1  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+		      }
 
 		    
 		    //cout << "---> Event " << ievgen << " phi(1020) decay, reco index phi(1020): " << j << " \n";
@@ -791,6 +796,11 @@ void nHCal_VM_Analysis(){
 		      {
 			n_this_decay_phi_kaonpm_k2_rec_lfHCal++; // generated-particle level
 		      }
+		    // check if K2 is any HCal acceptance:
+		    if( !calo_eta_acceptance("nhcal",recEta_phi_k2 ) && !calo_eta_acceptance("bhcal",recEta_phi_k2 ) && !calo_eta_acceptance("lfhcal",recEta_phi_k2 ) )
+		      {
+			cout << "*** reco K2 is in no HCal acceptance, eta = " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+		      }
 		    
 		    
 		    //cout << "          reco daughter-2 eta: " << recEta_phi_k2  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
@@ -840,7 +850,7 @@ void nHCal_VM_Analysis(){
 	// for phitoKK:
 	if( is_phidecay_kk )
 	  {
-	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ) \n";
+	    //cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ) \n";
 	    
 	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
 	      {
@@ -890,7 +900,7 @@ void nHCal_VM_Analysis(){
 		    HCalMatrixphi_kaonpm_rec[2][1]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (lfHCal, bHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+	if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][2]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
@@ -914,9 +924,9 @@ void nHCal_VM_Analysis(){
 	       cout << "*** WARNING: number of phi decay daughters larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
 	    }
 
-	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																				 {
-	    cout << "***EVENT with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
-	  }
+	  // if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )						//														 {
+	    //cout << "***EVENT with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
+	  //}
 																				       
 	    
 	} // end phiToKK
