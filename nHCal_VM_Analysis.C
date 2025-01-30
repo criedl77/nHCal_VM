@@ -840,7 +840,7 @@ void nHCal_VM_Analysis(){
 	// for phitoKK:
 	if( is_phidecay_kk )
 	  {
-	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K: " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ) \n";
+	    cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ) \n";
 	    
 	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
 	      {
@@ -849,48 +849,48 @@ void nHCal_VM_Analysis(){
 		    HCalMatrixphi_kaonpm_rec[0][0]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (nHCal, nHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[0][1]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (nHCal, bHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[0][2]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (nHCal, lfHCal)
 	      } // end of K1 in nHCal
-	    else if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
+	    if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
 	      {
 		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[1][0]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (bHCal, nHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[1][1]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (bHCal, bHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[1][2]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (bHCal, lfHCal)
 	      } // end of K1 in bHCal
-	    else if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
+	    if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
 	      {
 		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][0]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (lfHCal, nHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][1]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
 		  } // end of (lfHCal, bHCal)
-		else if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		  {
 		    HCalMatrixphi_kaonpm_rec[2][2]++;
 		    HCalMatrixphi_kaonpm_rec[3][3]++;
@@ -964,7 +964,7 @@ void nHCal_VM_Analysis(){
     {
       for (int k2 = 0; k2 <=3; k2++)
 	{
-	  cout << "( K1, K2 ) = (" << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
+	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
 	}
     }
   
