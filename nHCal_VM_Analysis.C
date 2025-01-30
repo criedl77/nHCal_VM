@@ -738,7 +738,7 @@ void nHCal_VM_Analysis(){
 		      }
 		    if(!calo_eta_acceptance("bhcal",recEta_phi_k1 ) && (recEta_phi_k1>= eta_min_bhcal || recEta_phi_k1< eta_min_bhcal))
 		      {
-			cout <<"@@@@@ Houston we have a problem, event" <<ievgen << " \n";
+			cout <<"@@@@@ Houston we have a problem, event" <<ievgen << ", recEta_phi_k1 = " << recEta_phi_k1 << ", bHCal acceptance function = " << calo_eta_acceptance("bhcal",recEta_phi_k1 ) << "  \n";
 		      }
 		    
 		    if(calo_eta_acceptance("lfhcal",recEta_phi_k1 ))
