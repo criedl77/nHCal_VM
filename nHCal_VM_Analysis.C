@@ -142,7 +142,7 @@ void nHCal_VM_Analysis(){
   // eta phi(1020)
   TH1D *phiEta = new TH1D("phiEta","Eta of thrown #phi(1020);#eta",120,-6.,6.);
   TH1D *kpmfromphiEta = new TH1D("kpmfromphiEta","generated #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
-  TH1D *kpmfromphiRecEta = new TH1D("kpmfromphiRecEta","reconstructed #eta of K^{#pm} from #phi(1020) decay;#eta",120,-6.,6.);
+  TH1D *kpmfromphiRecEta = new TH1D("kpmfromphiRecEta","reconstructed #eta of K^{#pm} from #phi(1020) decay;#eta",120,-7.,7.);
 
   TH1D *jpsiEta = new TH1D("jpsiEta","Eta of thrown J/#psi;#eta",120,-6.,6.);
   TH1D *epmfromjpsiEta = new TH1D("epmfromjpsiEta","generated #eta of e^{#pm} from J/#psi decay;#eta",120,-6.,6.);
@@ -743,7 +743,7 @@ void nHCal_VM_Analysis(){
 		    // check if K1 is any HCal acceptance:
 		    if( !calo_eta_acceptance("nhcal",recEta_phi_k1 ) && !calo_eta_acceptance("bhcal",recEta_phi_k1 ) && !calo_eta_acceptance("lfhcal",recEta_phi_k1 ) )
 		      {
-			cout << "*** reco K1 is in no HCal acceptance, eta = " << recEta_phi_k1  << ", reco index daughter-2: " << daughters_index[i_daughters_begin]+1 << " \n\n";
+			cout << "*** reco K1 is in no HCal acceptance, eta = " << recEta_phi_k1  << ", reco index daughter-1: " << daughters_index[i_daughters_begin] << " \n\n";
 		      }
 
 		    
