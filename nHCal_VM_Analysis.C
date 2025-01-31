@@ -871,58 +871,73 @@ void nHCal_VM_Analysis(){
 
 	    // apply the tag:
 	    if(is_phidecay_kk_reco == 1)
-	      {
+	      {	
 		if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
 		  {
+		    HCalMatrixphi_kaonpm_rec[0][3]++;
+		    
 		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[0][0]++;
+			HCalMatrixphi_kaonpm_rec[3][0]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (nHCal, nHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[0][1]++;
+			HCalMatrixphi_kaonpm_rec[3][1]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (nHCal, bHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[0][2]++;
+			HCalMatrixphi_kaonpm_rec[3][2]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (nHCal, lfHCal)
 		  } // end of K1 in nHCal
 		if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
 		  {
+		    HCalMatrixphi_kaonpm_rec[1][3]++;
+		    
 		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[1][0]++;
+			HCalMatrixphi_kaonpm_rec[3][0]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (bHCal, nHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[1][1]++;
+			HCalMatrixphi_kaonpm_rec[3][1]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (bHCal, bHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[1][2]++;
+			HCalMatrixphi_kaonpm_rec[3][2]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (bHCal, lfHCal)
 		  } // end of K1 in bHCal
 		if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
 		  {
+		    HCalMatrixphi_kaonpm_rec[2][3]++;
+		    
 		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[2][0]++;
+			HCalMatrixphi_kaonpm_rec[3][0]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (lfHCal, nHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[2][1]++;
+			HCalMatrixphi_kaonpm_rec[3][1]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (lfHCal, bHCal)
 		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
 		      {
 			HCalMatrixphi_kaonpm_rec[2][2]++;
+			HCalMatrixphi_kaonpm_rec[3][2]++;
 			HCalMatrixphi_kaonpm_rec[3][3]++;
 		      } // end of (lfHCal, lfHCal)
 		  } // end of K1 in lfHCal
@@ -945,10 +960,6 @@ void nHCal_VM_Analysis(){
 		  {
 		    cout << "*** WARNING: number of reco phi decay daughters in nHCal larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
 		  }
-	     
-		//if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																			//	 {
-	    // cout << "***EVENT " << ievgen << " with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
-	    //}
 		
 	     } //end of "both kaons were reco by ePIC tracking and in the acceptance of any HCal"
 	    
