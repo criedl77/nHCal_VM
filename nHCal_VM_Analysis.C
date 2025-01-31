@@ -864,7 +864,7 @@ void nHCal_VM_Analysis(){
 	if( is_phidecay_kk )
 	  {
 	    // set the tag:
-	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal + n_this_decay_phi_kaonpm_k2_rec_nHCal + n_this_decay_phi_kaonpm_k1_rec_bHCal + n_this_decay_phi_kaonpm_k2_rec_bHCal + n_this_decay_phi_kaonpm_k1_rec_lfHCal + n_this_decay_phi_kaonpm_k2_rec_lfHCal = 2 )
+	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal + n_this_decay_phi_kaonpm_k2_rec_nHCal + n_this_decay_phi_kaonpm_k1_rec_bHCal + n_this_decay_phi_kaonpm_k2_rec_bHCal + n_this_decay_phi_kaonpm_k1_rec_lfHCal + n_this_decay_phi_kaonpm_k2_rec_lfHCal == 2 )
 	      {
 		is_phidecay_kk_reco = 1;
 	      }
