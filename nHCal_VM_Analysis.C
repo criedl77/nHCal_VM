@@ -230,6 +230,7 @@ void nHCal_VM_Analysis(){
   int is_rho0decay_mumu = 0;
   int is_rho0decay_ee = 0;
   int is_phidecay_kk = 0;
+  int is_phidecay_kk_reco = 0; // tag that checks if both daughters are reco
   int is_jpsidecay_mumu = 0;
   int is_jpsidecay_ee = 0;
   // count number of each (!) decay daughters in HCalo (eta) acceptances on generated particle (!) level:
@@ -303,7 +304,7 @@ void nHCal_VM_Analysis(){
 	simulatorStatus->Fill(partSimStat[i]);
 	h_idaughters->Fill(i_daughters);
 
-	// reset particle decays for each new generated particle:
+	// reset particle decays on generated level for each new generated particle:
 	is_kpmdecay_mupm = 0;
 	is_kpmdecay_pipm = 0;
 	is_kpmdecay_em = 0;
@@ -312,6 +313,7 @@ void nHCal_VM_Analysis(){
 	is_rho0decay_mumu = 0;
 	is_rho0decay_ee = 0;
 	is_phidecay_kk = 0;
+	is_phidecay_kk_reco = 0; // were daughters reco?
 	is_jpsidecay_mumu = 0;
 	is_jpsidecay_ee = 0;
 	n_this_decay_phi_kaonpm_k1_rec_nHCal = 0;
@@ -320,6 +322,8 @@ void nHCal_VM_Analysis(){
 	n_this_decay_phi_kaonpm_k2_rec_nHCal = 0;
 	n_this_decay_phi_kaonpm_k2_rec_bHCal = 0;
 	n_this_decay_phi_kaonpm_k2_rec_lfHCal = 0;
+	// tag if for a given decay, all daughters were reconstructed:
+	
 
 	// partGenStat[i]== 1: stable; 2: decay; 4: beam particle;  21, 23, 61, 62, 63, 71, ... are [di]quark-related)
     //generatorStatus is set in DD4Hep -> Geant4InputAction::setGeneratorStatus. It is possible that it stays in its initial value, 0, "empty". 
@@ -736,10 +740,10 @@ void nHCal_VM_Analysis(){
 		      {
 			n_this_decay_phi_kaonpm_k1_rec_bHCal++; // generated-particle level
 		      }
-		    if(!calo_eta_acceptance("bhcal",recEta_phi_k1 ) && recEta_phi_k1>= eta_min_bhcal && recEta_phi_k1< eta_max_bhcal)
-		      {
-			cout <<"@@@@@ Houston we have a problem, event" <<ievgen << ", recEta_phi_k1 = " << recEta_phi_k1 << ", bHCal acceptance function = " << calo_eta_acceptance("bhcal",recEta_phi_k1 ) << "  \n";
-		      }
+		    //if(!calo_eta_acceptance("bhcal",recEta_phi_k1 ) && recEta_phi_k1>= eta_min_bhcal && recEta_phi_k1< eta_max_bhcal)
+		    //{
+		    //	cout <<"@@@@@ Houston we have a problem, event" <<ievgen << ", recEta_phi_k1 = " << recEta_phi_k1 << ", bHCal acceptance function = " << calo_eta_acceptance("bhcal",recEta_phi_k1 ) << "  \n";
+		    //}
 		    
 		    if(calo_eta_acceptance("lfhcal",recEta_phi_k1 ))
 		      {
@@ -855,90 +859,100 @@ void nHCal_VM_Analysis(){
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
 
-	// Put the information of the reco decay daughters together:
+	// Put the information of the reco decay daughters together - but only for those events were the decay happened on generated level *and* all decay daughters were reco by ePIC tracking *and* in the eta acceptance of any HCal:
 	// for phitoKK:
 	if( is_phidecay_kk )
 	  {
-	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
+	    // set the tag:
+	    if( n_this_decay_phi_kaonpm_k1_rec_nHCal + n_this_decay_phi_kaonpm_k2_rec_nHCal + n_this_decay_phi_kaonpm_k1_rec_bHCal + n_this_decay_phi_kaonpm_k2_rec_bHCal + n_this_decay_phi_kaonpm_k1_rec_lfHCal + n_this_decay_phi_kaonpm_k2_rec_lfHCal = 2 )
 	      {
-		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[0][0]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (nHCal, nHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[0][1]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (nHCal, bHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[0][2]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (nHCal, lfHCal)
-	      } // end of K1 in nHCal
-	    if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
-	      {
-		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[1][0]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, nHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[1][1]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, bHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[1][2]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (bHCal, lfHCal)
-	      } // end of K1 in bHCal
-	    if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
-	      {
-		if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[2][0]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (lfHCal, nHCal)
-		if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[2][1]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (lfHCal, bHCal)
-	if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
-		  {
-		    HCalMatrixphi_kaonpm_rec[2][2]++;
-		    HCalMatrixphi_kaonpm_rec[3][3]++;
-		  } // end of (lfHCal, lfHCal)
-	      } // end of K1 in lfHCal
+		is_phidecay_kk_reco = 1;
+	      }
 
-	    //cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ), Matrix[0][1]: " << HCalMatrixphi_kaonpm_rec[0][1] << ", Matrix[1][0]: " << HCalMatrixphi_kaonpm_rec[1][0] << " \n";
-																												
-	  if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
-	    {
-	      decay_phi_kaonpm_0_nHCal++;
-	    }
-	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )
-	    {
-	      decay_phi_kaonpm_1_nHCal++;
-	    }
-	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 2 )
-	    {
-	      decay_phi_kaonpm_2_nHCal++;
-	    }
-	  else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal > 2 )
-	    {
-	       cout << "*** WARNING: number of phi decay daughters larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
-	    }
-
-	  //if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																			//	 {
-	  // cout << "***EVENT " << ievgen << " with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
-	  //}
-																				       
+	    // apply the tag:
+	    if(is_phidecay_kk_reco == 1)
+	      {
+		if( n_this_decay_phi_kaonpm_k1_rec_nHCal )
+		  {
+		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[0][0]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (nHCal, nHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[0][1]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (nHCal, bHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[0][2]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (nHCal, lfHCal)
+		  } // end of K1 in nHCal
+		if( n_this_decay_phi_kaonpm_k1_rec_bHCal )
+		  {
+		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[1][0]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (bHCal, nHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[1][1]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (bHCal, bHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[1][2]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (bHCal, lfHCal)
+		  } // end of K1 in bHCal
+		if( n_this_decay_phi_kaonpm_k1_rec_lfHCal )
+		  {
+		    if( n_this_decay_phi_kaonpm_k2_rec_nHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[2][0]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (lfHCal, nHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_bHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[2][1]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (lfHCal, bHCal)
+		    if( n_this_decay_phi_kaonpm_k2_rec_lfHCal )
+		      {
+			HCalMatrixphi_kaonpm_rec[2][2]++;
+			HCalMatrixphi_kaonpm_rec[3][3]++;
+		      } // end of (lfHCal, lfHCal)
+		  } // end of K1 in lfHCal
+		
+		//cout << "This generated particle was a phi that decayed into KK. In acceptance (nHCal, bHCal, lfHCal) reco K1: ( " << n_this_decay_phi_kaonpm_k1_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k1_rec_lfHCal << " ), reco K2: ( " << n_this_decay_phi_kaonpm_k2_rec_nHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_bHCal << ", "<< n_this_decay_phi_kaonpm_k2_rec_lfHCal <<" ), Matrix[0][1]: " << HCalMatrixphi_kaonpm_rec[0][1] << ", Matrix[1][0]: " << HCalMatrixphi_kaonpm_rec[1][0] << " \n";
+		
+		if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 0 )
+		  {
+		    decay_phi_kaonpm_0_nHCal++;
+		  }
+		else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )
+		  {
+		    decay_phi_kaonpm_1_nHCal++;
+		  }
+		else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 2 )
+		  {
+		    decay_phi_kaonpm_2_nHCal++;
+		  }
+		else if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal > 2 )
+		  {
+		    cout << "*** WARNING: number of reco phi decay daughters in nHCal larger than 2, " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << " \n";
+		  }
+	     
+		//if( n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal == 1 )																			//	 {
+	    // cout << "***EVENT " << ievgen << " with 1 reco kaon in nHCal: " << n_this_decay_phi_kaonpm_k1_rec_nHCal +  n_this_decay_phi_kaonpm_k2_rec_nHCal << ", with the other counts - bHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_bHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_bHCal << ", lfHCal K1: " << n_this_decay_phi_kaonpm_k1_rec_lfHCal << ", K2: " << n_this_decay_phi_kaonpm_k2_rec_lfHCal << "\n";
+	    //}
+		
+	     } //end of "both kaons were reco by ePIC tracking and in the acceptance of any HCal"
 	    
-	} // end phiToKK
+	  } // end isphiToKK
 	
 	//} // End stable or decay particles condition
       } // End loop over thrown particles, within that event
