@@ -991,6 +991,16 @@ void nHCal_VM_Analysis(){
   double fraction_jpsi_epm_nHCal = 0.;
   fraction_jpsi_epm_nHCal = ndecay_jpsi_ee?(double(ndecay_jpsi_epm_nHCal)/(2*double(ndecay_jpsi_ee))):0;
   //
+  float HCalMatrixphi_kaonpm_rec_fraction[4][4];
+  for (int k1 = 0; k1 <=3; k1++)
+    {
+      for (int k2 = 0; k2 <=3; k2++)
+	{
+	  HCalMatrixphi_kaonpm_rec_fraction[k1][k2]=HCalMatrixphi_kaonpm_rec[3][3]?(double(HCalMatrixphi_kaonpm_rec[k1][k2])/double(HCalMatrixphi_kaonpm_rec[3][3])):0;  
+	}
+    }
+
+  
   
   cout << "Number of generated events: " << ievgen << " \n\n";
   cout << "Number of generated electrons +-: " << ngen_electrons << " \n";
@@ -1013,7 +1023,7 @@ void nHCal_VM_Analysis(){
     {
       for (int k2 = 0; k2 <=3; k2++)
 	{
-	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << "\n";  
+	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << " , fraction: " << HCalMatrixphi_kaonpm_rec_fraction[k1][k2] <<"\n";  
 	}
     }
   
