@@ -996,7 +996,7 @@ void nHCal_VM_Analysis(){
     {
       for (int k2 = 0; k2 <=3; k2++)
 	{
-	  HCalMatrixphi_kaonpm_rec_fraction[k1][k2]=HCalMatrixphi_kaonpm_rec[3][3]?(double(HCalMatrixphi_kaonpm_rec[k1][k2])/double(HCalMatrixphi_kaonpm_rec[3][3])):0;  
+	  HCalMatrixphi_kaonpm_rec_fraction[k1][k2]=HCalMatrixphi_kaonpm_rec[3][3]?(100*double(HCalMatrixphi_kaonpm_rec[k1][k2])/double(HCalMatrixphi_kaonpm_rec[3][3])):0;  
 	}
     }
 
@@ -1023,7 +1023,7 @@ void nHCal_VM_Analysis(){
     {
       for (int k2 = 0; k2 <=3; k2++)
 	{
-	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << " , fraction: " << HCalMatrixphi_kaonpm_rec_fraction[k1][k2] <<"\n";  
+	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << " , fraction [%]: " << HCalMatrixphi_kaonpm_rec_fraction[k1][k2] <<"\n";  
 	}
     }
   
