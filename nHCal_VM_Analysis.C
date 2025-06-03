@@ -81,10 +81,10 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
-  // Get reconstructed track information:
-  TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
-  TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
-  TTreeReaderArray<float> trackMomZ(tree_reader, "ReconstructedChargedParticles.momentum.z");
+  // Get reconstructed track information: // 2025-06-03 update float --> double
+  TTreeReaderArray<double> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
+  TTreeReaderArray<double> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
+  TTreeReaderArray<double> trackMomZ(tree_reader, "ReconstructedChargedParticles.momentum.z");
   TTreeReaderArray<float> trackEnergy(tree_reader, "ReconstructedChargedParticles.energy");
 
   // Get associations between MCParticles and ReconstructedChargedParticles:
