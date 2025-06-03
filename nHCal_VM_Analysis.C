@@ -69,9 +69,11 @@ void nHCal_VM_Analysis(){
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
   TTreeReaderArray<int> partSimStat(tree_reader, "MCParticles.simulatorStatus");
+  // update MCParticles.momentum.xyz float --> double (2025-06-03)
   TTreeReaderArray<float> partMomX(tree_reader, "MCParticles.momentum.x");
   TTreeReaderArray<float> partMomY(tree_reader, "MCParticles.momentum.y");
   TTreeReaderArray<float> partMomZ(tree_reader, "MCParticles.momentum.z");
+  //
   TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
   TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
   TTreeReaderArray<double> partEndpointX(tree_reader, "MCParticles.endpoint.x");
@@ -81,10 +83,10 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
-  // Get reconstructed track information: // 2025-06-03 update float --> double
-  TTreeReaderArray<double> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
-  TTreeReaderArray<double> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
-  TTreeReaderArray<double> trackMomZ(tree_reader, "ReconstructedChargedParticles.momentum.z");
+  // Get reconstructed track information: 
+  TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
+  TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
+  TTreeReaderArray<float> trackMomZ(tree_reader, "ReconstructedChargedParticles.momentum.z");
   TTreeReaderArray<float> trackEnergy(tree_reader, "ReconstructedChargedParticles.energy");
 
   // Get associations between MCParticles and ReconstructedChargedParticles:
