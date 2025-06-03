@@ -70,9 +70,9 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
   TTreeReaderArray<int> partSimStat(tree_reader, "MCParticles.simulatorStatus");
   // update MCParticles.momentum.xyz float --> double (2025-06-03)
-  TTreeReaderArray<float> partMomX(tree_reader, "MCParticles.momentum.x");
-  TTreeReaderArray<float> partMomY(tree_reader, "MCParticles.momentum.y");
-  TTreeReaderArray<float> partMomZ(tree_reader, "MCParticles.momentum.z");
+  TTreeReaderArray<double> partMomX(tree_reader, "MCParticles.momentum.x");
+  TTreeReaderArray<double> partMomY(tree_reader, "MCParticles.momentum.y");
+  TTreeReaderArray<double> partMomZ(tree_reader, "MCParticles.momentum.z");
   //
   TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
   TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
