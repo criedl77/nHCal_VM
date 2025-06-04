@@ -273,13 +273,13 @@ void nHCal_VM_Analysis(int RecChaPar){
 
     ievgen++;
     
-    //cout << "+ Entering event #: " << ievgen << " \n";
+    cout << "+ Entering event #: " << ievgen << " \n";
     if(ievgen % 10000 == 0 && ievgen != 0 ){
       cout << "+ processed " << ievgen << " events \n";
       }
 
     // event kinematics:
-    //cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
+    cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
     xTruth->Fill(evTruthX[0]);
     Q2Truth->Fill(evTruthQ2[0]);
     
