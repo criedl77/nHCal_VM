@@ -19,51 +19,6 @@ void nHCal_VM_Plotting(TString strang){
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
   
-  // Define name of input file (= output file of nHCal_VM_Analysis.C):
-  //TString strang = "pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_5.0001.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_vtxfix_5.hepmc3.tree"; // has no tree "events"
-  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_1.3998.eicrecon.tree.edm4eic";
-  //TString strang = "EpIC1.0.0-1.0_DVMP_10x100_1.0065.eicrecon.tree.edm4eic";
-  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv.0047.eicrecon.tree.edm4eic";
-  //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic";
-  //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39.ab.0606.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_5x41_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_5.0503.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_10x100_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_2.0256.eicrecon.tree.edm4eic";      
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1.0998.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=10_beamEffects_xAngle=-0.025_hiDiv_3.0294.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1.0015.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1000_beamEffects_xAngle=-0.025_hiDiv_1.0019.eicrecon.tree.edm4eic";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
-  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
-  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
-  //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //TString strang = "podio_output_100events";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files";   
-
-  //TString strang = "Sartre_Au_phi_10runs";
-  //TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
-
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x100";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
-  
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-
-  // Link instead of having to change here all the time: (doesn't work conveniently like this - then I overwrite all my plots in the current directory...)
-  //TString strang = "current";
-  
   if (!strang.IsNull()) {
     // Directory does not exist (): try to make it - this doesn't work as it should...
     gSystem->mkdir(strang.Data(), kTRUE);
