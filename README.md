@@ -1,4 +1,5 @@
 nHCal_VM_Analysis.C reads one or more MC files and produces a root file out.strang-nHCal_VM.root
+
 EXAMPLE: out.nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events-nHCal_VM.root
 
 nHCal_VM_Plotting.C takes the passed "strang", picks up the according out.strang-nHCal_VM.root file, and produces plots. 
