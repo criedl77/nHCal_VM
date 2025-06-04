@@ -288,7 +288,7 @@ void nHCal_VM_Analysis(int RecChaPar){
     // start a gigantic loop over the generated particles:
     for(unsigned int i=0; i<partGenStat.GetSize(); i++) // Loop over generated particles
       {
-	//cout << "++ Entering generated particle #: " << i << " \n";
+	cout << "++ Entering generated particle #: " << i << " \n";
 	
 	int pdg = TMath::Abs(partPdg[i]);
 	TVector3 trueMom(partMomX[i],partMomY[i],partMomZ[i]);
