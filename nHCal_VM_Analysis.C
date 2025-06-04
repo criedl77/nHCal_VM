@@ -279,10 +279,11 @@ void nHCal_VM_Analysis(int RecChaPar){
       }
 
     // event kinematics:
-    cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
-    xTruth->Fill(evTruthX[0]);
-    Q2Truth->Fill(evTruthQ2[0]);
-    
+    //cout << "++ Truth xB: " << evTruthX[0] << "Truth Q2: " << evTruthQ2[0] << " \n";
+    if(RecChaPar==1){
+      xTruth->Fill(evTruthX[0]);
+      Q2Truth->Fill(evTruthQ2[0]);
+    } // end of RecChaPar==1
     //cout << "Event #: " << ievgen << ", " << partGenStat.GetSize() << " gen particles, " << parents_index.GetSize() << " parent particles, " << daughters_index.GetSize() << " daughter particles \n";   // parent_index and daughter_index must be of the same length since they are in the same tree (is that what pushback does?)
 
     // start a gigantic loop over the generated particles:
