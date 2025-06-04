@@ -1,6 +1,6 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
+void nHCal_VM_Analysis(int ReconstructedChargedParticles){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
