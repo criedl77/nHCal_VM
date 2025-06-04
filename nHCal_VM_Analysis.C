@@ -85,7 +85,6 @@ void nHCal_VM_Analysis(){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
-  if(RecChaPar==1){
   // Get reconstructed track information: 
   TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
   TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
@@ -95,7 +94,7 @@ void nHCal_VM_Analysis(){
   // Get associations between MCParticles and ReconstructedChargedParticles:
   TTreeReaderArray<unsigned int> recoAssoc(tree_reader, "ReconstructedChargedParticleAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssoc(tree_reader, "ReconstructedChargedParticleAssociations.simID");
-  }// end RecChaPar
+ 
 
   // Get parent and daugther information:
   TTreeReaderArray<int> parents_index(tree_reader, "_MCParticles_parents.index");
@@ -620,7 +619,7 @@ void nHCal_VM_Analysis(){
 	
 	
 	// Loop over associations to find matching ReconstructedChargedParticle
-	if(RecChaPar==1){
+
 	for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
 	  {
 	    //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
@@ -868,7 +867,7 @@ void nHCal_VM_Analysis(){
 		  }// end of jpsi decay e2
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
-	}// end of if(RecChaPar)
+
 
 	// Put the information of the reco decay daughters together - but only for those events were the decay happened on generated level *and* all decay daughters were reco by ePIC tracking *and* in the eta acceptance of any HCal:
 	// for phitoKK:
