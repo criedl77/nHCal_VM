@@ -4,6 +4,7 @@ void nHCal_VM_Analysis(int RecChaPar){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
+  cout << "+ RecChaPar: " << RecChaPar << " \n";
   TString flavor = "nHCal_VM"; 
 
   // >>>>> If streaming a runlist from SDCC JLab:
