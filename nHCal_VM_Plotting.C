@@ -14,7 +14,7 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
 void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpmfromphiEndpointZ, TH1F *kpmfromphiRecZdecay_nHCal, TH1F *kpmfromphiEndpointZ_nHCal);
 void plot_kpmfromphi_zdecay_endpointz_nHCal(TString strang, TH1F *kpmfromphiRecZdecay_nHCal, TH1F *kpmfromphiEndpointZ_nHCal);
 
-void nHCal_VM_Plotting(){
+void nHCal_VM_Plotting(TString strang){
   
   gSystem->Exec("date");
   TString flavor = "nHCal_VM"; 
@@ -50,7 +50,7 @@ void nHCal_VM_Plotting(){
   //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files";   
 
   //TString strang = "Sartre_Au_phi_10runs";
-  TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
+  //TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
 
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
   //TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
