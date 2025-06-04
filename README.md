@@ -1,6 +1,21 @@
-nHCal_VM_Analysis.C reads one or more MC files and produces a root file output*.root
+*** nHCal_VM_Analysis.C reads one or more MC files and produces a root file out.strang-nHCal_VM.root
 
-nHCal_VM_Plotting.C then picks up this output*.root file and produces plots. 
+- usage:
+  
+root -l -q 'nHCal_VM_Analysis.C(0)' if you have no tracking 
+
+root -l -q 'nHCal_VM_Analysis.C(1)' if you have tracking 
+
+- EXAMPLE of an output file: out.nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events-nHCal_VM.root
+
+*** nHCal_VM_Plotting.C takes the passed "strang", picks up the according out.strang-nHCal_VM.root file, and produces plots in the subdirectory "strang". 
+
+- usage:
+
+root -l -q 'nHCal_VM_Plotting.C("strang")'
+
+EXAMPLE: root -l -q 'nHCal_VM_Plotting.C("nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events")'
+ 
 
 TODO: add description how to stream from a runlist, etc.
 
