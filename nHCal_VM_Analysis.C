@@ -1,11 +1,9 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(int RecChaPar){
-//const char strang[]="podio_output"){
+void nHCal_VM_Analysis(int RecChaPar, TString strang){
 
   gSystem->Exec("date");
-  //RecChaPar = 0; 
-  cout << "+ RecChaPar: " << RecChaPar << " \n";
+  cout << "+ ReconstructedChargedParticles? : " << RecChaPar << " \n";
   TString flavor = "nHCal_VM"; 
 
   // >>>>> If streaming a runlist from SDCC JLab:
@@ -33,7 +31,7 @@ void nHCal_VM_Analysis(int RecChaPar){
   // >>>>> If using local runlist (reading locally stored files):
   //TString strang = "Sartre_Au_phi_10runs"; 
   //TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events";
-  TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
+  //TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
   TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
