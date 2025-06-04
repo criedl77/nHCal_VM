@@ -83,6 +83,7 @@ void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
+  if(ReconstructedChargedParticles){
   // Get reconstructed track information: 
   TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
   TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
@@ -92,6 +93,7 @@ void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
   // Get associations between MCParticles and ReconstructedChargedParticles:
   TTreeReaderArray<unsigned int> recoAssoc(tree_reader, "ReconstructedChargedParticleAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssoc(tree_reader, "ReconstructedChargedParticleAssociations.simID");
+  }// end ReconstructedChargedParticles
 
   // Get parent and daugther information:
   TTreeReaderArray<int> parents_index(tree_reader, "_MCParticles_parents.index");
@@ -606,7 +608,7 @@ void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
 	partEta->Fill(trueEta);
 	
 	// Fill all true momentum:
-	partMom->Fill(trueMom.Mag());
+	partMom->Fill(trueP);
 	
 	// Fill all true phi: 
 	partPhi->Fill(truePhi);
