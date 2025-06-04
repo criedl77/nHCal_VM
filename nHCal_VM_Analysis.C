@@ -30,8 +30,8 @@ void nHCal_VM_Analysis(int RecChaPar){
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
-  //TString strang = "Sartre_Au_phi_10runs"; // local runlist
-  TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events"; // local runlist
+  TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  //TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events"; // local runlist
   TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
