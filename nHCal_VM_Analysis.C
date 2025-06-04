@@ -1,9 +1,10 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(int RecChaPar){
+void nHCal_VM_Analysis(){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
+  int RecChaPar = 1; 
   cout << "+ RecChaPar: " << RecChaPar << " \n";
   TString flavor = "nHCal_VM"; 
 
