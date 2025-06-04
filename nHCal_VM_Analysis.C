@@ -1,6 +1,6 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(){
+void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
@@ -290,9 +290,11 @@ void nHCal_VM_Analysis(){
 	
 	int pdg = TMath::Abs(partPdg[i]);
 	TVector3 trueMom(partMomX[i],partMomY[i],partMomZ[i]);
-	float trueEta = trueMom.PseudoRapidity();
-	float truePhi = trueMom.Phi();
+	float trueEta   = trueMom.PseudoRapidity();
 	float trueTheta = trueMom.Theta();
+	float truePhi   = trueMom.Phi();
+	float trueP     = trueMom.Mag();
+	float truePt    = trueMom.Perp();
 
 	// according to Wouter, "end" is exclusive for daughters - so no "+1" and stop 1 before "end" (can't do it for parents, otherwise we get negative indices)
 	int i_parents_begin = parents_begin[i];
@@ -614,6 +616,7 @@ void nHCal_VM_Analysis(){
 	
 	
 	// Loop over associations to find matching ReconstructedChargedParticle
+	if(ReconstructedChargedParticles){
 	for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
 	  {
 	    //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
@@ -861,6 +864,7 @@ void nHCal_VM_Analysis(){
 		  }// end of jpsi decay e2
 	      } // end of jpsi decay into ee
 	  }// End loop over associations
+	}// end of if(ReconstructedChargedParticles)
 
 	// Put the information of the reco decay daughters together - but only for those events were the decay happened on generated level *and* all decay daughters were reco by ePIC tracking *and* in the eta acceptance of any HCal:
 	// for phitoKK:
