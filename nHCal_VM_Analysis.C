@@ -4,7 +4,7 @@ void nHCal_VM_Analysis(int RecChaPa){
 //const char strang[]="podio_output"){
 
   gSystem->Exec("date");
-  int RecChaPar = 1; 
+  int RecChaPar = 0; 
   cout << "+ RecChaPar: " << RecChaPar << " \n";
   TString flavor = "nHCal_VM"; 
 
