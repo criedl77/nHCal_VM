@@ -1,6 +1,6 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(int RecChaPar, int mode, TString strang){
+void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run"){
 
   gSystem->Exec("date");
   TString flavor = "nHCal_VM";
