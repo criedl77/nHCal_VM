@@ -31,8 +31,8 @@ void nHCal_VM_Analysis(int RecChaPar){
   
   ///////////
   // >>>>> If using local runlist (reading locally stored files):
-  TString strang = "Sartre_Au_phi_10runs"; // local runlist
-  //TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events"; // local runlist
+  //TString strang = "Sartre_Au_phi_10runs"; // local runlist
+  TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events"; // local runlist
   TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
   ///////////
 
@@ -85,7 +85,6 @@ void nHCal_VM_Analysis(int RecChaPar){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
-  //if(RecChaPar==1){
   // Get reconstructed track information: 
   TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
   TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
@@ -95,7 +94,6 @@ void nHCal_VM_Analysis(int RecChaPar){
   // Get associations between MCParticles and ReconstructedChargedParticles:
   TTreeReaderArray<unsigned int> recoAssoc(tree_reader, "ReconstructedChargedParticleAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssoc(tree_reader, "ReconstructedChargedParticleAssociations.simID");
-  //}// end RecChaPar
 
   // Get parent and daugther information:
   TTreeReaderArray<int> parents_index(tree_reader, "_MCParticles_parents.index");
