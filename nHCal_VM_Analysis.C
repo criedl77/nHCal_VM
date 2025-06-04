@@ -1,65 +1,36 @@
 #include "MyConstants.h"
 
-void nHCal_VM_Analysis(int RecChaPar, TString strang){
+void nHCal_VM_Analysis(int RecChaPar, int mode, TString strang){
 
   gSystem->Exec("date");
+  TString flavor = "nHCal_VM";
+   
   cout << "+ ReconstructedChargedParticles? : " << RecChaPar << " \n";
-  TString flavor = "nHCal_VM"; 
+  cout << "+ Mode? (1=streaming runlist, 2=local runlist): " << mode << " \n";
+  cout << "+ Analyzed data is of the type: \n " << strang << " \n";
 
-  // >>>>> If streaming a runlist from SDCC JLab:
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_10files";  
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_100files"; 
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=1_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //TString strang = "pythia8NCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1";
-  //TString strang = "pythia8CCDIS_18x275_minQ2=100_beamEffects_xAngle=-0.025_hiDiv_1_1000runs";
-  //TString strang = "pythia_ep_noradcor_10x100_q2_0.000000001_1.0_run39_10runs";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39_10runs";
-  //TString strang = "pythia_ep_noradcor_18x275_q2_0.000000001_1.0_run39";
-  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv";
-  //TString strang = "rho_10x100_uChannel_Q2of0to10_hiDiv_1run";
-  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1000runs";
-  //TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run";
-  //TString strang = "EpIC1.0.0-1.1_DVMP_10x100_hiAcc_ab";
-  //TString strang = "sartre_bnonsat_Au_jpsi_ab_eAu_10runs";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_18x275";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_10x100";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x100";
-  //TString strang = "DIFFRACTIVE_JPSI_ABCONV_5x41";
-  
-  ///////////
-  // >>>>> If using local runlist (reading locally stored files):
-  //TString strang = "Sartre_Au_phi_10runs"; 
-  //TString strang = "nhcal_only_tile5cm_absorber3cm_scintillator0.8cm_11layers_neutron_p1gev_phi45_theta170_10events";
-  //TString strang = "nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events";
-  TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
-  ///////////
-
-  ///////////
-  // streaming runlist (default): 
-  //TString runlist = TString("runlists/") + strang + TString("_runlist.txt");  
-  ///////////
+  if(mode==1) // streaming runlist (default)
+    {
+      TString runlist = TString("runlists/") + strang + TString("_runlist.txt"); 
+    }
+  else if(mode==2) // local runlist (reading locally stored files)
+    {
+      TString runlist = TString("local_runlists/") + strang + TString("_runlist.txt");
+    }
   
   TString outfile = TString("out.") + strang + TString("-") + flavor + TString(".root");
   TFile *ofile = TFile::Open(outfile,"RECREATE"); // RECREATE overwrites an existing file of the same name
-
-  cout << "Analyzed data is of the type: \n " << strang << " \n";
+ 
   cout << "+ Runlist: " << runlist << " \n";
   cout << "+ Output file: " << outfile << " \n";
 
   TChain *mychain = new TChain("events");
 
-  // if reading a single local file: (locally or streaming)
-  //mychain->Add(infile);
-
-  // if reading from a run list (locally or streaming):
   std::ifstream in(runlist);
   std::string file("");
   while (in >> file) mychain->Add(file.data());
 
-  //////////////////////////////////////  
-  // Initialize reader
-  TTreeReader tree_reader(mychain);
+  TTreeReader tree_reader(mychain); // Initialize reader
 
   // Get event-level information:
   // XXX add x-bjorken, q2, t, x_pomeron, etc
