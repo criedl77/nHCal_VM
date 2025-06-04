@@ -9,6 +9,7 @@ void nHCal_VM_Analysis(int RecChaPar, int mode, TString strang){
   cout << "+ Mode? (1=streaming runlist, 2=local runlist): " << mode << " \n";
   cout << "+ Analyzed data is of the type: \n " << strang << " \n";
 
+  TString runlist = TString("dummy");
   if(mode==1) // streaming runlist (default)
     {
       TString runlist = TString("runlists/") + strang + TString("_runlist.txt"); 
