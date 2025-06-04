@@ -83,7 +83,7 @@ void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
   TTreeReaderArray<double> partVertexY(tree_reader, "MCParticles.vertex.y");
   TTreeReaderArray<double> partVertexZ(tree_reader, "MCParticles.vertex.z");
 
-  if(ReconstructedChargedParticles){
+  if(ReconstructedChargedParticles==1){
   // Get reconstructed track information: 
   TTreeReaderArray<float> trackMomX(tree_reader, "ReconstructedChargedParticles.momentum.x");
   TTreeReaderArray<float> trackMomY(tree_reader, "ReconstructedChargedParticles.momentum.y");
@@ -618,7 +618,7 @@ void nHCal_VM_Analysis(int ReconstructedChargedParticles = 1){
 	
 	
 	// Loop over associations to find matching ReconstructedChargedParticle
-	if(ReconstructedChargedParticles){
+	if(ReconstructedChargedParticles==1){
 	for(unsigned int j=0; j<simuAssoc.GetSize(); j++)
 	  {
 	    //cout << "*** Event " << ievgen << ", generated particle " << i << ", simID " << j << " \n";    
