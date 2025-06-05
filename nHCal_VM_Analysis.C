@@ -879,10 +879,10 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
 	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
 	  {
-	    // Find association index matching the index of the MCParticle we are looking at (i):
-	    if(simuAssocClusters[k] == i) 
+          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << " \n";
+          // Find association index matching the index of the MCParticle we are looking at (i):
+	    if(simuAssocClusters[k] == i)
 	      {
-		//cout << " hello world \n";
 		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
 	    
 			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
