@@ -40,14 +40,12 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> evTruthQ2(tree_reader, "InclusiveKinematicsTruth.Q2");
   
   // Get generated particle information (after GEANT; before GEANT is in "GeneratedParticles"):
-  TTreeReaderArray<int> partGenStat(tree_reader, "MCParticles.generatorStatus");
-  TTreeReaderArray<int> partSimStat(tree_reader, "MCParticles.simulatorStatus");
-  // update MCParticles.momentum.xyz float --> double (2025-06-03)
+  TTreeReaderArray<int>    partGenStat(tree_reader, "MCParticles.generatorStatus");
+  TTreeReaderArray<int>    partSimStat(tree_reader, "MCParticles.simulatorStatus");
   TTreeReaderArray<double> partMomX(tree_reader, "MCParticles.momentum.x");
   TTreeReaderArray<double> partMomY(tree_reader, "MCParticles.momentum.y");
   TTreeReaderArray<double> partMomZ(tree_reader, "MCParticles.momentum.z");
-  //
-  TTreeReaderArray<int> partPdg(tree_reader, "MCParticles.PDG");
+  TTreeReaderArray<int>    partPdg(tree_reader, "MCParticles.PDG");
   TTreeReaderArray<double> partMass(tree_reader, "MCParticles.mass");
   TTreeReaderArray<double> partEndpointX(tree_reader, "MCParticles.endpoint.x");
   TTreeReaderArray<double> partEndpointY(tree_reader, "MCParticles.endpoint.y");
@@ -75,8 +73,6 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<unsigned int> daughters_begin(tree_reader, "MCParticles.daughters_begin");
   TTreeReaderArray<unsigned int> daughters_end(tree_reader, "MCParticles.daughters_end");
 
-  //// Hits, clusters and particle-cluster associations
-
   // nHCal reconstructed hits: fParentName edm4eic::CalorimeterHitData
   TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");  
   TTreeReaderArray<float> nHCalRecHitsPosX(tree_reader, "HcalEndcapNRecHits.position.x");
@@ -90,11 +86,16 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.position.y");
   TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.position.z");
 
-  // HcalEndcapNClusters also has hits_begin, hits_end
-  // HcalEndcapNClusterAssociations.simID, HcalEndcapNClusterAssociations.recID
+  // Get associations between MCParticles and Clusters:
+  // edm4eic::MCRecoClusterParticleAssociation = "Association between a Cluster and a MCParticle"
+  TTreeReaderArray<unsigned int> recoAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.recID");
+  TTreeReaderArray<unsigned int> simuAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.simID");
+    
   // alone standing: 
   // _HcalEndcapNClusters_clusters
   //_HcalEndcapNClusters_hits
+
+  // HcalEndcapNClusters also has hits_begin, hits_end
 
   // before GEANT: (? why match clusters to this?) (MCParticles is after GEANT and does not provide this mapping)
   //GeneratedParticles.clusters_begin
@@ -181,6 +182,13 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH1D *partPhi = new TH1D("partPhi","Phi of thrown charged particles; #phi [rad]",150,-3.2,3.2);
   TH1D *recPhi = new TH1D("recPhi","Phi of reconstructed tracks; #phi [rad]",150,-3.2,3.2);
 
+  // Clusters
+  TH1D *nHCalClustersEnergy_muons = new TH1D("nHCalClustersEnergy_muons","Energy of muon clusters in the nHCal; E [GeV]",150,0.,12.);
+  TH2D *nHCalClustersPosXY_muons = new TH2D("nHCalClustersPosXY_muons","nHCalClusters_muons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 1000,-280.,280., 1000,-280,280);
+  TH2D *nHCalClustersPosZX_muons = new TH2D("nHCalClustersPosZX_muons","nHCalClusters_muons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 1000,-4600.,-3900., 1000,-280,280);
+  TH2D *nHCalClustersPosZY_muons = new TH2D("nHCalClustersPosZY_muons","nHCalClusters_muons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 1000,-4600.,-3900., 1000,-280,280);
+  //HcalEndcapNClusters.nhits - would be interesting to add this at some point
+ 
   //// Reset global counters : 
   // count events:
   int ievgen = 0;
@@ -866,6 +874,34 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	  }// End loop over associations
 	}// end of if(RecChaPar)
 
+	// Loop over all clusters for this MCParticle:
+	//HcalEndcapNClusterAssociations.simID - edm4eic::MCRecoClusterParticleAssociationData
+	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
+	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
+	  {
+	if(simuAssocClusters[k] == i) // Find association index matching the index of the MCParticle we are looking at (i)	  
+	  {
+	    cout << "*** MCParticle: " << i  << ", PDG: " << partPdg[i] <<", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocCluster[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocCluster[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocCluster[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocCluster[k]] << " \n";
+	    
+	    nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocCluster[k]]);
+	    nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocCluster[k]],nHCalRecHitsPosY[recoAssocCluster[k]]);
+	    nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocCluster[k]],nHCalRecHitsPosX[recoAssocCluster[k]]);
+	    nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocCluster[k]],nHCalRecHitsPosY[recoAssocCluster[k]]);	    
+	   
+  	  }// end of matching cluster
+	  // recoAssocClusters[k] is the index of the matched Cluster
+	  // grab associated cluster, particle
+	  //auto cluster  = assoc.getRec();
+	  //auto particle = assoc.getSim();
+	  } // end of loop over cluster associations
+	
+	// loop over associations
+	//for (size_t iAssoc = 0; edm4eic::MCRecoClusterParticleAssociation assoc : associations) {
+       
+	
+	
+	////////
+	
 	// Put the information of the reco decay daughters together - but only for those events were the decay happened on generated level *and* all decay daughters were reco by ePIC tracking *and* in the eta acceptance of any HCal:
 	// for phitoKK:
 	if( is_phidecay_kk )
