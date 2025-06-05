@@ -879,26 +879,23 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
 	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
 	  {
-	if(simuAssocClusters[k] == i) // Find association index matching the index of the MCParticle we are looking at (i)	  
-	  {
-	    cout << "*** MCParticle: " << i  << ", PDG: " << partPdg[i] <<", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
+	    // Find association index matching the index of the MCParticle we are looking at (i):
+	    if(simuAssocClusters[k] == i) 
+	      {
+		cout << " hello world \n";
+		//cout << " *** MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
 	    
-	    nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
-	    nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
-	    nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocClusters[k]],nHCalRecHitsPosX[recoAssocClusters[k]]);
-	    nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);	    
-	   
-  	  }// end of matching cluster
-	  // recoAssocClusters[k] is the index of the matched Cluster
-	  // grab associated cluster, particle
-	  //auto cluster  = assoc.getRec();
-	  //auto particle = assoc.getSim();
+			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
+			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
+		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocClusters[k]],nHCalRecHitsPosX[recoAssocClusters[k]]);
+		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);	    
+		
+	      }// end of matching cluster
+		  // recoAssocClusters[k] is the index of the matched Cluster
+		  // grab associated cluster, particle
+		  //auto cluster  = assoc.getRec();
+		  //auto particle = assoc.getSim();
 	  } // end of loop over cluster associations
-	
-	// loop over associations
-	//for (size_t iAssoc = 0; edm4eic::MCRecoClusterParticleAssociation assoc : associations) {
-       
-	
 	
 	////////
 	
@@ -1053,4 +1050,40 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   cout << "Number of generated pi0: " << ngen_pi0 << ", of which decay into 2 gamma: " << ndecay_pi0_gg <<  " \n";
   cout << "Number of generated kaons +-: " << ngen_kaons << ", of which have non-zero daughters: " << nonzero_daughters_kpm << ", of which decay into mu+- (1 daughter): " << ndecay_kpm_mupm << ", into pi+- (1 daughter): " << ndecay_kpm_pipm << ", involve an electron or photon: " << ndecay_kpm_em << ", end up as baryon: " << ndecay_kpm_baryon <<" \n";
   cout << "Number of generated rho0: " << ngen_rho0 << ", of which decay into pi+ pi-: " << ndecay_rho0_pp << ", into mu+ mu-: " << ndecay_rho0_mumu << ", into e+ e-: " << ndecay_rho0_ee << " \n";
-  cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n"
+  cout << "        " << ndecay_rho0_pionpm_nHCal << " reconstructed pi+ pi- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_rho0_pionpm_nHCal << " \n";
+  cout << "Number of generated rho+: " << ngen_rhop << " \n";
+  cout << "Number of generated phi: " << ngen_phi <<", of which decay into K+ K-: " << ndecay_phi_kk << " \n";
+  cout << "         Of these " << 2*ndecay_phi_kk << " decay K+ K-, " << ndecay_phi_kaonpm_rec << " are reconstructed by ePIC (fraction " << fraction_phi_kaonpm_rec << "), and \n ";
+  cout << "        " << ndecay_phi_kaonpm_nHCal << " reconstructed K+ K- make it into the nHCal acceptance, with corresponds to a fraction (of generated decay K+ K-) " << fraction_phi_kaonpm_nHCal << " \n";
+  cout << "  --> 0 kaons: " << decay_phi_kaonpm_0_nHCal << "\n";
+  cout << "  --> 1 kaon:  " << decay_phi_kaonpm_1_nHCal << "\n";
+  cout << "  --> 2 kaons: " << decay_phi_kaonpm_2_nHCal << "\n";
+  cout << "Distributions in nHCal (0), bHCal (1), lfHCal (2), and all HCals (3), for (K1, K2): \n";
+  for (int k1 = 0; k1 <=3; k1++)
+    {
+      for (int k2 = 0; k2 <=3; k2++)
+	{
+	  cout << "( K1, K2 ) = ( " << k1 << ", " << k2 << " ) = " << HCalMatrixphi_kaonpm_rec[k1][k2] << " , fraction [%]: " << HCalMatrixphi_kaonpm_rec_fraction[k1][k2] <<"\n";  
+	}
+    }
+  
+  cout << "Number of generated omega: " << ngen_omega << " \n";
+  cout << "Number of generated J/Psi: " << ngen_jpsi << " , of which decay into e+ e-: " << ndecay_jpsi_ee << ", into mu+ mu-: " << ndecay_jpsi_mumu << " \n";
+  cout << "        " << ndecay_jpsi_epm_nHCal << " reconstructed e+ e- make it into the nHCal acceptance, with corresponds to a fraction " << fraction_jpsi_epm_nHCal << " \n";
+  cout << "Number of generated Upsilon: " << ngen_upsilon << " \n";
+  cout << "Number of generated D0: " << ngen_d0 << " \n";
+  cout << "Number of generated B0: " << ngen_b0 << " \n\n";
+  cout << "Number of reconstructed electrons +-: " << nrec_electrons << " \n";
+  cout << "Number of reconstructed protons +-: " << nrec_protons << " \n";
+  cout << "Number of reconstructed muons +-: " << nrec_muons << " \n";
+  cout << "Number of reconstructed pions +-: " << nrec_pions << " \n";
+  cout << "Number of reconstructed kaons +-: " << nrec_kaons << " \n";
+  
+  ofile->Write(); // Write histograms to file
+  ofile->Close(); // Close output file
+
+  cout << "Output histograms written in: " << outfile << " \n";
+  
+  cout << "Thank you for running Caro's macro.\n";
+  gSystem->Exec("date");
+}
