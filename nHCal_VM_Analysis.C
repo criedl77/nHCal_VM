@@ -73,7 +73,33 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   
   TTreeReaderArray<int> daughters_index(tree_reader, "_MCParticles_daughters.index");
   TTreeReaderArray<unsigned int> daughters_begin(tree_reader, "MCParticles.daughters_begin");
-  TTreeReaderArray<unsigned int> daughters_end(tree_reader, "MCParticles.daughters_end");  
+  TTreeReaderArray<unsigned int> daughters_end(tree_reader, "MCParticles.daughters_end");
+
+  //// Hits, clusters and particle-cluster associations
+
+  // nHCal reconstructed hits: fParentName edm4eic::CalorimeterHitData
+  TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");  
+  TTreeReaderArray<float> nHCalRecHitsPosX(tree_reader, "HcalEndcapNRecHits.position.x");
+  TTreeReaderArray<float> nHCalRecHitsPosY(tree_reader, "HcalEndcapNRecHits.position.y");
+  TTreeReaderArray<float> nHCalRecHitsPosZ(tree_reader, "HcalEndcapNRecHits.position.z");
+
+  // nHCal clusters: fParentName edm4eic::ClusterData
+  TTreeReaderArray<int> nHCalClustersnHits(tree_reader, "HcalEndcapNClusters.nhits");
+  TTreeReaderArray<float> nHCalClustersE(tree_reader, "HcalEndcapNClusters.energy");
+  TTreeReaderArray<float> nHCalClustersPosX(tree_reader, "HcalEndcapNClusters.x");
+  TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.y");
+  TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.z");
+
+  // HcalEndcapNClusters also has hits_begin, hits_end
+  // HcalEndcapNClusterAssociations.simID, HcalEndcapNClusterAssociations.recID
+  // alone standing: 
+  // _HcalEndcapNClusters_clusters
+  //_HcalEndcapNClusters_hits
+
+  // before GEANT: (? why match clusters to this?) (MCParticles is after GEANT and doesn't provide this mapping)
+  //GeneratedParticles.clusters_begin
+  //GeneratedParticles.clusters_endy
+  // _GeneratedParticles_clusters
   
   //// Define Histograms
 
@@ -244,7 +270,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 
     ievgen++;
     
-    cout << "+ Entering event #: " << ievgen << " \n";
+    //cout << "+ Entering event #: " << ievgen << " \n";
     if(ievgen % 10000 == 0 && ievgen != 0 ){
       cout << "+ processed " << ievgen << " events \n";
       }
