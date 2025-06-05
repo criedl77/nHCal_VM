@@ -86,9 +86,9 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   // nHCal clusters: fParentName edm4eic::ClusterData
   TTreeReaderArray<unsigned int> nHCalClustersnHits(tree_reader, "HcalEndcapNClusters.nhits");
   TTreeReaderArray<float> nHCalClustersE(tree_reader, "HcalEndcapNClusters.energy");
-  TTreeReaderArray<float> nHCalClustersPosX(tree_reader, "HcalEndcapNClusters.x");
-  TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.y");
-  TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.z");
+  TTreeReaderArray<float> nHCalClustersPosX(tree_reader, "HcalEndcapNClusters.position.x");
+  TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.position.y");
+  TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.position.z");
 
   // HcalEndcapNClusters also has hits_begin, hits_end
   // HcalEndcapNClusterAssociations.simID, HcalEndcapNClusterAssociations.recID
@@ -96,7 +96,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   // _HcalEndcapNClusters_clusters
   //_HcalEndcapNClusters_hits
 
-  // before GEANT: (? why match clusters to this?) (MCParticles is after GEANT and doesn't provide this mapping)
+  // before GEANT: (? why match clusters to this?) (MCParticles is after GEANT and does not provide this mapping)
   //GeneratedParticles.clusters_begin
   //GeneratedParticles.clusters_endy
   // _GeneratedParticles_clusters
@@ -1054,4 +1054,3 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   cout << "Thank you for running Caro's macro.\n";
   gSystem->Exec("date");
 }
-                                                                                                                                                                                                                                                                                                                                                
