@@ -84,7 +84,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> nHCalRecHitsPosZ(tree_reader, "HcalEndcapNRecHits.position.z");
 
   // nHCal clusters: fParentName edm4eic::ClusterData
-  TTreeReaderArray<int> nHCalClustersnHits(tree_reader, "HcalEndcapNClusters.nhits");
+  TTreeReaderArray<unsigned int> nHCalClustersnHits(tree_reader, "HcalEndcapNClusters.nhits");
   TTreeReaderArray<float> nHCalClustersE(tree_reader, "HcalEndcapNClusters.energy");
   TTreeReaderArray<float> nHCalClustersPosX(tree_reader, "HcalEndcapNClusters.x");
   TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.y");
@@ -1054,3 +1054,4 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   cout << "Thank you for running Caro's macro.\n";
   gSystem->Exec("date");
 }
+                                                                                                                                                                                                                                                                                                                                                
