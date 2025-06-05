@@ -882,8 +882,8 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	    // Find association index matching the index of the MCParticle we are looking at (i):
 	    if(simuAssocClusters[k] == i) 
 	      {
-		cout << " hello world \n";
-		//cout << " *** MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
+		//cout << " hello world \n";
+		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
 	    
 			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
 			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
