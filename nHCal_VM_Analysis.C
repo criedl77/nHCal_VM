@@ -877,6 +877,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	// Loop over all clusters for this MCParticle:
 	//HcalEndcapNClusterAssociations.simID - edm4eic::MCRecoClusterParticleAssociationData
 	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
+                            cout << " simuAssocClusters.GetSize() " << simuAssocClusters.GetSize() << " \n ";
 	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
 	  {
           cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << " \n";
