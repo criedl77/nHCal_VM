@@ -875,27 +875,42 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	}// end of if(RecChaPar)
 
 	// Loop over all clusters for this MCParticle:
-	//HcalEndcapNClusterAssociations.simID - edm4eic::MCRecoClusterParticleAssociationData
+	// HcalEndcapNClusterAssociations.simID - edm4eic::MCRecoClusterParticleAssociationData
 	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
-                            cout << " simuAssocClusters.GetSize() " << simuAssocClusters.GetSize() << " \n ";
-	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
+    // Get associations between MCParticles and Clusters:
+    //TTreeReaderArray<unsigned int> recoAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.recID");
+    //TTreeReaderArray<unsigned int> simuAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.simID");
+    // recoAssocClusters[k] is the index of the matched Cluster
+    // grab associated cluster, particle
+    //auto cluster  = assoc.getRec();
+    //auto particle = assoc.getSim();
+    //edm4eic::MCRecoClusterParticleAssociation:
+    //Description: "Association between a Cluster and a MCParticle"
+    //Author : "S. Joosten"
+    //Members:
+    //- uint32_t simID // Index of corresponding MCParticle (position in MCParticles array)
+    //- uint32_t recID // Index of corresponding Cluster (position in Clusters array)
+    //- float    weight            // weight of this association
+    //OneToOneRelations:
+    //- edm4eic::Cluster  rec               // reference to the cluster
+    //- edm4hep::MCParticle sim             // reference to the Monte-Carlo particle
+
+    cout << " recoAssocClusters.GetSize() = " << recoAssocClusters.GetSize() << " \n ";
+          
+	for(unsigned int k=0; k<recoAssocClusters.GetSize(); k++)
 	  {
-          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << " \n";
+          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << "simuAssocClusters[k]" << simuAssocClusters[k] << "\n";
           // Find association index matching the index of the MCParticle we are looking at (i):
-	    if(simuAssocClusters[k] == i)
+	    if(recoAssocClusters[k] == i)
 	      {
-		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
+		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[simuAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[simuAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[simuAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[simuAssocClusters[k]] << " \n";
 	    
-			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
-			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
-		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocClusters[k]],nHCalRecHitsPosX[recoAssocClusters[k]]);
-		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);	    
+			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[simuAssocClusters[k]]);
+			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[simuAssocClusters[k]],nHCalRecHitsPosY[simuAssocClusters[k]]);
+		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[simuAssocClusters[k]],nHCalRecHitsPosX[simuAssocClusters[k]]);
+		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[simuAssocClusters[k]],nHCalRecHitsPosY[simuAssocClusters[k]]);
 		
 	      }// end of matching cluster
-		  // recoAssocClusters[k] is the index of the matched Cluster
-		  // grab associated cluster, particle
-		  //auto cluster  = assoc.getRec();
-		  //auto particle = assoc.getSim();
 	  } // end of loop over cluster associations
 	
 	////////
