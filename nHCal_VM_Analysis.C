@@ -890,25 +890,25 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
     //Members:
     //- uint32_t simID // Index of corresponding MCParticle (position in MCParticles array)
     //- uint32_t recID // Index of corresponding Cluster (position in Clusters array)
-    //- float    weight            // weight of this association
+    //- float             weight            // weight of this association
     //OneToOneRelations:
     //- edm4eic::Cluster  rec               // reference to the cluster
     //- edm4hep::MCParticle sim             // reference to the Monte-Carlo particle
 
-    cout << " recoAssocClusters.GetSize() = " << recoAssocClusters.GetSize() << " \n ";
+    cout << " simuAssocClusters.GetSize() " << simuAssocClusters.GetSize() << " \n ";
           
-	for(unsigned int k=0; k<recoAssocClusters.GetSize(); k++)
+	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
 	  {
-          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << "simuAssocClusters[k]" << simuAssocClusters[k] << "\n";
+          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << " \n";
           // Find association index matching the index of the MCParticle we are looking at (i):
-	    if(recoAssocClusters[k] == i)
+	    if(simuAssocClusters[k] == i)
 	      {
-		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[simuAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[simuAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[simuAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[simuAssocClusters[k]] << " \n";
+		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
 	    
-			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[simuAssocClusters[k]]);
-			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[simuAssocClusters[k]],nHCalRecHitsPosY[simuAssocClusters[k]]);
-		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[simuAssocClusters[k]],nHCalRecHitsPosX[simuAssocClusters[k]]);
-		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[simuAssocClusters[k]],nHCalRecHitsPosY[simuAssocClusters[k]]);
+			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
+			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
+		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocClusters[k]],nHCalRecHitsPosX[recoAssocClusters[k]]);
+		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
 		
 	      }// end of matching cluster
 	  } // end of loop over cluster associations
