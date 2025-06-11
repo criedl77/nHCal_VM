@@ -90,6 +90,8 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   // edm4eic::MCRecoClusterParticleAssociation = "Association between a Cluster and a MCParticle"
   TTreeReaderArray<unsigned int> recoAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.simID");
+  TTreeReaderArray<unsigned int> recoAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.recID");
+  TTreeReaderArray<unsigned int> simuAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.simID");
     
   // alone standing: 
   // _HcalEndcapNClusters_clusters
@@ -99,7 +101,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 
   // before GEANT: (? why match clusters to this?) (MCParticles is after GEANT and does not provide this mapping)
   //GeneratedParticles.clusters_begin
-  //GeneratedParticles.clusters_endy
+  //GeneratedParticles.clusters_end
   // _GeneratedParticles_clusters
   
   //// Define Histograms
@@ -874,46 +876,28 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	  }// End loop over associations
 	}// end of if(RecChaPar)
 
-	// Loop over all clusters for this MCParticle:
-	// HcalEndcapNClusterAssociations.simID - edm4eic::MCRecoClusterParticleAssociationData
-	// HcalEndcapNClusterAssociations.recID - edm4eic::MCRecoClusterParticleAssociationData
-    // Get associations between MCParticles and Clusters:
-    //TTreeReaderArray<unsigned int> recoAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.recID");
-    //TTreeReaderArray<unsigned int> simuAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.simID");
-    // recoAssocClusters[k] is the index of the matched Cluster
-    // grab associated cluster, particle
-    //auto cluster  = assoc.getRec();
-    //auto particle = assoc.getSim();
-    //edm4eic::MCRecoClusterParticleAssociation:
-    //Description: "Association between a Cluster and a MCParticle"
-    //Author : "S. Joosten"
-    //Members:
-    //- uint32_t simID // Index of corresponding MCParticle (position in MCParticles array)
-    //- uint32_t recID // Index of corresponding Cluster (position in Clusters array)
-    //- float             weight            // weight of this association
-    //OneToOneRelations:
-    //- edm4eic::Cluster  rec               // reference to the cluster
-    //- edm4hep::MCParticle sim             // reference to the Monte-Carlo particle
-
-    cout << " simuAssocClusters.GetSize() " << simuAssocClusters.GetSize() << " \n ";
-          
-	for(unsigned int k=0; k<simuAssocClusters.GetSize(); k++)
-	  {
-          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << " cluster: " << k << " \n";
-          // Find association index matching the index of the MCParticle we are looking at (i):
-	    if(simuAssocClusters[k] == i)
-	      {
-		cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID: " << k << ", cluster energy: " << nHCalRecHitsE[recoAssocClusters[k]] << ", cluster position X: " << nHCalRecHitsPosX[recoAssocClusters[k]] <<  ", cluster position Y: " << nHCalRecHitsPosY[recoAssocClusters[k]] <<  ", cluster position Z: " << nHCalRecHitsPosZ[recoAssocClusters[k]] << " \n";
-	    
-			nHCalClustersEnergy_muons->Fill(nHCalRecHitsE[recoAssocClusters[k]]);
-			nHCalClustersPosXY_muons->Fill(nHCalRecHitsPosX[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
-		  nHCalClustersPosZX_muons->Fill(nHCalRecHitsPosZ[recoAssocClusters[k]],nHCalRecHitsPosX[recoAssocClusters[k]]);
-		  nHCalClustersPosZY_muons->Fill(nHCalRecHitsPosY[recoAssocClusters[k]],nHCalRecHitsPosY[recoAssocClusters[k]]);
-		
-	      }// end of matching cluster
-	  } // end of loop over cluster associations
+    // nHCal cluster associations to MCParticles:
+    cout << "+ MCParticle: " << i << " simuAssocClusters_nHCal.GetSize() " << simuAssocClusters_nHCal.GetSize() << " \n ";
+                
+    for(unsigned int k=0; k<simuAssocClusters_nHCal.GetSize(); k++) {
+        cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
+        // Find association index matching the index of the MCParticle we are looking at (i):
+        if(simuAssocClusters_nHCal[k] == i){
+         cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
+              }// end of matching cluster in nHCal
+            } // end of loop over cluster associations in nHCal
+            
+    // LFHCal cluster associations to MCParticles:
+    cout << "+ MCParticle: " << i << " simuAssocClusters_lfHCal.GetSize() " << simuAssocClusters_lfHCal.GetSize() << " \n ";
+                  
+    for(unsigned int k=0; k<simuAssocClusters_lfHCal.GetSize(); k++){
+        cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " LFHCal cluster: " << k << " \n";
+        // Find association index matching the index of the MCParticle we are looking at (i):
+        if(simuAssocClusters_lfHCal[k] == i){
+        cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the LFHCal: " << k << ", cluster energy: " << lfHCalClustersE[recoAssocClusters_lfHCal[k]] << ", cluster position X: " << lfHCalClustersPosX[recoAssocClusters_lfHCal[k]] <<  ", cluster position Y: " << lfHCalClustersPosY[recoAssocClusters_lfHCal[k]] <<  ", cluster position Z: " << lfHCalClustersPosZ[recoAssocClusters_lfHCal[k]] << " \n";
+                }// end of matching cluster in LFHCal
+              } // end of loop over cluster associations in LFHCal
 	
-	////////
 	
 	// Put the information of the reco decay daughters together - but only for those events were the decay happened on generated level *and* all decay daughters were reco by ePIC tracking *and* in the eta acceptance of any HCal:
 	// for phitoKK:
