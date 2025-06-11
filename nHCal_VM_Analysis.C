@@ -302,7 +302,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
     // start a gigantic loop over the generated particles:
     for(unsigned int i=0; i<partGenStat.GetSize(); i++) // Loop over generated particles
       {
-	cout << "++ Entering generated particle #: " << i << " \n";
+	//cout << "++ Entering generated particle #: " << i << " \n";
 	
 	int pdg = TMath::Abs(partPdg[i]);
 	TVector3 trueMom(partMomX[i],partMomY[i],partMomZ[i]);
@@ -901,7 +901,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
             } // end of loop over cluster associations in nHCal
             
     // LFHCal cluster associations to MCParticles:
-    cout << "+ MCParticle: " << i << " simuAssocClusters_lfHCal.GetSize() " << simuAssocClusters_lfHCal.GetSize() << " \n ";
+    //cout << "+ MCParticle: " << i << " simuAssocClusters_lfHCal.GetSize() " << simuAssocClusters_lfHCal.GetSize() << " \n ";
                   
     for(unsigned int k=0; k<simuAssocClusters_lfHCal.GetSize(); k++){
         //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " LFHCal cluster: " << k << " \n";
