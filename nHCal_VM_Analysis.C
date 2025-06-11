@@ -85,11 +85,17 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> nHCalClustersPosX(tree_reader, "HcalEndcapNClusters.position.x");
   TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.position.y");
   TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.position.z");
+    
+ // LFHCal clusters: fParentName edm4eic::ClusterData
+  TTreeReaderArray<float> lfHCalClustersE(tree_reader, "LFHCALClusters.energy");
+  TTreeReaderArray<float> lfHCalClustersPosX(tree_reader, "LFHCALClusters.position.x");
+  TTreeReaderArray<float> lfHCalClustersPosY(tree_reader, "LFHCALClusters.position.y");
+  TTreeReaderArray<float> lfHCalClustersPosZ(tree_reader, "LFHCALClusters.position.z");
 
   // Get associations between MCParticles and Clusters:
   // edm4eic::MCRecoClusterParticleAssociation = "Association between a Cluster and a MCParticle"
-  TTreeReaderArray<unsigned int> recoAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.recID");
-  TTreeReaderArray<unsigned int> simuAssocClusters(tree_reader, "HcalEndcapNClusterAssociations.simID");
+  TTreeReaderArray<unsigned int> recoAssocClusters_nHCal(tree_reader, "HcalEndcapNClusterAssociations.recID");
+  TTreeReaderArray<unsigned int> simuAssocClusters_nHCal(tree_reader, "HcalEndcapNClusterAssociations.simID");
   TTreeReaderArray<unsigned int> recoAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.simID");
     
