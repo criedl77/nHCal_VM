@@ -904,7 +904,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
     cout << "+ MCParticle: " << i << " simuAssocClusters_lfHCal.GetSize() " << simuAssocClusters_lfHCal.GetSize() << " \n ";
                   
     for(unsigned int k=0; k<simuAssocClusters_lfHCal.GetSize(); k++){
-        cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " LFHCal cluster: " << k << " \n";
+        //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " LFHCal cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_lfHCal[k] == i){
         //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the LFHCal: " << k << ", cluster energy: " << lfHCalClustersE[recoAssocClusters_lfHCal[k]] << ", cluster position X: " << lfHCalClustersPosX[recoAssocClusters_lfHCal[k]] <<  ", cluster position Y: " << lfHCalClustersPosY[recoAssocClusters_lfHCal[k]] <<  ", cluster position Z: " << lfHCalClustersPosZ[recoAssocClusters_lfHCal[k]] << " \n";
