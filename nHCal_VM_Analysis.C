@@ -891,10 +891,10 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         if(simuAssocClusters_nHCal[k] == i){
          //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
             
-        nHCalClustersEnergy_muons->Fill(nHCalClustersE[recoAssocClusters[k]]);
-        nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters[k]],nHCalClustersPosY[recoAssocClusters[k]]);
-        nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters[k]],nHCalClustersPosX[recoAssocClusters[k]]);
-        nHCalClustersPosZY_muons->Fill(nHCalClustersPosY[recoAssocClusters[k]],nHCalClustersPosY[recoAssocClusters[k]]);
+        nHCalClustersEnergy_muons->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
+        nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+        nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
+        nHCalClustersPosZY_muons->Fill(nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
             
             
               }// end of matching cluster in nHCal
