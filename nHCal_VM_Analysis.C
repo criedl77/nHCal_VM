@@ -889,7 +889,14 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_nHCal[k] == i){
-         cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
+         //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
+            
+        nHCalClustersEnergy_muons->Fill(nHCalClustersE[recoAssocClusters[k]]);
+        nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters[k]],nHCalClustersPosY[recoAssocClusters[k]]);
+        nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters[k]],nHCalClustersPosX[recoAssocClusters[k]]);
+        nHCalClustersPosZY_muons->Fill(nHCalClustersPosY[recoAssocClusters[k]],nHCalClustersPosY[recoAssocClusters[k]]);
+            
+            
               }// end of matching cluster in nHCal
             } // end of loop over cluster associations in nHCal
             
@@ -900,7 +907,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " LFHCal cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_lfHCal[k] == i){
-        cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the LFHCal: " << k << ", cluster energy: " << lfHCalClustersE[recoAssocClusters_lfHCal[k]] << ", cluster position X: " << lfHCalClustersPosX[recoAssocClusters_lfHCal[k]] <<  ", cluster position Y: " << lfHCalClustersPosY[recoAssocClusters_lfHCal[k]] <<  ", cluster position Z: " << lfHCalClustersPosZ[recoAssocClusters_lfHCal[k]] << " \n";
+        //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the LFHCal: " << k << ", cluster energy: " << lfHCalClustersE[recoAssocClusters_lfHCal[k]] << ", cluster position X: " << lfHCalClustersPosX[recoAssocClusters_lfHCal[k]] <<  ", cluster position Y: " << lfHCalClustersPosY[recoAssocClusters_lfHCal[k]] <<  ", cluster position Z: " << lfHCalClustersPosZ[recoAssocClusters_lfHCal[k]] << " \n";
                 }// end of matching cluster in LFHCal
               } // end of loop over cluster associations in LFHCal
 	
