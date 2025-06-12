@@ -178,7 +178,6 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH2D *kpmfromphiRecZdecay_EndpointZ = new TH2D("kpmfromphiRecZdecay_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its Z of decay; endpoint.z [cm]; z_{decay} [cm]", 150,-4000.,4000., 150,-4000.,4000.);
   TH2D *kpmfromphiSimstatus_EndpointZ = new TH2D("kpmfromphiSimstatus_EndpointZ","generated endpoint.z of K^{#pm} from #phi(1020) decay vs. its simulator status; endpoint.z [cm]; simulator status", 150,-4000.,4000., 1000,50000000,200000000);
 
-
   // theta (polar angle)
   TH1D *partTheta = new TH1D("partTheta","Theta of thrown charged particles; #theta [rad]",150,0.,3.2);
   TH1D *recTheta = new TH1D("recTheta","Theta of reconstructed tracks; #theta [rad]",150,0.,3.2);
@@ -192,9 +191,13 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 
   // Clusters
   TH1D *nHCalClustersEnergy_muons = new TH1D("nHCalClustersEnergy_muons","Energy of muon clusters in the nHCal; E [GeV]",150,0.,12.);
-  TH2D *nHCalClustersPosXY_muons = new TH2D("nHCalClustersPosXY_muons","nHCalClusters_muons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 1000,-280.,280., 1000,-280,280);
-  TH2D *nHCalClustersPosZX_muons = new TH2D("nHCalClustersPosZX_muons","nHCalClusters_muons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 1000,-4600.,-3900., 1000,-280,280);
-  TH2D *nHCalClustersPosZY_muons = new TH2D("nHCalClustersPosZY_muons","nHCalClusters_muons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 1000,-4600.,-3900., 1000,-280,280);
+  TH2D *nHCalClustersPosXY_muons = new TH2D("nHCalClustersPosXY_muons","nHCalClusters_muons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 1000,hx_min_nhcal,hx_max_nhcal, 1000,hy_min_nhcal,hy_max_nhcal);
+  TH2D *nHCalClustersPosZX_muons = new TH2D("nHCalClustersPosZX_muons","nHCalClusters_muons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 1000,hz_min_nhcal,hz_max_nhcal, 1000,hx_min_nhcal,hx_max_nhcal);
+  TH2D *nHCalClustersPosZY_muons = new TH2D("nHCalClustersPosZY_muons","nHCalClusters_muons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 1000,hz_min_nhcal,hz_max_nhcal, 1000,hy_min_nhcal,hy_max_nhcal);
+  TH3D *nHCalClustersPosXYZ_muons = new TH3D("nHCalClustersPosXYZ_muons","nHCalClusters_muons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]"; 1000,hx_min_nhcal,hx_max_nhcal,  1000,hy_min_nhcal,hy_max_nhcal, 1000,hz_min_nhcal,hz_max_nhcal);
+    
+    
+    
   //HcalEndcapNClusters.nhits - would be interesting to add this at some point
  
   //// Reset global counters : 
@@ -895,6 +898,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
         nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
         nHCalClustersPosZY_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+        nHCalClustersPosXYZ_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);
             
             
               }// end of matching cluster in nHCal
