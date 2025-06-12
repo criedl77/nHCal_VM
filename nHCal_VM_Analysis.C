@@ -883,7 +883,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	}// end of if(RecChaPar)
 
     // nHCal cluster associations to MCParticles:
-    //cout << "+ MCParticle: " << i << " simuAssocClusters_nHCal.GetSize() " << simuAssocClusters_nHCal.GetSize() << " \n ";
+    cout << "+ MCParticle: " << i << " simuAssocClusters_nHCal.GetSize() " << simuAssocClusters_nHCal.GetSize() << " \n ";
                 
     for(unsigned int k=0; k<simuAssocClusters_nHCal.GetSize(); k++) {
         //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
