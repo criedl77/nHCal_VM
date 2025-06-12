@@ -17,7 +17,7 @@ const double hx_min_nhcal = -2800.;
 const double hx_max_nhcal = 2800.;
 const double hy_min_nhcal = -2800.;
 const double hy_max_nhcal = 2800.;
-const double hz_min_nhcal = -4600.;
+const double hz_min_nhcal = -4300.;
 const double hz_max_nhcal = -3800.;
 
 // from $DETECTOR_PATH/compact/definitions.xml (not used in my code currently):
