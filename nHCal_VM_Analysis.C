@@ -886,7 +886,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
     cout << "+ MCParticle: " << i << " simuAssocClusters_nHCal.GetSize() " << simuAssocClusters_nHCal.GetSize() << " \n ";
                 
     for(unsigned int k=0; k<simuAssocClusters_nHCal.GetSize(); k++) {
-        //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
+        cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_nHCal[k] == i){
          //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
