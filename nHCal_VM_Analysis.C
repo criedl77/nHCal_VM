@@ -194,7 +194,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH2D *nHCalClustersPosXY_muons = new TH2D("nHCalClustersPosXY_muons","nHCalClusters_muons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 1000,hx_min_nhcal,hx_max_nhcal, 1000,hy_min_nhcal,hy_max_nhcal);
   TH2D *nHCalClustersPosZX_muons = new TH2D("nHCalClustersPosZX_muons","nHCalClusters_muons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 1000,hz_min_nhcal,hz_max_nhcal, 1000,hx_min_nhcal,hx_max_nhcal);
   TH2D *nHCalClustersPosZY_muons = new TH2D("nHCalClustersPosZY_muons","nHCalClusters_muons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 1000,hz_min_nhcal,hz_max_nhcal, 1000,hy_min_nhcal,hy_max_nhcal);
-  TH3D *nHCalClustersPosXYZ_muons = new TH3D("nHCalClustersPosXYZ_muons","nHCalClusters_muons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 1000,hx_min_nhcal,hx_max_nhcal,  1000,hy_min_nhcal,hy_max_nhcal, 1000,hz_min_nhcal,hz_max_nhcal);
+  TH3D *nHCalClustersPosXYZ_muons = new TH3D("nHCalClustersPosXYZ_muons","nHCalClusters_muons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
     
     
     
