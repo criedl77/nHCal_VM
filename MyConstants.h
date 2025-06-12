@@ -13,10 +13,10 @@ const double eta_min_lfhcal = 1.18;
 const double eta_max_lfhcal = 4.2;
 
 // define max and min for histograms:
-const double hx_min_nhcal = -280.;
-const double hx_max_nhcal = 280.;
-const double hy_min_nhcal = -280.;
-const double hy_max_nhcal = 280.;
+const double hx_min_nhcal = -2800.;
+const double hx_max_nhcal = 2800.;
+const double hy_min_nhcal = -2800.;
+const double hy_max_nhcal = 2800.;
 const double hz_min_nhcal = -4600.;
 const double hz_max_nhcal = -3800.;
 
