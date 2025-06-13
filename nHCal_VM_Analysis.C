@@ -185,6 +185,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH1D *nHCalClustersnHits_all = new TH1D("nHCalClustersnHits_all","nHits of all clusters in the nHCal; number of hits",16,0,15);
   TH1D *nHCalClustersEnergy_all = new TH1D("nHCalClustersEnergy_all","Energy of all clusters in the nHCal; E [GeV]",150,0.,12.);
   TH2D *nHCalClustersPosXY_all = new TH2D("nHCalClustersPosXY_all","nHCalClusters_all XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH1D *nHCalClustersPosZ_all = new TH1D("nHCalClustersPosZ_all","nHCalClusters_all Z; nHCalClusters.position.z [mm]", 100,hz_min_nhcal,hz_max_nhcal);
   TH2D *nHCalClustersPosZX_all = new TH2D("nHCalClustersPosZX_all","nHCalClusters_all ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
   TH2D *nHCalClustersPosZY_all = new TH2D("nHCalClustersPosZY_all","nHCalClusters_all ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalClustersPosXYZ_all = new TH3D("nHCalClustersPosXYZ_all","nHCalClusters_all XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
@@ -209,6 +210,14 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH2D *nHCalClustersPosZX_electrons = new TH2D("nHCalClustersPosZX_electrons","nHCalClusters_electrons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
   TH2D *nHCalClustersPosZY_electrons = new TH2D("nHCalClustersPosZY_electrons","nHCalClusters_electrons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalClustersPosXYZ_electrons = new TH3D("nHCalClustersPosXYZ_electrons","nHCalClusters_electrons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
+
+  // Hits
+  //// all
+  TH1D *nHCalRecHitsPosZ_all = new TH1D("nHCalRecHitsPosZ_all","nHCalRecHits_all Z; nHCalRecHits.position.z [mm]", 100,hz_min_nhcal,hz_max_nhcal);
+    
+    //TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");
+    //TTreeReaderArray<float> nHCalRecHitsPosX(tree_reader, "HcalEndcapNRecHits.position.x");
+    //TTreeReaderArray<float> nHCalRecHitsPosY(tree_reader, "HcalEndcapNRecHits.position.y");
 
  
   //// Reset global counters : 
@@ -907,6 +916,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
             nHCalClustersnHits_all->Fill(nHCalClustersnHits[recoAssocClusters_nHCal[k]]);
             nHCalClustersEnergy_all->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosXY_all->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+            nHCalClustersPosZ_all->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosZX_all->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosZY_all->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosXYZ_all->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);
