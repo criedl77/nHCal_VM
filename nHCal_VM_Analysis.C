@@ -190,12 +190,30 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH1D *recPhi = new TH1D("recPhi","Phi of reconstructed tracks; #phi [rad]",150,-3.2,3.2);
 
   // Clusters
+  //// all
+  TH1D *nHCalClustersEnergy_all = new TH1D("nHCalClustersEnergy_all","Energy of all clusters in the nHCal; E [GeV]",150,0.,12.);
+  TH2D *nHCalClustersPosXY_all = new TH2D("nHCalClustersPosXY_all","nHCalClusters_all XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH2D *nHCalClustersPosZX_all = new TH2D("nHCalClustersPosZX_all","nHCalClusters_all ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
+  TH2D *nHCalClustersPosZY_all = new TH2D("nHCalClustersPosZY_all","nHCalClusters_all ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH3D *nHCalClustersPosXYZ_all = new TH3D("nHCalClustersPosXYZ_all","nHCalClusters_all XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
+  //// muons
   TH1D *nHCalClustersEnergy_muons = new TH1D("nHCalClustersEnergy_muons","Energy of muon clusters in the nHCal; E [GeV]",150,0.,12.);
   TH2D *nHCalClustersPosXY_muons = new TH2D("nHCalClustersPosXY_muons","nHCalClusters_muons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
   TH2D *nHCalClustersPosZX_muons = new TH2D("nHCalClustersPosZX_muons","nHCalClusters_muons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
   TH2D *nHCalClustersPosZY_muons = new TH2D("nHCalClustersPosZY_muons","nHCalClusters_muons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalClustersPosXYZ_muons = new TH3D("nHCalClustersPosXYZ_muons","nHCalClusters_muons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
-    
+  //// charged kaons
+  TH1D *nHCalClustersEnergy_kaons = new TH1D("nHCalClustersEnergy_kaons","Energy of muon clusters in the nHCal; E [GeV]",150,0.,12.);
+  TH2D *nHCalClustersPosXY_kaons = new TH2D("nHCalClustersPosXY_kaons","nHCalClusters_kaons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH2D *nHCalClustersPosZX_kaons = new TH2D("nHCalClustersPosZX_kaons","nHCalClusters_kaons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
+  TH2D *nHCalClustersPosZY_kaons = new TH2D("nHCalClustersPosZY_kaons","nHCalClusters_kaons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH3D *nHCalClustersPosXYZ_kaons = new TH3D("nHCalClustersPosXYZ_kaons","nHCalClusters_kaons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
+  //// electrons (+-)
+  TH1D *nHCalClustersEnergy_electrons = new TH1D("nHCalClustersEnergy_electrons","Energy of muon clusters in the nHCal; E [GeV]",150,0.,12.);
+  TH2D *nHCalClustersPosXY_electrons = new TH2D("nHCalClustersPosXY_electrons","nHCalClusters_electrons XY; nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH2D *nHCalClustersPosZX_electrons = new TH2D("nHCalClustersPosZX_electrons","nHCalClusters_electrons ZX; nHCalClusters.position.z [mm]; nHCalClusters.position.x [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hx_min_nhcal,hx_max_nhcal);
+  TH2D *nHCalClustersPosZY_electrons = new TH2D("nHCalClustersPosZY_electrons","nHCalClusters_electrons ZY; nHCalClusters.position.z [mm]; nHCalClusters.position.y [mm]", 100,hz_min_nhcal,hz_max_nhcal, 100,hy_min_nhcal,hy_max_nhcal);
+  TH3D *nHCalClustersPosXYZ_electrons = new TH3D("nHCalClustersPosXYZ_electrons","nHCalClusters_electrons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
     
     
   //HcalEndcapNClusters.nhits - would be interesting to add this at some point
@@ -642,8 +660,8 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	    
 	    if(simuAssoc[j] == i) // Find association index matching the index of the thrown particle we are looking at
 	      {
-		TVector3 recMom(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]); // recoAssoc[j] is the index of the matched ReconstructedChargedParticle                                                       
-		
+		TVector3 recMom(trackMomX[recoAssoc[j]],trackMomY[recoAssoc[j]],trackMomZ[recoAssoc[j]]); // recoAssoc[j] is the index of the matched ReconstructedChargedParticle
+              
 		float CPartMom = recMom.Mag();
 		float CPartEta = recMom.PseudoRapidity();
 		float CPartPhi = recMom.Phi();
@@ -885,7 +903,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
 	  }// End loop over associations
 	}// end of if(RecChaPar)
 
-    // nHCal cluster associations to MCParticles:
+    // ***CLUSTERSFILL*** nHCal cluster associations to MCParticles:
     //cout << "+ MCParticle: " << i << " simuAssocClusters_nHCal.GetSize() " << simuAssocClusters_nHCal.GetSize() << " \n ";
                 
     for(unsigned int k=0; k<simuAssocClusters_nHCal.GetSize(); k++) {
@@ -893,13 +911,30 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_nHCal[k] == i){
          //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
+            nHCalClustersEnergy_all->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
+            nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+            nHCalClustersPosZX_all->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
+            nHCalClustersPosZY_all->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+            nHCalClustersPosXYZ_all->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);
             
-        nHCalClustersEnergy_muons->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
-        nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
-        nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
-        nHCalClustersPosZY_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
-        nHCalClustersPosXYZ_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);
-            
+            if( pdg == 13){
+                nHCalClustersEnergy_muons->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXY_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZX_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZY_muons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXYZ_muons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);} // end muon
+            else if( pdg == 321){
+                nHCalClustersEnergy_kaons->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXY_kaons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZX_kaons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZY_kaons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXYZ_kaons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);} // end charged kaon
+            else if( pdg == 11){
+                nHCalClustersEnergy_electrons->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXY_electrons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZX_electrons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosX[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosZY_electrons->Fill(nHCalClustersPosZ[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
+                nHCalClustersPosXYZ_kaons->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]],nHCalClustersPosZ[recoAssocClusters_nHCal[k]]);} // end e+-
             
               }// end of matching cluster in nHCal
             } // end of loop over cluster associations in nHCal
