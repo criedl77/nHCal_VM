@@ -920,7 +920,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
          cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << ", hits begin: " << nHCalClustershits_begin[recoAssocClusters_nHCal[k]] << ", hits end: " << nHCalClustershits_end[recoAssocClusters_nHCal[k]] << " \n";
             
             for(unsigned int h=nHCalClustershits_begin[recoAssocClusters_nHCal[k]]; k<=nHCalClustershits_end[recoAssocClusters_nHCal[k]]; k++){
-             cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n"
+                cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
             }// end of loop over associated hits
         
             
