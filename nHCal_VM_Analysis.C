@@ -921,6 +921,8 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
             
             for(unsigned int h=nHCalClustershits_begin[recoAssocClusters_nHCal[k]]; h<=nHCalClustershits_end[recoAssocClusters_nHCal[k]]; h++){
                 cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
+                nHCalRecHitsPosZ_all->Fill(nHCalRecHitsPosZ[h]);
+                // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
         
             
