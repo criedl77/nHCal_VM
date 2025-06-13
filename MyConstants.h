@@ -17,8 +17,8 @@ const double hx_min_nhcal = -2800.;
 const double hx_max_nhcal = 2800.;
 const double hy_min_nhcal = -2800.;
 const double hy_max_nhcal = 2800.;
-const double hz_min_nhcal = -4300.;
-const double hz_max_nhcal = -3800.;
+const double hz_min_nhcal = -4500.;
+const double hz_max_nhcal = -3950.;
 
 // from $DETECTOR_PATH/compact/definitions.xml (not used in my code currently):
 const double z_min_nhcal = -395.; // (2024-12-03) start of nHCal in z-direction [cm]
