@@ -86,6 +86,10 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> nHCalClustersPosY(tree_reader, "HcalEndcapNClusters.position.y");
   TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.position.z");
     
+ // Hit navigators for clusters:
+  TTreeReaderArray<unsigned int> nHCalClustershits_begin(tree_reader, "HcalEndcapNClusters.hits_begin");
+  TTreeReaderArray<unsigned int> nHCalClustershits_end(tree_reader, "HcalEndcapNClusters.hits_end");
+    
  // LFHCal clusters: fParentName edm4eic::ClusterData
   TTreeReaderArray<float> lfHCalClustersE(tree_reader, "LFHCALClusters.energy");
   TTreeReaderArray<float> lfHCalClustersPosX(tree_reader, "LFHCALClusters.position.x");
@@ -98,7 +102,8 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<unsigned int> simuAssocClusters_nHCal(tree_reader, "HcalEndcapNClusterAssociations.simID");
   TTreeReaderArray<unsigned int> recoAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.simID");
-    
+   
+  
   
   
   //// Define Histograms
@@ -912,7 +917,9 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_nHCal[k] == i){
-         //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << " \n";
+         cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << ", hits begin: " << nHCalClustershits_begin[recoAssocClusters_nHCal[k]] << ", hits end: " << nHCalClustershits_end[recoAssocClusters_nHCal[k]] << " \n";
+            
+            
             nHCalClustersnHits_all->Fill(nHCalClustersnHits[recoAssocClusters_nHCal[k]]);
             nHCalClustersEnergy_all->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosXY_all->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
