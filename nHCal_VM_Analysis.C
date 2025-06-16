@@ -87,6 +87,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<float> nHCalClustersPosZ(tree_reader, "HcalEndcapNClusters.position.z");
     
  // Hit navigators for clusters:
+ // Remark: _HcalEndcapNClusters_clusters is not filled
   TTreeReaderArray<unsigned int> nHCalClustershits_begin(tree_reader, "HcalEndcapNClusters.hits_begin");
   TTreeReaderArray<unsigned int> nHCalClustershits_end(tree_reader, "HcalEndcapNClusters.hits_end");
     
@@ -219,7 +220,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   // Hits
   //// all
   TH1D *nHCalRecHitsPosZ_all = new TH1D("nHCalRecHitsPosZ_all","nHCalRecHits_all Z; nHCalRecHits.position.z [mm]", 30,hz_min_nhcal,hz_max_nhcal);
-  TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all X; nHCalRecHits_all Y; nHCalRecHits_all Z; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 30,hx_min_nhcal,hx_max_nhcal, 30,hy_min_nhcal,hy_max_nhcal, 30,hz_min_nhcal,hz_max_nhcal);
+  TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 30,hx_min_nhcal,hx_max_nhcal, 30,hy_min_nhcal,hy_max_nhcal, 30,hz_min_nhcal,hz_max_nhcal);
     
     //TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");
     //TTreeReaderArray<float> nHCalRecHitsPosX(tree_reader, "HcalEndcapNRecHits.position.x");
