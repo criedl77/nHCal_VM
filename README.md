@@ -2,9 +2,16 @@
 
 - usage:
   
-root -l -q 'nHCal_VM_Analysis.C(0)' if you have no tracking 
+	○ root -l -q 'nHCal_VM_Analysis.C(tracking,  mode, "strang")'
+		 ○ tracking= 
+			1: tracking available (ReconstructedChargedParticles is filled) = default
+			0: no tracking available 
+		 ○ mode=
+			1: streaming runlist (SDCC via Jlab) = default
+			2: local runlist
+		 ○ strang is the data production string, for example=
+			nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events
 
-root -l -q 'nHCal_VM_Analysis.C(1)' if you have tracking 
 
 - EXAMPLE of an output file: out.nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events-nHCal_VM.root
 
@@ -17,13 +24,11 @@ root -l -q 'nHCal_VM_Plotting.C("strang")'
 EXAMPLE: root -l -q 'nHCal_VM_Plotting.C("nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events")'
  
 
-TODO: add description how to stream from a runlist, etc.
-
-TODO: introduce flags to easily switch between local and streaming runlist; between different MC productions; etc.
-
 LOGS:
 
-CKR 2024-08-20: clean up strang definitions (not complete yet)
+CKR June 2025 - read cluster and hit information
+
+CKR 2024-08-20: clean up strang definitions 
 
 CKR 2024-10-03: continue cleaning up; remove option of streaming 1 file - use runlist always (it's easy to generate a runlist with 1 file)
 
