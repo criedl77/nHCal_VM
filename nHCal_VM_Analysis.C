@@ -220,6 +220,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   // Hits
   //// all
   TH1D *nHCalRecHitsPosZ_all = new TH1D("nHCalRecHitsPosZ_all","nHCalRecHits_all Z; nHCalRecHits.position.z [mm]", 30,hz_min_nhcal,hz_max_nhcal);
+  TH2D *nHCalRecHitsPosXY_all = new TH2D("nHCalRecHitsPosXY_all","nHCalRecHits_all XY; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]", 30,hx_min_nhcal,hx_max_nhcal,30,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 30,hx_min_nhcal,hx_max_nhcal, 30,hy_min_nhcal,hy_max_nhcal, 30,hz_min_nhcal,hz_max_nhcal);
     
     //TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");
@@ -924,6 +925,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
             for(unsigned int h=nHCalClustershits_begin[recoAssocClusters_nHCal[k]]; h<=nHCalClustershits_end[recoAssocClusters_nHCal[k]]; h++){
                 cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
                 nHCalRecHitsPosZ_all->Fill(nHCalRecHitsPosZ[h]);
+                nHCalRecHitsPosXY_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h]);
                 nHCalRecHitsPosXYZ_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h], nHCalRecHitsPosZ[h]);
                 // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
