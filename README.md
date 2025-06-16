@@ -34,7 +34,6 @@ EXAMPLE: root -l -q 'nHCal_VM_Plotting.C("nhcal_only_tile5cm_absorber4cm_scintil
 
 LOGS:
 
-CKR June 2025 - read cluster and hit information
 
 CKR 2024-08-20: clean up strang definitions 
 
@@ -45,3 +44,5 @@ CKR 2024-10-28: continue cleaning up
 CKR 2024-11-12: set up this code on github and set it up both on my laptop and on SDCC
 
 CKR 2024-12-03: calculate decay length 
+
+CKR June 2025 - read cluster and hit information
