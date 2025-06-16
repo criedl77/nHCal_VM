@@ -3,13 +3,20 @@
 - usage:
   
 	○ root -l -q 'nHCal_VM_Analysis.C(tracking,  mode, "strang")'
-		 ○ tracking= 
+	   ○ tracking=
+	
 			1: tracking available (ReconstructedChargedParticles is filled) = default
-			0: no tracking available 
-		 ○ mode=
+			
+			0: no tracking available
+			
+		○ mode=
+			
 			1: streaming runlist (SDCC via Jlab) = default
+			
 			2: local runlist
-		 ○ strang is the data production string, for example=
+			
+			○ strang is the data production string, for example=
+			
 			nhcal_only_tile5cm_absorber4cm_scintillator0.4cm_10layers_mu-_p1gev_phi45_theta170_10events
 
 
