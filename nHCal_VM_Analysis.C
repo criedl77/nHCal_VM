@@ -222,12 +222,9 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH1D *nHCalRecHitsPosZ_all = new TH1D("nHCalRecHitsPosZ_all","nHCalRecHits_all Z; nHCalRecHits.position.z [mm]", 30,hz_min_nhcal,hz_max_nhcal);
   TH2D *nHCalRecHitsPosXY_all = new TH2D("nHCalRecHitsPosXY_all","nHCalRecHits_all XY; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal,100,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 30,hx_min_nhcal,hx_max_nhcal, 30,hy_min_nhcal,hy_max_nhcal, 30,hz_min_nhcal,hz_max_nhcal);
-    
-    //TTreeReaderArray<float> nHCalRecHitsE(tree_reader, "HcalEndcapNRecHits.energy");
-    //TTreeReaderArray<float> nHCalRecHitsPosX(tree_reader, "HcalEndcapNRecHits.position.x");
-    //TTreeReaderArray<float> nHCalRecHitsPosY(tree_reader, "HcalEndcapNRecHits.position.y");
+  TH1D *nHCalRecHitsE_all = new TH1D("nHCalRecHitsE_all","nHCalRecHits_all Energy; nHCalRecHits.energy [GeV]", 100,0.,12.);
+  TH2D *nHCalRecHitsE_Vs_PosZ_all = new TH2D("nHCalRecHitsE_Vs_PosZ_all","nHCalRecHits_all E vs. Z; nHCalRecHits.position.z [mm]; nHCalRecHits.energy [GeV]", 30,hz_min_nhcal,hz_max_nhcal, 100,0.,12.);
 
- 
   //// Reset global counters : 
   // count events:
   int ievgen = 0;
@@ -920,13 +917,15 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
         //cout << "--- MCParticle: " << i << ", PDG: " << partPdg[i] << " nHCal      cluster: " << k << " \n";
         // Find association index matching the index of the MCParticle we are looking at (i):
         if(simuAssocClusters_nHCal[k] == i){
-         cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << ", hits begin: " << nHCalClustershits_begin[recoAssocClusters_nHCal[k]] << ", hits end: " << nHCalClustershits_end[recoAssocClusters_nHCal[k]] << " \n";
+         //cout << " MCParticle: " << i << ", PDG: " << partPdg[i] << ", matching cluster ID in the nHCal: " << k << ", cluster energy: " << nHCalClustersE[recoAssocClusters_nHCal[k]] << ", cluster position X: " << nHCalClustersPosX[recoAssocClusters_nHCal[k]] <<  ", cluster position Y: " << nHCalClustersPosY[recoAssocClusters_nHCal[k]] <<  ", cluster position Z: " << nHCalClustersPosZ[recoAssocClusters_nHCal[k]] << ", hits begin: " << nHCalClustershits_begin[recoAssocClusters_nHCal[k]] << ", hits end: " << nHCalClustershits_end[recoAssocClusters_nHCal[k]] << " \n";
             
             for(unsigned int h=nHCalClustershits_begin[recoAssocClusters_nHCal[k]]; h<=nHCalClustershits_end[recoAssocClusters_nHCal[k]]; h++){
-                cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
+                //cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
                 nHCalRecHitsPosZ_all->Fill(nHCalRecHitsPosZ[h]);
                 nHCalRecHitsPosXY_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h]);
                 nHCalRecHitsPosXYZ_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h], nHCalRecHitsPosZ[h]);
+                nHCalRecHitsE_all->Fill(nHCalRecHitsE[h]);
+                nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
                 // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
         
