@@ -946,7 +946,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
                     //cout << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << ", nHCalRecHitsPosZ=" << nHCalRecHitsPosZ[h] << ", nHCalRecHitsE=" << nHCalRecHitsE[h] << "\n ";
                     if(nHCalRecHitsPosZ[h]<=min_nhcal && nHCalRecHitsPosZ[h]>max_nhcal){
                         nHCalRecHitsE_L_all[l]->Fill(nHCalRecHitsE[h]);
-                    cout << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << ", nHCalRecHitsPosZ=" << nHCalRecHitsPosZ[h] << ", nHCalRecHitsE=" << nHCalRecHitsE[h] << "\n ";
+                    cout << "event# " << ievgen << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << ", nHCalRecHitsPosZ=" << nHCalRecHitsPosZ[h] << ", nHCalRecHitsE=" << nHCalRecHitsE[h] << "\n ";
                     } // end of hit is in that layer
                 } // end of loop over nhcal layers
                 nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
