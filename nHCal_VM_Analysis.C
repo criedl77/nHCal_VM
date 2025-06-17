@@ -929,7 +929,7 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
                 for(int l=1; l<=nlayers_nhcal; l++){
                     double min_nhcal=z_min_nhcal+(l-1)*(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
                     double max_nhcal=z_min_nhcal+(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
-                    cout << "layer # " << l << "with " min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << "\n ";
+                    cout << "layer # " << l << ", min_nhcal= " min_nhcal << ", max_nhcal= " << max_nhcal << "\n ";
             } // end of loop over nhcal layers
                 // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
