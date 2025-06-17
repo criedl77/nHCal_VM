@@ -2,6 +2,8 @@
 
 void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bnonsat_Au_phi_ab_eAu_q2_15_1_1run"){
 
+  int nlayers_nhcal=10; //currently hardcoded
+    
   gSystem->Exec("date");
   TString flavor = "nHCal_VM";
    
@@ -104,9 +106,6 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TTreeReaderArray<unsigned int> recoAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.recID");
   TTreeReaderArray<unsigned int> simuAssocClusters_lfHCal(tree_reader, "LFHCALClusterAssociations.simID");
    
-  
-  
-  
   //// Define Histograms
 
   // event level
@@ -926,6 +925,12 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
                 nHCalRecHitsPosXYZ_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h], nHCalRecHitsPosZ[h]);
                 nHCalRecHitsE_all->Fill(nHCalRecHitsE[h]);
                 nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
+                
+                for(int l=1; l<=nlayers_nhcal; l++){
+                    double min_nhcal=z_min_nhcal+(l-1)*(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
+                    double max_nhcal=z_min_nhcal+(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
+                    cout << "layer # " << l << "with " min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << "\n ";
+            } // end of loop over nhcal layers
                 // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
         
