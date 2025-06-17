@@ -222,6 +222,18 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH2D *nHCalRecHitsPosXY_all = new TH2D("nHCalRecHitsPosXY_all","nHCalRecHits_all XY; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]", 100,hx_min_nhcal,hx_max_nhcal,100,hy_min_nhcal,hy_max_nhcal);
   TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 30,hx_min_nhcal,hx_max_nhcal, 30,hy_min_nhcal,hy_max_nhcal, 30,hz_min_nhcal,hz_max_nhcal);
   TH1D *nHCalRecHitsE_all = new TH1D("nHCalRecHitsE_all","nHCalRecHits_all Energy; nHCalRecHits.energy [GeV]", 100,0.,12.);
+    
+// Create a vector to store the histogram pointers
+  std::vector<TH1D*> nHCalRecHitsE_L_all;
+
+  for (int i = 1; i <= 10; ++i) {
+        std::ostringstream name, title;
+        name << "nHCalRecHitsE_L" << i << "_all";
+        title << "nHCalRecHits Layer " << i << "; nHCalRecHits.energy [GeV]";
+        TH1D* hist = new TH1D(name.str().c_str(), title.str().c_str(), 100, 0., 12.);
+        nHCalRecHitsE_L_all.push_back(hist);
+    }
+    
   TH2D *nHCalRecHitsE_Vs_PosZ_all = new TH2D("nHCalRecHitsE_Vs_PosZ_all","nHCalRecHits_all E vs. Z; nHCalRecHits.position.z [mm]; nHCalRecHits.energy [GeV]", 30,hz_min_nhcal,hz_max_nhcal, 100,0.,12.);
 
   //// Reset global counters : 
@@ -920,21 +932,25 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
             
             for(unsigned int h=nHCalClustershits_begin[recoAssocClusters_nHCal[k]]; h<=nHCalClustershits_end[recoAssocClusters_nHCal[k]]; h++){
                 //cout << "asso hit: " << h << " with energy: " << nHCalRecHitsE[h] << " \n";
+                // Fill hit level info:
                 nHCalRecHitsPosZ_all->Fill(nHCalRecHitsPosZ[h]);
                 nHCalRecHitsPosXY_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h]);
                 nHCalRecHitsPosXYZ_all->Fill(nHCalRecHitsPosX[h], nHCalRecHitsPosY[h], nHCalRecHitsPosZ[h]);
                 nHCalRecHitsE_all->Fill(nHCalRecHitsE[h]);
-                nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
                 
-                for(int l=1; l<=nlayers_nhcal; l++){
-                    double min_nhcal=z_min_nhcal+(l-1)*(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
+                
+                for(int l=0; l<nlayers_nhcal; l++){
+                    double min_nhcal=z_min_nhcal+l*(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
                     double max_nhcal=min_nhcal+(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
                     cout << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << "\n ";
-            } // end of loop over nhcal layers
+                    //XXX continue here with hit energy in a given layer
+                    nHCalRecHitsE_L_all[l]->Fill(nHCalRecHitsE[h]);
+                } // end of loop over nhcal layers
+                nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
                 // here you can also discriminate pdg: XXX
             }// end of loop over associated hits
         
-            
+            // Fill cluster-level info:
             nHCalClustersnHits_all->Fill(nHCalClustersnHits[recoAssocClusters_nHCal[k]]);
             nHCalClustersEnergy_all->Fill(nHCalClustersE[recoAssocClusters_nHCal[k]]);
             nHCalClustersPosXY_all->Fill(nHCalClustersPosX[recoAssocClusters_nHCal[k]],nHCalClustersPosY[recoAssocClusters_nHCal[k]]);
