@@ -942,11 +942,10 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
                 for(int l=0; l<nlayers_nhcal; l++){
                     double min_nhcal=z_min_nhcal+l*(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
                     double max_nhcal=min_nhcal+(z_max_nhcal-z_min_nhcal)/nlayers_nhcal;
-                    cout << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << "\n ";
-                    //XXX continue here with hit energy in a given layer
+                    cout << "layer # " << l << ", min_nhcal= " << min_nhcal << ", max_nhcal= " << max_nhcal << ", nHCalRecHitsPosZ=" << nHCalRecHitsPosZ[h] << "\n ";
                     if(nHCalRecHitsPosZ[h]>=min_nhcal && nHCalRecHitsPosZ[h]<max_nhcal){
                         nHCalRecHitsE_L_all[l]->Fill(nHCalRecHitsE[h]);
-                    } // end of hit is in that layer 
+                    } // end of hit is in that layer
                 } // end of loop over nhcal layers
                 nHCalRecHitsE_Vs_PosZ_all->Fill(nHCalRecHitsPosZ[h],nHCalRecHitsE[h]);
                 // here you can also discriminate pdg: XXX
