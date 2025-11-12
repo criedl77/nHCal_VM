@@ -595,12 +595,12 @@ void plot_kpmfromphi_zdecay(TString strang, TH1F *kpmfromphiRecZdecay, TH1F *kpm
   // add vertical lines for nHCal z-min and z-max:
   Int_t binmax = kpmfromphiRecZdecay->GetMaximumBin();
   Double_t y_max = 0.45*kpmfromphiRecZdecay->GetBinContent(binmax);
-  TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
+  TLine *z_min_nhcal_line= new TLine(z_min_nhcal,0.,z_min_nhcal,y_max);  // (x1,y1,x2,y2)
   z_min_nhcal_line->SetLineColor(kBlack);
   z_min_nhcal_line->SetLineWidth(2);
   z_min_nhcal_line->SetLineStyle(kDashed);
   z_min_nhcal_line->Draw("same");
-  TLine *z_max_nhcal_line= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max);  // (x1,y1,x2,y2)
+  TLine *z_max_nhcal_line= new TLine(z_max_nhcal,0.,z_max_nhcal,y_max);  // (x1,y1,x2,y2)
   z_max_nhcal_line->SetLineColor(kBlack);
   z_max_nhcal_line->SetLineWidth(2);
   z_max_nhcal_line->SetLineStyle(kDashed);
@@ -646,12 +646,12 @@ void plot_kpmfromphi_zdecay_endpointz(TString strang, TH1F *kpmfromphiRecZdecay,
   // add vertical lines for nHCal z-min and z-max:
   Int_t binmax = kpmfromphiEndpointZ->GetMaximumBin();
   Double_t y_max = 0.45*kpmfromphiEndpointZ->GetBinContent(binmax);
-  TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
+  TLine *z_min_nhcal_line= new TLine(z_min_nhcal,0.,z_min_nhcal,y_max);  // (x1,y1,x2,y2)
   z_min_nhcal_line->SetLineColor(kBlack);
   z_min_nhcal_line->SetLineWidth(2);
   z_min_nhcal_line->SetLineStyle(kDashed);
   z_min_nhcal_line->Draw("same");
-  TLine *z_max_nhcal_line= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max);  // (x1,y1,x2,y2)
+  TLine *z_max_nhcal_line= new TLine(z_max_nhcal,0.,z_max_nhcal,y_max);  // (x1,y1,x2,y2)
   z_max_nhcal_line->SetLineColor(kBlack);
   z_max_nhcal_line->SetLineWidth(2);
   z_max_nhcal_line->SetLineStyle(kDashed);
@@ -688,12 +688,12 @@ void plot_kpmfromphi_zdecay_endpointz_nHCal(TString strang, TH1F *kpmfromphiRecZ
   // add vertical lines for nHCal z-min and z-max:
   Int_t binmax = kpmfromphiEndpointZ_nHCal->GetMaximumBin();
   Double_t y_max = 0.45*kpmfromphiEndpointZ_nHCal->GetBinContent(binmax);
-  TLine *z_min_nhcal_line= new TLine(z_nhcal_min,0.,z_nhcal_min,y_max);  // (x1,y1,x2,y2)
+  TLine *z_min_nhcal_line= new TLine(z_min_nhcal,0.,z_min_nhcal,y_max);  // (x1,y1,x2,y2)
   z_min_nhcal_line->SetLineColor(kBlack);
   z_min_nhcal_line->SetLineWidth(2);
   z_min_nhcal_line->SetLineStyle(kDashed);
   z_min_nhcal_line->Draw("same");
-  TLine *z_max_nhcal_line= new TLine(z_nhcal_max,0.,z_nhcal_max,y_max);  // (x1,y1,x2,y2)
+  TLine *z_max_nhcal_line= new TLine(z_max_nhcal,0.,z_max_nhcal,y_max);  // (x1,y1,x2,y2)
   z_max_nhcal_line->SetLineColor(kBlack);
   z_max_nhcal_line->SetLineWidth(2);
   z_max_nhcal_line->SetLineStyle(kDashed);
