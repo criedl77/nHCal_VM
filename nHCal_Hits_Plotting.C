@@ -83,7 +83,7 @@ void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all){
   //gStyle->SetOptStat(0); //no stats box
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
-    nHCalRecHitsPosZ_all(2);
+    nHCalRecHitsPosZ_all->SetLineStyle(2);
     nHCalRecHitsPosZ_all->SetTitle(strang);
     nHCalRecHitsPosZ_all->SetLineColor(kRed);
     nHCalRecHitsPosZ_all->Draw();
