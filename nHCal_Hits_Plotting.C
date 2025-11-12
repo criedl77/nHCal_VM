@@ -83,7 +83,7 @@ void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all){
   //gStyle->SetOptStat(0); //no stats box
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
-    nHCalRecHitsPosZ_all->SetLineStyle(2);
+    nHCalRecHitsPosZ_all->SetLineStyle(1);
     nHCalRecHitsPosZ_all->SetTitle(strang);
     nHCalRecHitsPosZ_all->SetLineColor(kRed);
     nHCalRecHitsPosZ_all->Draw();
@@ -94,18 +94,18 @@ void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all){
   leg->SetFillStyle(0);
   leg->SetTextSize(0.05);
   leg->SetHeader("Reco hits in nHCal", "C");
-  leg->AddEntry(nHCalRecHitsPosZ_all,"all","l");
+  //leg->AddEntry(nHCalRecHitsPosZ_all,"all","l");
   leg->Draw();
 
   // add vertical lines for nHCal range
   Int_t binmax = nHCalRecHitsPosZ_all->GetMaximumBin();
   Double_t y_max = 0.6*nHCalRecHitsPosZ_all->GetBinContent(binmax);
-  TLine *z_min_nhcal_line= new TLine(z_min_nhcal,0.,z_min_nhcal,y_max);
+  TLine *z_min_nhcal_line= new TLine(10*z_min_nhcal,0.,10*z_min_nhcal,y_max);
   z_min_nhcal_line->SetLineColor(kBlack);
   z_min_nhcal_line->SetLineWidth(2);
   z_min_nhcal_line->SetLineStyle(kDashed);
   z_min_nhcal_line->Draw("same");
-  TLine *z_max_nhcal_line= new TLine(z_max_nhcal,0.,z_max_nhcal,y_max);
+  TLine *z_max_nhcal_line= new TLine(10*z_max_nhcal,0.,10*z_max_nhcal,y_max);
   z_max_nhcal_line->SetLineColor(kBlack);
   z_max_nhcal_line->SetLineWidth(2);
   z_max_nhcal_line->SetLineStyle(kDashed);
