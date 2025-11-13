@@ -217,10 +217,11 @@ void nHCal_VM_Analysis(int RecChaPar=1, int mode=1, TString strang = "sartre_bno
   TH3D *nHCalClustersPosXYZ_electrons = new TH3D("nHCalClustersPosXYZ_electrons","nHCalClusters_electrons XYZ;  nHCalClusters.position.x [mm]; nHCalClusters.position.y [mm]; nHCalClusters.position.z [mm]", 100,hx_min_nhcal,hx_max_nhcal,  100,hy_min_nhcal,hy_max_nhcal, 100,hz_min_nhcal,hz_max_nhcal);
 
   // Hits
+   //// 56 = 2*ymax/size of tile=10cm = 2*2800/10 - to get bin sizes that match the tile size
   //// all
   TH1D *nHCalRecHitsPosZ_all = new TH1D("nHCalRecHitsPosZ_all","nHCalRecHits_all Z; nHCalRecHits.position.z [mm]", nlayers_nhcal,hz_min_nhcal,hz_max_nhcal);
   TH2D *nHCalRecHitsPosXY_all = new TH2D("nHCalRecHitsPosXY_all","nHCalRecHits_all XY; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]", 56,hx_min_nhcal,hx_max_nhcal,56,hy_min_nhcal,hy_max_nhcal);
-  TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 56,hx_min_nhcal,hx_max_nhcal, 56,hy_min_nhcal,hy_max_nhcal, 10,hz_min_nhcal,hz_max_nhcal);
+  TH3D *nHCalRecHitsPosXYZ_all = new TH3D("nHCalRecHitsPosXYZ_all","nHCalRecHits_all XYZ; nHCalRecHits.position.x [mm]; nHCalRecHits.position.y [mm]; nHCalRecHits.position.z [mm]", 56,hx_min_nhcal,hx_max_nhcal, 56,hy_min_nhcal,hy_max_nhcal, nlayers_nhcal,hz_min_nhcal,hz_max_nhcal);
   TH1D *nHCalRecHitsE_all = new TH1D("nHCalRecHitsE_all","nHCalRecHits_all Energy; nHCalRecHits.energy [GeV]", 100,0.,12.);
     
 // Create a vector to store the histogram pointers
