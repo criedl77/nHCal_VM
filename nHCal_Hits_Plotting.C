@@ -2,6 +2,7 @@
 
 void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all);
 void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all);
+void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all);
 
 void nHCal_Hits_Plotting(TString strang){
   
@@ -66,6 +67,7 @@ void nHCal_Hits_Plotting(TString strang){
     // Hit distributions:
     plot_nHCalRecHitsPosZ(strang, nHCalRecHitsPosZ_all);
     plot_nHCalRecHitsPosXY(strang, nHCalRecHitsPosXY_all);
+    plot_nHCalRecHitsPosXYZ(strang, nHCalRecHitsPosXYZ_all);
   
   
   ///////////////////////////////////////////////////////////
@@ -122,8 +124,6 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
-    
-  
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
     // Make sure margins are wide enough
@@ -150,4 +150,36 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
     
     canvas->Print(filename, "pdf");
  
-} // end of plot_nHCalRecHitsPosZ()
+} // end of plot_nHCalRecHitsPosXY()
+
+void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all){
+  TString name = TString("nHCalRecHitsPosXYZ");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+    // Make sure margins are wide enough
+    canvas->SetLeftMargin(0.13);   // space for y-axis title
+    canvas->SetRightMargin(0.15);  // space for color palette
+    canvas->SetBottomMargin(0.12); // space for x-axis title
+    canvas->SetTopMargin(0.05);
+    
+    nHCalRecHitsPosXYZ_all->SetLineStyle(1);
+    nHCalRecHitsPosXYZ_all->SetTitle(strang);
+    nHCalRecHitsPosXYZ_all->Draw("box");
+    canvas->Draw();
+
+    // Create a circle (TEllipse) centered at (0,0) with nHCal radius
+    TEllipse *circle = new TEllipse(0, 0, hx_max_nhcal, hx_max_nhcal);
+    circle->SetFillStyle(0);     // no fill, just outline
+    circle->SetLineColor(kRed);  // red border
+    circle->SetLineWidth(2);     // thicker line
+
+    // Draw it on top of the histogram
+    circle->Draw("same");
+    canvas->SetFixedAspectRatio(); // makes the circle look right
+    
+    canvas->Print(filename, "pdf");
+ 
+} // end of plot_nHCalRecHitsPosXYZ()
