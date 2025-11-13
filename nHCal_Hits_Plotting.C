@@ -126,10 +126,10 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
     nHCalRecHitsPosXY_all->SetLineStyle(1);
     nHCalRecHitsPosXY_all->SetTitle(strang);
-    nHCalRecHitsPosZ_all->Draw("colz");
+    nHCalRecHitsPosXY_all->Draw("colz");
     canvas->Draw();
 
-    // Create a circle (TEllipse) centered at (0,0) with nHCal radius 
+    // Create a circle (TEllipse) centered at (0,0) with nHCal radius
     TEllipse *circle = new TEllipse(0, 0, hx_max_nhcal, hx_max_nhcal);
     circle->SetFillStyle(0);     // no fill, just outline
     circle->SetLineColor(kRed);  // red border
@@ -139,6 +139,6 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
     circle->Draw("same");
     
     
-  canvas->Print(filename, "pdf");
+    canvas->Print(filename, "pdf");
  
 } // end of plot_nHCalRecHitsPosZ()
