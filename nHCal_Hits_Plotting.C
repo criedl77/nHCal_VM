@@ -181,7 +181,7 @@ void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all){
     //   phi = rotation around z (horizontal angle)
     //   theta = tilt above xy plane
     // Example: look along z with a slight downward tilt
-    view->SetView(30, 15, 0, 0, 0);  // phi=30°, theta=15° gives a nice "barrel" look
+    view->SetView(30, 15, 0, 0);  // phi=30°, theta=15° gives a nice "barrel" look
     
     canvas->Print(filename, "pdf");
  
