@@ -1,6 +1,7 @@
 #include "MyConstants.h"
 
 void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all);
+void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all);
 
 void nHCal_Hits_Plotting(TString strang){
   
@@ -62,7 +63,9 @@ void nHCal_Hits_Plotting(TString strang){
   ///////////////////////////////////////////////////////////
   // Plot:
   
+    // Hit distributions:
     plot_nHCalRecHitsPosZ(strang, nHCalRecHitsPosZ_all);
+    plot_nHCalRecHitsPosXY(strang, nHCalRecHitsPosXY_all);
   
   
   ///////////////////////////////////////////////////////////
@@ -110,6 +113,32 @@ void plot_nHCalRecHitsPosZ(TString strang, TH1F *nHCalRecHitsPosZ_all){
   z_max_nhcal_line->SetLineWidth(2);
   z_max_nhcal_line->SetLineStyle(kDashed);
   z_max_nhcal_line->Draw("same");
+  canvas->Print(filename, "pdf");
+ 
+} // end of plot_nHCalRecHitsPosZ()
+
+void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
+  TString name = TString("nHCalRecHitsPosXY");
+  TString filename = strang + TString("/") + TString(name) + TString(".pdf");
+
+  gStyle->SetOptStat(0); //no stats box
+
+  TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+    nHCalRecHitsPosXY_all->SetLineStyle(1);
+    nHCalRecHitsPosXY_all->SetTitle(strang);
+    nHCalRecHitsPosZ_all->Draw("colz");
+    canvas->Draw();
+
+    // Create a circle (TEllipse) centered at (0,0) with nHCal radius 
+    TEllipse *circle = new TEllipse(0, 0, hx_max_nhcal, hx_max_nhcal);
+    circle->SetFillStyle(0);     // no fill, just outline
+    circle->SetLineColor(kRed);  // red border
+    circle->SetLineWidth(2);     // thicker line
+
+    // Draw it on top of the histogram
+    circle->Draw("same");
+    
+    
   canvas->Print(filename, "pdf");
  
 } // end of plot_nHCalRecHitsPosZ()
