@@ -123,13 +123,15 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
 
   gStyle->SetOptStat(0); //no stats box
     
-  // Make sure margins are wide enough
-  canvas->SetLeftMargin(0.13);   // space for y-axis title
-  canvas->SetRightMargin(0.15);  // space for color palette
-  canvas->SetBottomMargin(0.12); // space for x-axis title
-  canvas->SetTopMargin(0.05);
+  
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
+    // Make sure margins are wide enough
+    canvas->SetLeftMargin(0.13);   // space for y-axis title
+    canvas->SetRightMargin(0.15);  // space for color palette
+    canvas->SetBottomMargin(0.12); // space for x-axis title
+    canvas->SetTopMargin(0.05);
+    
     nHCalRecHitsPosXY_all->SetLineStyle(1);
     nHCalRecHitsPosXY_all->SetTitle(strang);
     nHCalRecHitsPosXY_all->Draw("colz");
