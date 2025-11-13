@@ -160,25 +160,28 @@ void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all){
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
     // Make sure margins are wide enough
-    canvas->SetLeftMargin(0.13);   // space for y-axis title
-    canvas->SetRightMargin(0.15);  // space for color palette
-    canvas->SetBottomMargin(0.12); // space for x-axis title
-    canvas->SetTopMargin(0.05);
+    nHCalRecHitsPosXYZ_all->GetXaxis()->SetTitleOffset(1.5);
+    nHCalRecHitsPosXYZ_all->GetYaxis()->SetTitleOffset(1.8);
+    nHCalRecHitsPosXYZ_all->GetZaxis()->SetTitleOffset(1.2);
+
+    nHCalRecHitsPosXYZ_all->GetXaxis()->SetLabelOffset(0.02);
+    nHCalRecHitsPosXYZ_all->GetYaxis()->SetLabelOffset(0.02);
+    nHCalRecHitsPosXYZ_all->GetZaxis()->SetLabelOffset(0.02);
     
     nHCalRecHitsPosXYZ_all->SetLineStyle(1);
     nHCalRecHitsPosXYZ_all->SetTitle(strang);
-    nHCalRecHitsPosXYZ_all->Draw("box");
+    nHCalRecHitsPosXYZ_all->Draw("box2");
     canvas->Draw();
 
-    // Create a circle (TEllipse) centered at (0,0) with nHCal radius
-    TEllipse *circle = new TEllipse(0, 0, hx_max_nhcal, hx_max_nhcal);
-    circle->SetFillStyle(0);     // no fill, just outline
-    circle->SetLineColor(kRed);  // red border
-    circle->SetLineWidth(2);     // thicker line
+    // Get or create a 3D view
+    TView *view = (TView*)gPad->GetView();
+    if (!view) view = TView::CreateView(1);
 
-    // Draw it on top of the histogram
-    circle->Draw("same");
-    canvas->SetFixedAspectRatio(); // makes the circle look right
+    // Set view angles (phi, theta)
+    //   phi = rotation around z (horizontal angle)
+    //   theta = tilt above xy plane
+    // Example: look along z with a slight downward tilt
+    view->SetView(30, 15, 0, 0, 0);  // phi=30°, theta=15° gives a nice "barrel" look
     
     canvas->Print(filename, "pdf");
  
