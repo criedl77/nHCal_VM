@@ -122,6 +122,12 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
   TString filename = strang + TString("/") + TString(name) + TString(".pdf");
 
   gStyle->SetOptStat(0); //no stats box
+    
+  // Make sure margins are wide enough
+  canvas->SetLeftMargin(0.13);   // space for y-axis title
+  canvas->SetRightMargin(0.15);  // space for color palette
+  canvas->SetBottomMargin(0.12); // space for x-axis title
+  canvas->SetTopMargin(0.05);
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
     nHCalRecHitsPosXY_all->SetLineStyle(1);
@@ -137,6 +143,7 @@ void plot_nHCalRecHitsPosXY(TString strang, TH2F *nHCalRecHitsPosXY_all){
 
     // Draw it on top of the histogram
     circle->Draw("same");
+    canvas->SetFixedAspectRatio(); // makes the circle look right
     
     
     canvas->Print(filename, "pdf");
