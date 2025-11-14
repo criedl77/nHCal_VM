@@ -160,10 +160,11 @@ void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all){
 
   TCanvas *canvas = new TCanvas(name, strang, 800, 600);
     // Make sure margins are wide enough
-    nHCalRecHitsPosXYZ_all->GetXaxis()->SetTitleOffset(1.5);
-    nHCalRecHitsPosXYZ_all->GetYaxis()->SetTitleOffset(1.8);
-    nHCalRecHitsPosXYZ_all->GetZaxis()->SetTitleOffset(1.2);
+    nHCalRecHitsPosXYZ_all->GetXaxis()->SetTitleOffset(2.0);
+    nHCalRecHitsPosXYZ_all->GetYaxis()->SetTitleOffset(2.0);
+    nHCalRecHitsPosXYZ_all->GetZaxis()->SetTitleOffset(1.6);
 
+    // theese are the numbers on the axes:
     nHCalRecHitsPosXYZ_all->GetXaxis()->SetLabelOffset(0.02);
     nHCalRecHitsPosXYZ_all->GetYaxis()->SetLabelOffset(0.02);
     nHCalRecHitsPosXYZ_all->GetZaxis()->SetLabelOffset(0.02);
