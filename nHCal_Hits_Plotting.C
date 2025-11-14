@@ -171,18 +171,21 @@ void plot_nHCalRecHitsPosXYZ(TString strang, TH3F *nHCalRecHitsPosXYZ_all){
     nHCalRecHitsPosXYZ_all->SetLineStyle(1);
     nHCalRecHitsPosXYZ_all->SetTitle(strang);
     nHCalRecHitsPosXYZ_all->Draw("box2");
+    gPad->SetPhi(30);    // rotate around vertical axis
+    gPad->SetTheta(15);  // tilt downward slightly
+    gPad->Update();
     canvas->Draw();
 
     // Get or create a 3D view
-    TView *view = (TView*)gPad->GetView();
-    if (!view) view = TView::CreateView(1);
+    //TView *view = (TView*)gPad->GetView();
+    //if (!view) view = TView::CreateView(1);
 
     // Set view angles (phi, theta)
     //   phi = rotation around z (horizontal angle)
     //   theta = tilt above xy plane
     // Example: look along z with a slight downward tilt
-    int irep = 0;
-    view->SetView(30, 15, 0, 0, irep);  // phi=30°, theta=15° gives a nice "barrel" look
+    //int irep = 0;
+    //view->SetView(30, 15, 0, 0, irep);  // phi=30°, theta=15° gives a nice "barrel" look
     
     canvas->Print(filename, "pdf");
  
