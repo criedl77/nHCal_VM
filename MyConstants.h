@@ -14,9 +14,15 @@ const double eta_max_lfhcal = 4.2;
 const int nlayers_nhcal=10; // 2025-11-14
 const double steel_thickness_nhcal=4; // [cm] 2025-11-14
 const double scintillator_thickness_nhcal=2.4; // [cm] 2025-11-14
-const double extra_z_nhcal = 1.; // [cm]
+const double extra_z_nhcal = 0.1.; // [cm]
 const double tilesize_nhcal=10; // [cm] 2025-11-19
 const double tilesize_lfhcal=5; // [cm] 2025-11-19
+//
+const double x_min_nhcal = -280.; // [cm]
+const double x_max_nhcal = 280.; // [cm]
+const double y_min_nhcal = -280.; // [cm]
+const double y_max_nhcal = 280.; // [cm]
+//
 
 // from https://github.com/eic/epic/blob/main/compact/definitions.xml :
 const double BackwardServiceGap_zmin = 316.; // [cm]
@@ -24,16 +30,16 @@ const double BackwardServiceGap_length = 15.; // [cm]
 const double GapToBackwardServiceGap = 44.; // [cm], (called "gap between service gap" in definitions.xml,) includes 28.5cm oculus
 
 const double z_min_nhcal = -1*(BackwardServiceGap_zmin + BackwardServiceGap_length + GapToBackwardServiceGap); // start of nHCal in z-direction [cm]
-const double z_thickness_nhcal = nlayers_nhcal * (steel_thickness_nhcal + scintillator_thickness_nhcal) + extra_z_nhcal; // nHCal thickness in z [cm]
+const double z_thickness_nhcal = nlayers_nhcal * (steel_thickness_nhcal + scintillator_thickness_nhcal + extra_z_nhcal); // nHCal thickness in z [cm]
 const double z_max_nhcal = z_min_nhcal - z_thickness_nhcal; // what should be done is that z_max_nhcal is fixed (the pivot) and z_min_nhcal adapted accordingly. Also the gap to the gap, GapToBackwardServiceGap, shouldn't be hardcoded like this.
 
 // define max and min for histograms (need mm):
-const double hx_min_nhcal = -2800.;
-const double hx_max_nhcal = 2800.;
-const double hy_min_nhcal = -2800.;
-const double hy_max_nhcal = 2800.;
-const double hz_min_nhcal = (z_min_nhcal*10)*0.95; //extends to more positive by 5% (0.95 because negative number) than the actual calo to display the bin edge in a well-defined way
-const double hz_max_nhcal = (z_max_nhcal*10)*1.05; // extends to more negative by 5% than the actual calo to display the bin edge in a well-defined way
+const double hx_min_nhcal = 10*x_min_nhcal;
+const double hx_max_nhcal = 10*x_max_nhcal;
+const double hy_min_nhcal = 10*y_min_nhcal;
+const double hy_max_nhcal = 10*y_max_nhcal;
+const double hz_min_nhcal = 10*(z_min_nhcal)*0.95; //extends to more positive by 5% (0.95 because negative number) than the actual calo to display the bin edge in a well-defined way
+const double hz_max_nhcal = 10*(z_max_nhcal)*1.05; // extends to more negative by 5% than the actual calo to display the bin edge in a well-defined way
 
 // define physical constants:
 const double speedoflight = 299792458;        // speed of light in m/s
